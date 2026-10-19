@@ -1,0 +1,2757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mathematical Calculation Boost — 100 Mock Tests (SSC / Eduquity Pattern)</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-subtle: #f1f5f9;
+      --text-primary: #0f172a;
+      --text-secondary: #334155;
+      --text-muted: #64748b;
+      --border-color: #cbd5e1;
+      --border-light: #e2e8f0;
+      --blue-primary: #1d4ed8;
+      --blue-hover: #1e40af;
+      --blue-soft: #eff6ff;
+      --blue-border: #bfdbfe;
+      --green-primary: #15803d;
+      --green-hover: #166534;
+      --green-soft: #f0fdf4;
+      --green-border: #bbf7d0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-primary);
+      line-height: 1.5;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .font-mono-num {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #94a3b8;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #64748b;
+    }
+
+    /* Top Navigation / Exam Bar */
+    .edu-top-bar {
+      background: #ffffff;
+      border-bottom: 2px solid #e2e8f0;
+      padding: 0.6rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    }
+
+    .timer-digit-box {
+      background: #1e293b;
+      color: #ffffff;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 0.92rem;
+      padding: 0.2rem 0.45rem;
+      border-radius: 4px;
+      min-width: 2rem;
+      text-align: center;
+      display: inline-block;
+      letter-spacing: 0.03em;
+    }
+
+    .timer-digit-box.timer-urgent {
+      background: #dc2626;
+      animation: pulseUrgent 1s infinite;
+    }
+
+    @keyframes pulseUrgent {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.78; }
+    }
+
+    /* TCS / Eduquity Main Exam Layout */
+    .exam-shell {
+      display: flex;
+      flex-direction: column;
+      height: calc(100vh - 58px);
+      min-height: 540px;
+      background: #ffffff;
+    }
+
+    .exam-sub-bar {
+      background: #f8fafc;
+      border-bottom: 1px solid #cbd5e1;
+      padding: 0.55rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .exam-body {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .question-work-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      background: #ffffff;
+    }
+
+    /* Small-sized Question Number Palette on the RIGHT */
+    .question-palette-aside {
+      width: 250px;
+      min-width: 250px;
+      max-width: 250px;
+      background: #f8fafc;
+      border-left: 2px solid #cbd5e1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-y: auto;
+      user-select: none;
+    }
+
+    /* Strictly hide the question number palette on mobile phones per Requirement 5 */
+    @media (max-width: 768px) {
+      .question-palette-aside {
+        display: none !important;
+      }
+      .exam-shell {
+        height: auto;
+        min-height: calc(100vh - 58px);
+      }
+    }
+
+    /* Palette 5x5 Compact Grid */
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.4rem;
+      padding: 0.75rem;
+    }
+
+    .palette-btn {
+      height: 32px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      border-radius: 4px;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color: #1e293b;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.12s ease;
+      position: relative;
+    }
+
+    .palette-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 4px rgba(15, 23, 42, 0.1);
+    }
+
+    /* Palette States using Blue & Green Theme + Eduquity Convention */
+    .palette-btn.st-not-visited {
+      background: #ffffff;
+      color: #334155;
+      border-color: #cbd5e1;
+    }
+
+    .palette-btn.st-not-answered {
+      background: #e0f2fe;
+      color: #0369a1;
+      border-color: #38bdf8;
+    }
+
+    .palette-btn.st-answered {
+      background: #16a34a;
+      color: #ffffff;
+      border-color: #15803d;
+    }
+
+    .palette-btn.st-review {
+      background: #1d4ed8;
+      color: #ffffff;
+      border-color: #1e40af;
+    }
+
+    .palette-btn.st-answered-review {
+      background: #1d4ed8;
+      color: #ffffff;
+      border-color: #1e40af;
+    }
+    .palette-btn.st-answered-review::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+      border: 1px solid #ffffff;
+    }
+
+    .palette-btn.is-current {
+      outline: 2px solid #0f172a;
+      outline-offset: 1px;
+    }
+
+    /* Radio Option Rows (TCS / Eduquity Style) */
+    .option-row {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.85rem 1.1rem;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.12s ease;
+      background: #ffffff;
+    }
+
+    .option-row:hover {
+      background: #f8fafc;
+      border-color: #93c5fd;
+    }
+
+    .option-row.selected {
+      background: #eff6ff;
+      border-color: #1d4ed8;
+      box-shadow: 0 0 0 1px rgba(29, 78, 216, 0.15);
+    }
+
+    .option-radio {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid #64748b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .option-row.selected .option-radio {
+      border-color: #1d4ed8;
+    }
+
+    .option-row.selected .option-radio::after {
+      content: '';
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #1d4ed8;
+    }
+
+    /* Action Buttons (Blue & Green Accent Theme) */
+    .btn-edu {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.55rem 1.05rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    .btn-edu:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .btn-blue {
+      background: #1d4ed8;
+      color: #ffffff;
+      border-color: #1e40af;
+    }
+    .btn-blue:hover:not(:disabled) {
+      background: #1e40af;
+    }
+
+    .btn-green {
+      background: #15803d;
+      color: #ffffff;
+      border-color: #166534;
+    }
+    .btn-green:hover:not(:disabled) {
+      background: #166534;
+    }
+
+    .btn-outline-blue {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border-color: #93c5fd;
+    }
+    .btn-outline-blue:hover:not(:disabled) {
+      background: #dbeafe;
+    }
+
+    .btn-outline-slate {
+      background: #ffffff;
+      color: #334155;
+      border-color: #cbd5e1;
+    }
+    .btn-outline-slate:hover:not(:disabled) {
+      background: #f1f5f9;
+    }
+
+    /* Mock Card Grid on Home Dashboard */
+    .mock-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.16s ease;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+    }
+
+    .mock-card:hover {
+      border-color: #93c5fd;
+      box-shadow: 0 6px 16px -4px rgba(29, 78, 216, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .mock-card.completed-card {
+      border-left: 4px solid #16a34a;
+    }
+
+    /* Modal Backdrop */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(2px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 1rem;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===================================================================== -->
+  <!-- VIEW 1: DASHBOARD (100 MOCK TESTS SERIES HOME)                        -->
+  <!-- ===================================================================== -->
+  <div id="view-dashboard" class="min-h-screen flex flex-col">
+    <!-- Top Header -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-700 to-green-600 flex items-center justify-center text-white font-extrabold text-lg shadow-sm">
+            M
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-base sm:text-lg font-extrabold text-slate-900 tracking-tight">
+                Mathematical Calculation Boost
+              </h1>
+              <span class="px-2 py-0.5 text-xs font-bold rounded bg-blue-50 text-blue-700 border border-blue-200">
+                SSC / Eduquity TCS Pattern
+              </span>
+            </div>
+            <p class="text-xs text-slate-500">
+              100 Full Speed-Calculation Mock Tests • 2,500 Verified MCQs • Topics A to F
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2.5">
+          <button id="btn-open-ref-sheet" class="btn-edu btn-outline-blue text-xs sm:text-sm">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+            </svg>
+            Surds, Indices &amp; Triplets Sheet
+          </button>
+          <button id="btn-open-syllabus" class="btn-edu btn-outline-slate text-xs sm:text-sm">
+            Syllabus &amp; Marking
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Dashboard Container -->
+    <main class="max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 flex-1 space-y-6">
+      <!-- Hero Metrics Strip -->
+      <section class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+        <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+          <div class="text-xs font-medium text-slate-500">Total Mock Tests</div>
+          <div class="text-xl font-extrabold text-blue-700 mt-0.5 font-mono-num">100 Mocks</div>
+          <div class="text-[11px] text-slate-500 mt-0.5">2,500 Distinct MCQs</div>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+          <div class="text-xs font-medium text-slate-500">Pattern per Mock</div>
+          <div class="text-xl font-extrabold text-slate-800 mt-0.5 font-mono-num">25 MCQs</div>
+          <div class="text-[11px] text-slate-500 mt-0.5">Max Marks: 50.00</div>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+          <div class="text-xs font-medium text-slate-500">Marking Scheme</div>
+          <div class="text-xl font-extrabold text-green-700 mt-0.5 font-mono-num">+2 / −0.25</div>
+          <div class="text-[11px] text-slate-500 mt-0.5">0 for Unattempted</div>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+          <div class="text-xs font-medium text-slate-500">Strict Duration</div>
+          <div class="text-xl font-extrabold text-blue-700 mt-0.5 font-mono-num">15:00 Mins</div>
+          <div class="text-[11px] text-slate-500 mt-0.5">No Pause • Auto-Submit</div>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+          <div class="text-xs font-medium text-slate-500">Mocks Completed</div>
+          <div id="stat-completed-count" class="text-xl font-extrabold text-green-700 mt-0.5 font-mono-num">0 / 100</div>
+          <div id="stat-avg-accuracy" class="text-[11px] text-slate-500 mt-0.5">Avg Accuracy: —</div>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+          <div class="text-xs font-medium text-slate-500">Best Score</div>
+          <div id="stat-best-score" class="text-xl font-extrabold text-blue-700 mt-0.5 font-mono-num">— / 50</div>
+          <div id="stat-avg-score" class="text-[11px] text-slate-500 mt-0.5">Avg Score: —</div>
+        </div>
+      </section>
+
+      <!-- Topic Strip Banner -->
+      <section class="bg-gradient-to-r from-blue-50 via-white to-green-50 border border-blue-200 rounded-xl p-4">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-blue-800">
+            Mandatory 6-Topic Coverage &amp; Difficulty Mix Inside Every Mock Test
+          </h2>
+          <span class="text-xs font-semibold text-green-800 bg-green-100 px-2.5 py-0.5 rounded-full border border-green-200">
+            Easy: 3–5 Qs • Moderate: 10–12 Qs • Tough: 8–12 Qs (Shuffled Order)
+          </span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 text-xs text-slate-700">
+          <div class="bg-white/90 border border-slate-200 rounded-lg px-3 py-2">
+            <span class="font-bold text-blue-700">(A)</span> Addition &amp; Subtraction of 4 &amp; 5-digit natural numbers, complex fractions, decimals
+          </div>
+          <div class="bg-white/90 border border-slate-200 rounded-lg px-3 py-2">
+            <span class="font-bold text-green-700">(B)</span> Multiplication &amp; Division of a variety of numbers (base shortcuts, decimals, ratios)
+          </div>
+          <div class="bg-white/90 border border-slate-200 rounded-lg px-3 py-2">
+            <span class="font-bold text-blue-700">(C)</span> Squares of 2 &amp; 3-digit numbers, Square-roots (Perfect &amp; Non-perfect), Cubes 1 to 21
+          </div>
+          <div class="bg-white/90 border border-slate-200 rounded-lg px-3 py-2">
+            <span class="font-bold text-green-700">(D)</span> Simplification on Surds &amp; Indices (PDF powers of 2, 3, 5, 7, 11), BODMAS &amp; Approximation
+          </div>
+          <div class="bg-white/90 border border-slate-200 rounded-lg px-3 py-2">
+            <span class="font-bold text-blue-700">(E)</span> Basic Problems on Percentage, Average, Profit &amp; Loss, SI &amp; CI, Ratio, Age, Mixture
+          </div>
+          <div class="bg-white/90 border border-slate-200 rounded-lg px-3 py-2">
+            <span class="font-bold text-green-700">(F)</span> Mensuration 2D/3D, Trigonometry &amp; Pythagorean Triplets (PDF base, frequent &amp; multiples)
+          </div>
+        </div>
+      </section>
+
+      <!-- Filter & Quick Launch Controls -->
+      <section class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex flex-wrap items-center justify-between gap-3">
+        <div class="flex flex-wrap items-center gap-1.5" id="mock-range-tabs">
+          <button data-range="all" class="range-tab btn-edu btn-blue text-xs py-1.5 px-3">All 100 Mocks</button>
+          <button data-range="1-20" class="range-tab btn-edu btn-outline-slate text-xs py-1.5 px-3">Mocks 01–20</button>
+          <button data-range="21-40" class="range-tab btn-edu btn-outline-slate text-xs py-1.5 px-3">Mocks 21–40</button>
+          <button data-range="41-60" class="range-tab btn-edu btn-outline-slate text-xs py-1.5 px-3">Mocks 41–60</button>
+          <button data-range="61-80" class="range-tab btn-edu btn-outline-slate text-xs py-1.5 px-3">Mocks 61–80</button>
+          <button data-range="81-100" class="range-tab btn-edu btn-outline-slate text-xs py-1.5 px-3">Mocks 81–100</button>
+          <button data-range="attempted" class="range-tab btn-edu btn-outline-slate text-xs py-1.5 px-3">Attempted</button>
+          <button data-range="unattempted" class="range-tab btn-edu btn-outline-slate text-xs py-1.5 px-3">Unattempted</button>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <label for="quick-jump-input" class="text-xs font-semibold text-slate-600">Quick Start Mock #:</label>
+          <input
+            id="quick-jump-input"
+            type="number"
+            min="1"
+            max="100"
+            placeholder="1 - 100"
+            class="w-24 px-2.5 py-1.5 text-xs font-semibold border border-slate-300 rounded-md focus:outline-none focus:border-blue-600"
+          />
+          <button id="btn-quick-start" class="btn-edu btn-green text-xs py-1.5 px-3">
+            Launch Mock
+          </button>
+        </div>
+      </section>
+
+      <!-- Grid of 100 Mock Tests -->
+      <section id="mocks-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3.5 pb-10">
+      </section>
+    </main>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- VIEW 2: ACTIVE EXAM INTERFACE (TCS / EDUQUITY SSC PATTERN)            -->
+  <!-- ===================================================================== -->
+  <div id="view-exam" class="hidden">
+    <!-- Top Exam Header Bar (Matches Eduquity / Testbook Screenshot) -->
+    <header class="edu-top-bar">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <span class="px-2 py-0.5 rounded bg-blue-700 text-white font-extrabold text-xs tracking-wide">
+          EDUQUITY / SSC
+        </span>
+        <h2 id="exam-header-title" class="text-xs sm:text-sm font-bold text-slate-800 truncate">
+          Mathematical Calculation Boost — Mock Test - 01
+        </h2>
+      </div>
+
+      <!-- Center Countdown Timer (Strictly 15:00, NO Pause Button) -->
+      <div class="flex items-center gap-2 bg-slate-100 border border-slate-300 px-3 py-1 rounded-md">
+        <span class="text-xs font-bold text-slate-700">Time Left</span>
+        <div class="flex items-center gap-1">
+          <span id="timer-hr" class="timer-digit-box">00</span>
+          <span class="font-bold text-slate-700">:</span>
+          <span id="timer-min" class="timer-digit-box">15</span>
+          <span class="font-bold text-slate-700">:</span>
+          <span id="timer-sec" class="timer-digit-box">00</span>
+        </div>
+      </div>
+
+      <!-- Right Header Controls (Answered Count & Full Screen, NO Pause Button) -->
+      <div class="flex items-center gap-2.5">
+        <div class="hidden sm:flex items-center gap-1.5 text-xs font-semibold text-slate-700">
+          <span>Total Questions Answered:</span>
+          <span id="header-answered-badge" class="px-2 py-0.5 rounded bg-green-600 text-white font-bold font-mono-num">0</span>
+        </div>
+        <button id="btn-exam-instructions" class="btn-edu btn-outline-slate text-xs py-1 px-2.5">
+          Instructions
+        </button>
+        <button id="btn-toggle-fullscreen" class="btn-edu btn-outline-blue text-xs py-1 px-2.5">
+          Switch Full Screen
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Exam Shell -->
+    <div class="exam-shell">
+      <!-- Sub-bar with Question Number, Section Badge, and Action Buttons -->
+      <div class="exam-sub-bar">
+        <div class="flex items-center gap-2.5">
+          <span id="exam-qno-label" class="text-sm font-extrabold text-slate-900">
+            Question No. 1
+          </span>
+          <span id="exam-topic-badge" class="px-2.5 py-0.5 text-xs font-semibold rounded bg-blue-50 text-blue-800 border border-blue-200">
+            Topic A
+          </span>
+          <span id="exam-diff-badge" class="px-2 py-0.5 text-[11px] font-semibold rounded bg-slate-100 text-slate-700 border border-slate-300">
+            Moderate
+          </span>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div class="text-xs font-semibold text-slate-600 flex items-center gap-1.5">
+            <span>Marks:</span>
+            <span class="px-1.5 py-0.5 rounded bg-green-50 text-green-700 border border-green-200 font-mono-num">+2.00</span>
+            <span class="px-1.5 py-0.5 rounded bg-red-50 text-red-600 border border-red-200 font-mono-num">−0.25</span>
+          </div>
+          <span class="text-xs font-bold text-blue-800 hidden md:inline">
+            15 Minutes Speed Test
+          </span>
+        </div>
+      </div>
+
+      <!-- Body: Question Area (Left) + Small Number Palette (Right, Hidden on Mobile) -->
+      <div class="exam-body">
+        <!-- Left/Main Question Work Area -->
+        <div class="question-work-area justify-between">
+          <div class="p-4 sm:p-6 max-w-4xl space-y-5">
+            <!-- Directions / Topic Context Line -->
+            <div class="text-xs text-slate-500 border-b border-slate-200 pb-2.5 flex items-center justify-between">
+              <span id="exam-topic-full">
+                Section: Mathematical Calculation Boost (Objective MCQ — Select one option)
+              </span>
+              <span class="font-mono-num text-slate-600 font-semibold" id="exam-mobile-progress">
+                Q 1 / 25
+              </span>
+            </div>
+
+            <!-- Question Text -->
+            <div id="exam-question-text" class="text-base sm:text-lg font-semibold text-slate-900 leading-relaxed bg-slate-50/70 border border-slate-200 rounded-lg p-4">
+            </div>
+
+            <!-- 4 Radio Options Container -->
+            <div id="exam-options-container" class="space-y-3 pt-1">
+            </div>
+          </div>
+
+          <!-- Bottom Navigation & Control Bar -->
+          <!-- Required buttons: Previous Question, Next Question, Clear, Mark for Review, Submit -->
+          <div class="border-t border-slate-300 bg-slate-50 px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-2.5 sticky bottom-0">
+            <div class="flex flex-wrap items-center gap-2">
+              <button id="btn-prev-q" class="btn-edu btn-outline-slate">
+                ← Previous Question
+              </button>
+              <button id="btn-next-q" class="btn-edu btn-blue">
+                Next Question →
+              </button>
+              <button id="btn-clear-q" class="btn-edu btn-outline-slate">
+                Clear
+              </button>
+              <button id="btn-review-q" class="btn-edu btn-outline-blue">
+                Mark for Review
+              </button>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button id="btn-abort-exam" class="btn-edu btn-outline-slate text-xs">
+                Exit to Mocks
+              </button>
+              <button id="btn-submit-exam" class="btn-edu btn-green px-5">
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Sidebar: Small-Sized Question Number Palette (Hidden on Mobile Phones) -->
+        <aside class="question-palette-aside" aria-label="Question Number Palette">
+          <div>
+            <!-- Section Header -->
+            <div class="bg-blue-700 text-white px-3 py-2 text-xs font-bold flex items-center justify-between">
+              <span>Question Palette (25)</span>
+              <span id="palette-mock-tag" class="bg-blue-800 px-1.5 py-0.5 rounded text-[11px] font-mono-num">M-01</span>
+            </div>
+
+            <!-- Compact Symbols Legend -->
+            <div class="p-2.5 bg-white border-b border-slate-200 grid grid-cols-2 gap-1.5 text-[11px] text-slate-700">
+              <div class="flex items-center gap-1.5">
+                <span class="w-4 h-4 rounded bg-green-600 text-white flex items-center justify-center font-bold text-[10px]" id="leg-answered">0</span>
+                <span>Answered</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-4 h-4 rounded bg-sky-100 text-sky-800 border border-sky-400 flex items-center justify-center font-bold text-[10px]" id="leg-not-answered">0</span>
+                <span>Not Answered</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-4 h-4 rounded bg-blue-700 text-white flex items-center justify-center font-bold text-[10px]" id="leg-review">0</span>
+                <span>Marked Review</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-4 h-4 rounded bg-white text-slate-700 border border-slate-300 flex items-center justify-center font-bold text-[10px]" id="leg-not-visited">25</span>
+                <span>Not Visited</span>
+              </div>
+            </div>
+
+            <!-- 5x5 Question Number Buttons (1 to 25) -->
+            <div id="palette-grid-container" class="palette-grid">
+            </div>
+          </div>
+
+          <!-- Palette Bottom Analysis Box -->
+          <div class="p-3 border-t border-slate-300 bg-white space-y-2">
+            <div class="text-[11px] font-bold uppercase tracking-wider text-slate-500">
+              Mock Test Status
+            </div>
+            <div class="flex items-center justify-between text-xs">
+              <span class="text-slate-600">Attempted:</span>
+              <span id="side-attempted-count" class="font-bold text-green-700 font-mono-num">0 / 25</span>
+            </div>
+            <div class="flex items-center justify-between text-xs">
+              <span class="text-slate-600">Remaining:</span>
+              <span id="side-remaining-count" class="font-bold text-blue-700 font-mono-num">25</span>
+            </div>
+            <button id="btn-side-submit" class="btn-edu btn-green w-full mt-1">
+              Submit Test
+            </button>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- VIEW 3: POST-SUBMISSION RESULT & DETAILED SOLUTIONS ANALYSIS          -->
+  <!-- ===================================================================== -->
+  <div id="view-result" class="hidden min-h-screen flex flex-col bg-slate-50">
+    <!-- Top Result Header -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <div class="flex items-center gap-2">
+            <span id="res-submit-mode-badge" class="px-2.5 py-0.5 text-xs font-bold rounded bg-green-100 text-green-800 border border-green-300">
+              Test Submitted
+            </span>
+            <h2 id="res-title" class="text-base sm:text-lg font-extrabold text-slate-900">
+              Mock Test #01 — Performance &amp; Solution Analysis
+            </h2>
+          </div>
+          <p class="text-xs text-slate-500 mt-0.5">
+            Marking Scheme: +2.00 for Correct • −0.25 for Incorrect • 0.00 for Unattempted
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button id="btn-retake-mock" class="btn-edu btn-outline-blue text-xs sm:text-sm">
+            Retake This Mock
+          </button>
+          <button id="btn-next-mock" class="btn-edu btn-green text-xs sm:text-sm">
+            Start Next Mock →
+          </button>
+          <button id="btn-back-dashboard" class="btn-edu btn-outline-slate text-xs sm:text-sm">
+            All 100 Mocks
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Result Content -->
+    <main class="max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6 flex-1">
+      <!-- Primary Scorecard Strip -->
+      <section class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5">
+        <div class="bg-white border-2 border-blue-600 rounded-xl p-4 shadow-sm">
+          <div class="text-xs font-bold uppercase text-blue-700">Final Score</div>
+          <div id="res-final-score" class="text-2xl font-extrabold text-slate-900 mt-1 font-mono-num">0.00 / 50</div>
+          <div id="res-percentage-score" class="text-xs text-slate-500 mt-0.5">0.0% Score</div>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+          <div class="text-xs font-bold uppercase text-green-700">Accuracy</div>
+          <div id="res-accuracy" class="text-2xl font-extrabold text-green-700 mt-1 font-mono-num">0.0%</div>
+          <div id="res-attempted-sub" class="text-xs text-slate-500 mt-0.5">0 / 25 Attempted</div>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+          <div class="text-xs font-bold uppercase text-green-700">Correct (+2.00)</div>
+          <div id="res-correct-count" class="text-2xl font-extrabold text-green-700 mt-1 font-mono-num">0</div>
+          <div id="res-positive-marks" class="text-xs text-green-700 mt-0.5">+0.00 Marks</div>
+        </div>
+        <div class="bg-white border-2 border-red-200 rounded-xl p-4 shadow-sm">
+          <div class="text-xs font-bold uppercase text-red-600">Incorrect (−0.25)</div>
+          <div id="res-incorrect-count" class="text-2xl font-extrabold text-red-600 mt-1 font-mono-num">0</div>
+          <div id="res-negative-marks" class="text-xs text-red-600 mt-0.5">−0.00 Penalty</div>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+          <div class="text-xs font-bold uppercase text-slate-500">Unattempted (0)</div>
+          <div id="res-unattempted-count" class="text-2xl font-extrabold text-slate-700 mt-1 font-mono-num">0</div>
+          <div class="text-xs text-slate-500 mt-0.5">No Penalty</div>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+          <div class="text-xs font-bold uppercase text-blue-700">Time Taken</div>
+          <div id="res-time-taken" class="text-2xl font-extrabold text-slate-800 mt-1 font-mono-num">00:00</div>
+          <div class="text-xs text-slate-500 mt-0.5">Out of 15:00 Mins</div>
+        </div>
+      </section>
+
+      <!-- Topic-wise & Difficulty Breakdown -->
+      <section class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div class="lg:col-span-2 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+          <h3 class="text-sm font-bold text-slate-800 mb-3">
+            Topic-Wise Calculation Breakdown (Topics A to F)
+          </h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-left border-collapse">
+              <thead>
+                <tr class="bg-slate-100 text-slate-700 border-b border-slate-200">
+                  <th class="py-2 px-3 font-bold">Topic</th>
+                  <th class="py-2 px-2 font-bold text-center">Total</th>
+                  <th class="py-2 px-2 font-bold text-center text-green-700">Correct</th>
+                  <th class="py-2 px-2 font-bold text-center text-red-600">Incorrect</th>
+                  <th class="py-2 px-2 font-bold text-center text-slate-500">Skipped</th>
+                  <th class="py-2 px-3 font-bold text-right">Net Marks</th>
+                </tr>
+              </thead>
+              <tbody id="res-topic-tbody" class="divide-y divide-slate-200">
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex flex-col justify-between">
+          <div>
+            <h3 class="text-sm font-bold text-slate-800 mb-3">
+              Difficulty Tier Analysis
+            </h3>
+            <div id="res-diff-breakdown" class="space-y-3">
+            </div>
+          </div>
+          <div class="mt-4 p-3 rounded-lg bg-blue-50 border border-blue-200 text-xs text-blue-900">
+            <span class="font-bold">Calculation Tip:</span> Review all incorrect answers below using the step-by-step surd, base-multiplication, and triplet shortcuts.
+          </div>
+        </div>
+      </section>
+
+      <!-- Detailed Solutions & Incorrect Answers Filter Section -->
+      <section class="bg-white border border-slate-200 rounded-xl p-4 sm:p-5 shadow-sm space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-3">
+          <div>
+            <h3 class="text-base font-extrabold text-slate-900">
+              Detailed Question-Wise Review &amp; Step-by-Step Solutions
+            </h3>
+            <p class="text-xs text-slate-500">
+              Filter by Incorrect Answers to immediately inspect mistakes with their full mathematical solution.
+            </p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-1.5" id="solution-filter-tabs">
+            <button data-solfilter="all" class="sol-tab btn-edu btn-blue text-xs py-1.5 px-3">
+              All Questions (25)
+            </button>
+            <button data-solfilter="incorrect" class="sol-tab btn-edu btn-outline-slate text-xs py-1.5 px-3">
+              Incorrect Answers (<span id="tab-inc-count">0</span>)
+            </button>
+            <button data-solfilter="correct" class="sol-tab btn-edu btn-outline-slate text-xs py-1.5 px-3">
+              Correct Answers (<span id="tab-cor-count">0</span>)
+            </button>
+            <button data-solfilter="unattempted" class="sol-tab btn-edu btn-outline-slate text-xs py-1.5 px-3">
+              Unattempted (<span id="tab-unatt-count">0</span>)
+            </button>
+          </div>
+        </div>
+
+        <div id="solutions-list-container" class="space-y-4">
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 1: SUBMIT TEST CONFIRMATION                                     -->
+  <!-- ===================================================================== -->
+  <div id="modal-submit" class="modal-backdrop hidden">
+    <div class="bg-white rounded-xl max-w-md w-full p-5 shadow-xl border border-slate-200 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+        <h3 class="text-base font-extrabold text-slate-900">Confirm Test Submission</h3>
+        <button id="btn-close-submit-modal" class="text-slate-400 hover:text-slate-600 text-lg font-bold">✕</button>
+      </div>
+      <p class="text-xs text-slate-600">
+        Are you sure you want to submit this mock test? Once submitted, answers will be evaluated (+2.00 for correct, −0.25 for incorrect).
+      </p>
+      <div class="grid grid-cols-2 gap-2.5 bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs">
+        <div class="flex items-center justify-between">
+          <span class="text-slate-600">Answered:</span>
+          <span id="mod-sub-answered" class="font-bold text-green-700 font-mono-num">0</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-slate-600">Not Answered:</span>
+          <span id="mod-sub-unanswered" class="font-bold text-blue-700 font-mono-num">0</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-slate-600">Marked for Review:</span>
+          <span id="mod-sub-review" class="font-bold text-blue-700 font-mono-num">0</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-slate-600">Time Remaining:</span>
+          <span id="mod-sub-time" class="font-bold text-slate-900 font-mono-num">15:00</span>
+        </div>
+      </div>
+      <div class="flex items-center justify-end gap-2 pt-2">
+        <button id="btn-cancel-submit" class="btn-edu btn-outline-slate">Resume Test</button>
+        <button id="btn-confirm-submit" class="btn-edu btn-green">Submit &amp; View Analysis</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 2: SURDS, INDICES & PYTHAGOREAN TRIPLETS REFERENCE SHEET        -->
+  <!-- ===================================================================== -->
+  <div id="modal-ref-sheet" class="modal-backdrop hidden">
+    <div class="bg-white rounded-xl max-w-4xl w-full max-h-[88vh] flex flex-col shadow-xl border border-slate-200">
+      <div class="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 bg-slate-50 rounded-t-xl">
+        <div>
+          <h3 class="text-base font-extrabold text-slate-900">
+            Important Surds, Indices, Cubes (1–21) &amp; Pythagorean Triplets Sheet
+          </h3>
+          <p class="text-xs text-slate-500">
+            Complete reference values integrated across all 100 Mock Tests
+          </p>
+        </div>
+        <button id="btn-close-ref-modal" class="btn-edu btn-outline-slate text-xs py-1 px-2.5">Close ✕</button>
+      </div>
+
+      <div class="p-5 overflow-y-auto space-y-5 text-xs">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Powers of 2 & 3 -->
+          <div class="border border-blue-200 rounded-lg p-3.5 bg-blue-50/40">
+            <h4 class="font-bold text-blue-800 mb-2">Important Surds &amp; Indices — Base 2 &amp; Base 3</h4>
+            <div class="grid grid-cols-2 gap-2 font-mono-num text-[11px]">
+              <div class="space-y-1">
+                <div>2¹ = 2</div>
+                <div>2² = 4</div>
+                <div>2³ = 8</div>
+                <div>2⁴ = 16 = 4²</div>
+                <div>2⁵ = 32</div>
+                <div>2⁶ = 64 = 4³ = 8²</div>
+                <div>2⁷ = 128</div>
+                <div>2⁸ = 256 = 4⁴ = 16²</div>
+                <div>2⁹ = 512 = 8³</div>
+                <div>2¹⁰ = 1024 = 4⁵ = 32²</div>
+                <div>2¹¹ = 2048</div>
+                <div>2¹² = 4096 = 4⁶ = 8⁴ = 16³ = 64²</div>
+              </div>
+              <div class="space-y-1">
+                <div>3¹ = 3</div>
+                <div>3² = 9</div>
+                <div>3³ = 27</div>
+                <div>3⁴ = 81 = 9²</div>
+                <div>3⁵ = 243</div>
+                <div>3⁶ = 729 = 9³ = 27²</div>
+                <div>3⁷ = 2187</div>
+                <div>3⁸ = 6561 = 9⁴ = 81²</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Powers of 5, 7, 11 & Cubes 1-21 -->
+          <div class="border border-green-200 rounded-lg p-3.5 bg-green-50/40 space-y-3">
+            <div>
+              <h4 class="font-bold text-green-800 mb-1.5">Base 5, Base 7 &amp; Base 11 Powers</h4>
+              <div class="grid grid-cols-2 gap-2 font-mono-num text-[11px]">
+                <div class="space-y-1">
+                  <div>5¹ = 5, 5² = 25, 5³ = 125</div>
+                  <div>5⁴ = 625 = 25²</div>
+                  <div>5⁵ = 3125</div>
+                  <div>5⁶ = 15625 = 25³ = 125²</div>
+                  <div>7¹ = 7, 7² = 49, 7³ = 343</div>
+                  <div>7⁴ = 2401 = 49²</div>
+                </div>
+                <div class="space-y-1">
+                  <div>11¹ = 11</div>
+                  <div>11² = 121</div>
+                  <div>11³ = 1331</div>
+                  <div>11⁴ = 14641 = 121²</div>
+                </div>
+              </div>
+            </div>
+            <div class="border-t border-green-200 pt-2">
+              <h4 class="font-bold text-green-800 mb-1">Cubes from 1 to 21</h4>
+              <div class="font-mono-num text-[11px] leading-relaxed text-slate-700">
+                1³=1, 2³=8, 3³=27, 4³=64, 5³=125, 6³=216, 7³=343, 8³=512, 9³=729, 10³=1000, 11³=1331, 12³=1728, 13³=2197, 14³=2744, 15³=3375, 16³=4096, 17³=4913, 18³=5832, 19³=6859, 20³=8000, 21³=9261
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pythagorean Triplets & Generator Formulas -->
+        <div class="border border-slate-200 rounded-lg p-3.5 bg-white space-y-2.5">
+          <h4 class="font-bold text-slate-900">Pythagorean Triplets &amp; Generator Formulas</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-[11px] font-mono-num">
+            <div>
+              <div class="font-sans font-bold text-blue-700 mb-1">Base Triplets</div>
+              <div>(3, 4, 5), (5, 12, 13), (7, 24, 25)</div>
+              <div>(8, 15, 17), (9, 40, 41), (11, 60, 61)</div>
+              <div>(12, 35, 37), (16, 63, 65), (20, 21, 29)</div>
+              <div>(20, 99, 101), (36, 77, 85)</div>
+              <div>(39, 80, 89), (65, 72, 97)</div>
+            </div>
+            <div>
+              <div class="font-sans font-bold text-green-700 mb-1">Frequent &amp; Multiples</div>
+              <div>Frequent: (28, 45, 53), (33, 56, 65), (48, 55, 73)</div>
+              <div>Of (3,4,5): (6,8,10), (9,12,15), (12,16,20), (15,20,25), (18,24,30), (30,40,50)</div>
+              <div>Of (5,12,13): (10,24,26), (15,36,39), (20,48,52)</div>
+              <div>Of (8,15,17): (16,30,34), (24,45,51)</div>
+            </div>
+            <div>
+              <div class="font-sans font-bold text-blue-700 mb-1">Triplet Formulas</div>
+              <div>• General (x &gt; y): (x² − y², 2xy, x² + y²)</div>
+              <div>• Odd n ≥ 3: (n, (n²−1)/2, (n²+1)/2)</div>
+              <div>• Even n ≥ 4: (n, (n/2)²−1, (n/2)²+1)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 3: INSTRUCTIONS / SYLLABUS / EXIT CONFIRMATION                  -->
+  <!-- ===================================================================== -->
+  <div id="modal-instructions" class="modal-backdrop hidden">
+    <div class="bg-white rounded-xl max-w-xl w-full p-5 shadow-xl border border-slate-200 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+        <h3 class="text-base font-extrabold text-slate-900">SSC / Eduquity Pattern — Exam Instructions</h3>
+        <button id="btn-close-inst-modal" class="text-slate-400 hover:text-slate-600 text-lg font-bold">✕</button>
+      </div>
+      <ul class="space-y-2 text-xs text-slate-700 list-disc pl-5">
+        <li><strong>Total Questions:</strong> 25 MCQs with 4 options each. Maximum Marks = <strong>50.00</strong>.</li>
+        <li><strong>Marking Scheme:</strong> <strong>+2.00 marks</strong> for every correct answer, <strong>−0.25 mark</strong> for every wrong answer, and <strong>0 marks</strong> for unattempted questions.</li>
+        <li><strong>Strict Countdown Timer:</strong> Exactly <strong>15 Minutes (15:00)</strong>. There is no pause option. When the 15-minute timer reaches 00:00, the test submits automatically.</li>
+        <li><strong>Navigation Controls:</strong> Selecting an option saves your choice immediately without jumping to the next question. Use <strong>Next Question</strong> and <strong>Previous Question</strong> to navigate, <strong>Clear</strong> to reset your selection, <strong>Mark for Review</strong> to flag a question, and <strong>Submit</strong> when finished.</li>
+        <li><strong>Fair Exam Mode:</strong> Answers and solutions are never revealed during the test; full score, accuracy, and solutions for all incorrect and attempted questions are displayed immediately upon submission.</li>
+      </ul>
+      <div class="flex justify-end pt-2">
+        <button id="btn-ok-inst-modal" class="btn-edu btn-blue">Got It</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 4: EXIT EXAM CONFIRMATION -->
+  <div id="modal-exit-exam" class="modal-backdrop hidden">
+    <div class="bg-white rounded-xl max-w-md w-full p-5 shadow-xl border border-slate-200 space-y-4">
+      <h3 class="text-base font-extrabold text-slate-900">Exit Active Mock Test?</h3>
+      <p class="text-xs text-slate-600">
+        Exiting now will discard your current unsubmitted progress. Would you like to submit the test for evaluation instead, or return to the 100 Mocks Dashboard?
+      </p>
+      <div class="flex items-center justify-end gap-2 pt-2">
+        <button id="btn-cancel-exit" class="btn-edu btn-outline-slate">Continue Test</button>
+        <button id="btn-confirm-exit" class="btn-edu btn-blue">Return to Dashboard</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- APPLICATION JAVASCRIPT ENGINE                                         -->
+  <!-- ===================================================================== -->
+  <script>
+    (function() {
+      "use strict";
+
+      // -------------------------------------------------------------------
+      // 1. EXACT CONSTANTS FROM UPLOADED PDF (SURDS, INDICES & TRIPLETS)
+      // -------------------------------------------------------------------
+      const PDF_SURDS_BASE2 = [
+        { exp: 1, val: 2, alt: "2¹" },
+        { exp: 2, val: 4, alt: "2²" },
+        { exp: 3, val: 8, alt: "2³" },
+        { exp: 4, val: 16, alt: "4²" },
+        { exp: 5, val: 32, alt: "2⁵" },
+        { exp: 6, val: 64, alt: "4³ = 8²" },
+        { exp: 7, val: 128, alt: "2⁷" },
+        { exp: 8, val: 256, alt: "4⁴ = 16²" },
+        { exp: 9, val: 512, alt: "8³" },
+        { exp: 10, val: 1024, alt: "4⁵ = 32²" },
+        { exp: 11, val: 2048, alt: "2¹¹" },
+        { exp: 12, val: 4096, alt: "4⁶ = 8⁴ = 16³ = 64²" }
+      ];
+
+      const PDF_SURDS_BASE3 = [
+        { exp: 1, val: 3, alt: "3¹" },
+        { exp: 2, val: 9, alt: "3²" },
+        { exp: 3, val: 27, alt: "3³" },
+        { exp: 4, val: 81, alt: "9²" },
+        { exp: 5, val: 243, alt: "3⁵" },
+        { exp: 6, val: 729, alt: "9³ = 27²" },
+        { exp: 7, val: 2187, alt: "3⁷" },
+        { exp: 8, val: 6561, alt: "9⁴ = 81²" }
+      ];
+
+      const PDF_SURDS_BASE5 = [
+        { exp: 1, val: 5, alt: "5¹" },
+        { exp: 2, val: 25, alt: "5²" },
+        { exp: 3, val: 125, alt: "5³" },
+        { exp: 4, val: 625, alt: "25²" },
+        { exp: 5, val: 3125, alt: "5⁵" },
+        { exp: 6, val: 15625, alt: "25³ = 125²" }
+      ];
+
+      const PDF_SURDS_BASE7 = [
+        { exp: 1, val: 7, alt: "7¹" },
+        { exp: 2, val: 49, alt: "7²" },
+        { exp: 3, val: 343, alt: "7³" },
+        { exp: 4, val: 2401, alt: "49²" }
+      ];
+
+      const PDF_SURDS_BASE11 = [
+        { exp: 1, val: 11, alt: "11¹" },
+        { exp: 2, val: 121, alt: "11²" },
+        { exp: 3, val: 1331, alt: "11³" },
+        { exp: 4, val: 14641, alt: "11⁴ = 121²" }
+      ];
+
+      const PDF_TRIPLETS = [
+        // Base Triplets from PDF Page 3
+        [3, 4, 5], [5, 12, 13], [7, 24, 25], [8, 15, 17], [9, 40, 41],
+        [11, 60, 61], [12, 35, 37], [16, 63, 65], [20, 21, 29], [20, 99, 101],
+        [36, 77, 85], [39, 80, 89], [65, 72, 97],
+        // Frequent Triplets from PDF Page 3
+        [28, 45, 53], [33, 56, 65], [48, 55, 73],
+        // Multiples of (3,4,5) from PDF Page 3
+        [6, 8, 10], [9, 12, 15], [12, 16, 20], [15, 20, 25], [30, 40, 50], [18, 24, 30],
+        // Multiples of (5,12,13) from PDF Page 3
+        [10, 24, 26], [15, 36, 39], [20, 48, 52],
+        // Multiples of (8,15,17) from PDF Page 3
+        [16, 30, 34], [24, 45, 51],
+        // Additional from PDF Page 4 Formulas (Odd/Even n & x²-y², 2xy, x²+y²)
+        [13, 84, 85], [14, 48, 50], [15, 112, 113], [17, 144, 145], [18, 80, 82],
+        [19, 180, 181], [21, 220, 221], [22, 120, 122], [24, 70, 74], [24, 143, 145],
+        [26, 168, 170], [27, 364, 365], [35, 120, 125], [40, 42, 58]
+      ];
+
+      const PRIMITIVE_TRIPLETS = [
+        [3, 4, 5], [5, 12, 13], [7, 24, 25], [8, 15, 17], [9, 40, 41],
+        [11, 60, 61], [12, 35, 37], [16, 63, 65], [20, 21, 29], [20, 99, 101],
+        [36, 77, 85], [39, 80, 89], [65, 72, 97], [28, 45, 53], [33, 56, 65],
+        [48, 55, 73], [13, 84, 85], [15, 112, 113], [17, 144, 145], [19, 180, 181]
+      ];
+
+      const CUBES_1_TO_21 = [
+        0, 1, 8, 27, 64, 125, 216, 343, 512, 729, 1000,
+        1331, 1728, 2197, 2744, 3375, 4096, 4913, 5832, 6859, 8000, 9261
+      ];
+
+      function gcd(a, b) {
+        a = Math.abs(a);
+        b = Math.abs(b);
+        while (b > 0) {
+          const t = b;
+          b = a % b;
+          a = t;
+        }
+        return a || 1;
+      }
+
+      function createRng(seed) {
+        let s = (seed * 1664525 + 1013904223) >>> 0;
+        return function() {
+          s = (s * 1664525 + 1013904223) >>> 0;
+          return s;
+        };
+      }
+
+      function buildOptions(correctStr, distractorList, rng) {
+        const unique = [String(correctStr)];
+        for (const d of distractorList) {
+          const s = String(d);
+          if (s && s !== "NaN" && s !== "undefined" && !unique.includes(s)) {
+            unique.push(s);
+          }
+          if (unique.length === 4) break;
+        }
+        let fallbackStep = 1;
+        while (unique.length < 4) {
+          const num = parseFloat(String(correctStr).replace(/,/g, ""));
+          let candidate;
+          if (!isNaN(num)) {
+            candidate = String(num + fallbackStep * 10);
+          } else {
+            candidate = `${correctStr} (${fallbackStep})`;
+          }
+          if (!unique.includes(candidate)) unique.push(candidate);
+          fallbackStep++;
+        }
+        const indices = [0, 1, 2, 3];
+        for (let i = 3; i > 0; i--) {
+          const j = rng() % (i + 1);
+          const tmp = indices[i];
+          indices[i] = indices[j];
+          indices[j] = tmp;
+        }
+        const options = indices.map(idx => unique[idx]);
+        const correctIndex = indices.indexOf(0);
+        return { options, correctIndex };
+      }
+
+      function fmtMixed(whole, num, den) {
+        const g = gcd(num, den);
+        num = Math.round(num / g);
+        den = Math.round(den / g);
+        if (num >= den) {
+          whole += Math.floor(num / den);
+          num = num % den;
+        }
+        if (num === 0) return `${whole}`;
+        return `${whole} ${num}/${den}`;
+      }
+
+      // -------------------------------------------------------------------
+      // 2. DETERMINISTIC 2,500-QUESTION GENERATOR (100 MOCKS × 25 MCQs)
+      // -------------------------------------------------------------------
+      function getMockMetadata(mockId) {
+        const m = mockId;
+        const easyCount = 3 + (m % 3);          // 3, 4, or 5
+        const modCount = 10 + ((m + 1) % 3);    // 10, 11, or 12
+        const toughCount = 25 - easyCount - modCount; // 8 to 12
+        return { mockId, easyCount, modCount, toughCount };
+      }
+
+      function generateMockQuestions(mockId) {
+        const rng = createRng(mockId * 9973 + 137);
+        const m = mockId; // 1..100
+        const questions = [];
+
+        // =================================================================
+        // TOPIC A: Addition & Subtraction of 4, 5-digit natural numbers, complex fractions, decimals (4 Qs)
+        // =================================================================
+
+        // Q1 (Topic A): 4 & 5-digit natural number addition and subtraction
+        {
+          const a = 12450 + m * 317 + (rng() % 90);
+          const b = 34820 + m * 463 + (rng() % 80);
+          const c = 18390 + m * 251 + (rng() % 70);
+          const d = 6425 + m * 83 + (rng() % 60);
+          const ans = a + b - c + d;
+          const { options, correctIndex } = buildOptions(
+            ans.toString(),
+            [(ans + 100).toString(), (ans - 100).toString(), (ans + 10).toString(), (ans - 20).toString()],
+            rng
+          );
+          questions.push({
+            topicCode: "A",
+            topicName: "Addition & Subtraction (Natural Numbers, Fractions, Decimals)",
+            difficulty: "Easy",
+            question: `Evaluate the exact value of: ${a.toLocaleString('en-IN')} + ${b.toLocaleString('en-IN')} − ${c.toLocaleString('en-IN')} + ${d.toLocaleString('en-IN')} = ?`,
+            options: options.map(x => Number(x).toLocaleString('en-IN')),
+            correctIndex,
+            solution: `Group positive terms first: (${a} + ${b} + ${d}) = ${a + b + d}. Now subtract ${c}: ${a + b + d} − ${c} = ${ans}. (Shortcut: Last two digits check: ${(a % 100)} + ${(b % 100)} − ${(c % 100)} + ${(d % 100)} ends in ${String(ans).slice(-2)}).`
+          });
+        }
+
+        // Q2 (Topic A): Multi-decimal addition and subtraction
+        {
+          const aInt = 1042000 + m * 15437;
+          const bInt = 483500 + m * 8290;
+          const cInt = 619250 + m * 6123;
+          const dInt = 94875 + m * 2311;
+          const ansInt = aInt + bInt - cInt - dInt;
+          const f3 = (n) => (n / 1000).toFixed(3);
+          const ansStr = f3(ansInt);
+          const { options, correctIndex } = buildOptions(
+            ansStr,
+            [f3(ansInt + 100), f3(ansInt - 100), f3(ansInt + 1000), f3(ansInt - 250)],
+            rng
+          );
+          questions.push({
+            topicCode: "A",
+            topicName: "Addition & Subtraction (Natural Numbers, Fractions, Decimals)",
+            difficulty: "Moderate",
+            question: `Simplify the decimal expression: ${f3(aInt)} + ${f3(bInt)} − ${f3(cInt)} − ${f3(dInt)} = ?`,
+            options,
+            correctIndex,
+            solution: `Align to 3 decimal places (thousandths): (${f3(aInt)} + ${f3(bInt)}) = ${f3(aInt + bInt)}. Subtract (${f3(cInt)} + ${f3(dInt)}) = ${f3(cInt + dInt)} to get ${ansStr}.`
+          });
+        }
+
+        // Q3 (Topic A): Mixed Fraction Addition & Subtraction
+        {
+          const w1 = 10 + m;
+          const w2 = 15 + m * 2;
+          const w3 = 8 + Math.floor(m / 2);
+          const w4 = 5 + (m % 17);
+          const fSets = [
+            { n1: 1, d1: 3, n2: 3, d2: 4, n3: 1, d3: 6, n4: 5, d4: 12 },
+            { n1: 2, d1: 3, n2: 1, d2: 4, n3: 5, d3: 6, n4: 7, d4: 12 },
+            { n1: 3, d1: 5, n2: 7, d2: 10, n3: 1, d3: 2, n4: 2, d4: 5 },
+            { n1: 5, d1: 8, n2: 3, d2: 4, n3: 1, d3: 2, n4: 7, d4: 8 }
+          ];
+          const fs = fSets[m % fSets.length];
+          const lcm = (fs.d4 === 12) ? 12 : (fs.d4 === 5 ? 10 : 8);
+          const numSum = fs.n1 * (lcm / fs.d1) + fs.n2 * (lcm / fs.d2) - fs.n3 * (lcm / fs.d3) + fs.n4 * (lcm / fs.d4);
+          const wholeSum = w1 + w2 - w3 + w4;
+          const totalNum = wholeSum * lcm + numSum;
+          const ansW = Math.floor(totalNum / lcm);
+          const ansN = totalNum % lcm;
+          const ansStr = fmtMixed(ansW, ansN, lcm);
+          const { options, correctIndex } = buildOptions(
+            ansStr,
+            [
+              fmtMixed(ansW + 1, ansN, lcm),
+              fmtMixed(ansW - 1, ansN, lcm),
+              fmtMixed(ansW, (ansN + 1) % lcm || 1, lcm),
+              fmtMixed(ansW + 2, ansN, lcm)
+            ],
+            rng
+          );
+          questions.push({
+            topicCode: "A",
+            topicName: "Addition & Subtraction (Natural Numbers, Fractions, Decimals)",
+            difficulty: "Moderate",
+            question: `Evaluate the mixed fraction expression: ${w1}(${fs.n1}/${fs.d1}) + ${w2}(${fs.n2}/${fs.d2}) − ${w3}(${fs.n3}/${fs.d3}) + ${w4}(${fs.n4}/${fs.d4}) = ?`,
+            options,
+            correctIndex,
+            solution: `Separate integer and fractional parts: Integer sum = ${w1} + ${w2} − ${w3} + ${w4} = ${wholeSum}. Fractional sum with LCM ${lcm} = (${fs.n1}/${fs.d1} + ${fs.n2}/${fs.d2} − ${fs.n3}/${fs.d3} + ${fs.n4}/${fs.d4}) = ${numSum}/${lcm}. Combining gives ${ansStr}.`
+          });
+        }
+
+        // Q4 (Topic A): Complex Continued Fraction + 5-digit natural number subtraction
+        {
+          const a = 1 + (m % 4);
+          const b = 2 + ((m * 2) % 5);
+          const c = 2 + (m % 6);
+          const den = a * (b * c + 1) + c;
+          const num = b * c + 1;
+          const k = (12 + m) * den;
+          const baseFiveDigit = 42500 + m * 310;
+          const subFiveDigit = 41200 + m * 285;
+          const offset = baseFiveDigit - subFiveDigit;
+          const fracVal = (k / den) * num;
+          const ans = offset + fracVal;
+          const { options, correctIndex } = buildOptions(
+            String(ans),
+            [String(ans + num), String(ans - num), String(ans + 10), String(ans - 12)],
+            rng
+          );
+          questions.push({
+            topicCode: "A",
+            topicName: "Addition & Subtraction (Natural Numbers, Fractions, Decimals)",
+            difficulty: "Tough",
+            question: `Simplify the complex fraction and 5-digit expression: (${baseFiveDigit} − ${subFiveDigit}) + ${k} × [ 1 / (${a} + 1 / (${b} + 1/${c})) ] = ?`,
+            options,
+            correctIndex,
+            solution: `Step 1: ${baseFiveDigit} − ${subFiveDigit} = ${offset}. Step 2: Bottom of continued fraction: ${b} + 1/${c} = ${num}/${c}. Next level: ${a} + ${c}/${num} = ${den}/${num}. Reciprocal = ${num}/${den}. Step 3: ${offset} + ${k} × (${num}/${den}) = ${offset} + ${fracVal} = ${ans}.`
+          });
+        }
+
+        // =================================================================
+        // TOPIC B: Multiplication & Division of a variety of numbers (4 Qs)
+        // =================================================================
+
+        // Q5 (Topic B): Fast Strategic Multiplication
+        {
+          const base = 100 + (m % 5) * 100;
+          const d1 = 3 + (m % 17);
+          const d2 = 4 + ((m * 3) % 19);
+          const n1 = base + d1;
+          const n2 = base - d2;
+          const k25 = 12 + m;
+          const extra = k25 * 25;
+          const ans = n1 * n2 + extra;
+          const { options, correctIndex } = buildOptions(
+            String(ans),
+            [String(ans + base), String(ans - base), String(ans + 100), String(ans - 50)],
+            rng
+          );
+          questions.push({
+            topicCode: "B",
+            topicName: "Multiplication & Division of Numbers",
+            difficulty: "Easy",
+            question: `Calculate rapidly: (${n1} × ${n2}) + (${k25} × 25) = ?`,
+            options,
+            correctIndex,
+            solution: `Use base ${base} multiplication: ${n1} × ${n2} = (${base} + ${d1})(${base} − ${d2}) = ${base * base} + ${base}×(${d1 - d2}) − ${d1 * d2} = ${n1 * n2}. Add ${k25} × 25 = ${extra} to get ${ans}.`
+          });
+        }
+
+        // Q6 (Topic B): Multi-step Exact Division & Multiplication
+        {
+          const divisor1 = 17 + (m % 19);
+          const quot1 = 124 + m * 3;
+          const mult1 = 12 + (m % 9);
+          const dividend1 = divisor1 * quot1;
+          const divisor2 = 13 + (m % 15);
+          const quot2 = 85 + m * 2;
+          const dividend2 = divisor2 * quot2;
+          const ans = quot1 * mult1 - quot2;
+          const { options, correctIndex } = buildOptions(
+            String(ans),
+            [String(ans + mult1), String(ans - mult1), String(ans + 20), String(ans - 15)],
+            rng
+          );
+          questions.push({
+            topicCode: "B",
+            topicName: "Multiplication & Division of Numbers",
+            difficulty: "Moderate",
+            question: `Evaluate: (${dividend1} ÷ ${divisor1}) × ${mult1} − (${dividend2} ÷ ${divisor2}) = ?`,
+            options,
+            correctIndex,
+            solution: `First division: ${dividend1} ÷ ${divisor1} = ${quot1}. Multiply by ${mult1}: ${quot1} × ${mult1} = ${quot1 * mult1}. Second division: ${dividend2} ÷ ${divisor2} = ${quot2}. Subtracting gives ${quot1 * mult1} − ${quot2} = ${ans}.`
+          });
+        }
+
+        // Q7 (Topic B): Decimal Multiplication & Division
+        {
+          const k1 = 10 + m;
+          const k2 = 15 + ((m * 2) % 23);
+          const p = (k1 * 0.75).toFixed(2);
+          const q = (k2 * 0.4).toFixed(1);
+          const term1 = k1 * k2 * 2;
+          const mult125 = 8 + (m % 16);
+          const addend = Math.round((12.5 * mult125) * 10) / 10;
+          const ans = term1 + addend;
+          const { options, correctIndex } = buildOptions(
+            String(ans),
+            [String(ans + k1), String(ans - k2), String(ans + 15), String(ans - 10)],
+            rng
+          );
+          questions.push({
+            topicCode: "B",
+            topicName: "Multiplication & Division of Numbers",
+            difficulty: "Moderate",
+            question: `Find the value of: ( ${p} × ${q} ) ÷ 0.15 + ( 12.5 × ${mult125} ) = ?`,
+            options,
+            correctIndex,
+            solution: `Note that ${p} = ${k1} × 0.75 and ${q} = ${k2} × 0.4. Since (0.75 × 0.4) / 0.15 = 0.30 / 0.15 = 2, the first term simplifies directly to ${k1} × ${k2} × 2 = ${term1}. Second term: 12.5 × ${mult125} = ${addend}. Total = ${term1} + ${addend} = ${ans}.`
+          });
+        }
+
+        // Q8 (Topic B): Algebraic Multiplication/Division Ratio Equation
+        {
+          const A = 12 + m;
+          const B = (7 + (m % 11)) * 12;
+          const C = 12;
+          const D = 11 + (m % 19);
+          const E = (5 + (m % 9)) * 15;
+          const F = 15;
+          const multX = 4 + (m % 5);
+          const rhsVal = (A * (B / C) + D * (E / F));
+          const totalLhs = rhsVal * multX;
+          const ans = rhsVal;
+          const { options, correctIndex } = buildOptions(
+            String(ans),
+            [String(ans + A), String(ans - D), String(ans + 12), String(ans - 8)],
+            rng
+          );
+          questions.push({
+            topicCode: "B",
+            topicName: "Multiplication & Division of Numbers",
+            difficulty: "Tough",
+            question: `If x × ${multX} = ${totalLhs}, and y = (${A} × ${B}) ÷ ${C} + (${D} × ${E}) ÷ ${F}, then find the value of (x + y) ÷ 2:`,
+            options,
+            correctIndex,
+            solution: `First, x = ${totalLhs} ÷ ${multX} = ${rhsVal}. Next, y = ${A} × (${B}÷${C}) + ${D} × (${E}÷${F}) = ${A * (B / C)} + ${D * (E / F)} = ${rhsVal}. Therefore, (x + y) ÷ 2 = (${rhsVal} + ${rhsVal}) ÷ 2 = ${ans}.`
+          });
+        }
+
+        // =================================================================
+        // TOPIC C: Squares of 2, 3-digit numbers, Square-roots of Perfect & Non-perfect squares, Cubes 1 to 21 (4 Qs)
+        // =================================================================
+
+        // Q9 (Topic C): Cubes from 1 to 21 and 2-digit Squares
+        {
+          const cIdx1 = 6 + (m % 16);
+          const cIdx2 = 2 + ((m * 3) % 19);
+          const sqTwo = 15 + Math.floor(m * 0.8);
+          const offsetM = m * 2;
+          const ans = CUBES_1_TO_21[cIdx1] + CUBES_1_TO_21[cIdx2] - (sqTwo * sqTwo) + offsetM;
+          const { options, correctIndex } = buildOptions(
+            String(ans),
+            [String(ans + 100), String(ans - 100), String(ans + 50), String(ans - 40)],
+            rng
+          );
+          questions.push({
+            topicCode: "C",
+            topicName: "Squares, Square-Roots (Perfect & Non-Perfect) & Cubes (1–21)",
+            difficulty: "Easy",
+            question: `Evaluate using standard cubes (1 to 21) and 2-digit squares: ${cIdx1}³ + ${cIdx2}³ − ${sqTwo}² + ${offsetM} = ?`,
+            options,
+            correctIndex,
+            solution: `From Cubes 1–21: ${cIdx1}³ = ${CUBES_1_TO_21[cIdx1]} and ${cIdx2}³ = ${CUBES_1_TO_21[cIdx2]}. Two-digit square: ${sqTwo}² = ${sqTwo * sqTwo}. Result = ${CUBES_1_TO_21[cIdx1]} + ${CUBES_1_TO_21[cIdx2]} − ${sqTwo * sqTwo} + ${offsetM} = ${ans}.`
+          });
+        }
+
+        // Q10 (Topic C): 3-Digit Squares & Difference of Squares
+        {
+          const sq3A = 104 + m * 2;
+          const sq3B = 101 + m;
+          const sq2C = 25 + (m % 60);
+          const ans = (sq3A * sq3A) - (sq3B * sq3B) + (sq2C * sq2C);
+          const { options, correctIndex } = buildOptions(
+            String(ans),
+            [String(ans + 200), String(ans - 200), String(ans + 110), String(ans - 90)],
+            rng
+          );
+          questions.push({
+            topicCode: "C",
+            topicName: "Squares, Square-Roots (Perfect & Non-Perfect) & Cubes (1–21)",
+            difficulty: "Moderate",
+            question: `Compute the value of three-digit and two-digit squares: ${sq3A}² − ${sq3B}² + ${sq2C}² = ?`,
+            options,
+            correctIndex,
+            solution: `Use identity a² − b² = (a − b)(a + b): ${sq3A}² − ${sq3B}² = (${sq3A - sq3B}) × (${sq3A + sq3B}) = ${(sq3A - sq3B) * (sq3A + sq3B)}. Now add ${sq2C}² = ${sq2C * sq2C} to get ${ans}.`
+          });
+        }
+
+        // Q11 (Topic C): Square-Roots of Large Perfect Squares & Cube-Roots (1–21)
+        {
+          const r1 = 112 + m * 2;
+          const r2 = 64 + m;
+          const cRoot = 7 + (m % 15);
+          const mult = 5 + (m % 8);
+          const sq1 = r1 * r1;
+          const sq2 = r2 * r2;
+          const cb = CUBES_1_TO_21[cRoot];
+          const ans = r1 + r2 + cRoot * mult;
+          const { options, correctIndex } = buildOptions(
+            String(ans),
+            [String(ans + 10), String(ans - 10), String(ans + mult), String(ans - 6)],
+            rng
+          );
+          questions.push({
+            topicCode: "C",
+            topicName: "Squares, Square-Roots (Perfect & Non-Perfect) & Cubes (1–21)",
+            difficulty: "Moderate",
+            question: `Find the exact value of: √${sq1} + √${sq2} + ( ∛${cb} × ${mult} ) = ?`,
+            options,
+            correctIndex,
+            solution: `√${sq1} = ${r1} (since ${r1}² = ${sq1}), √${sq2} = ${r2} (since ${r2}² = ${sq2}), and ∛${cb} = ${cRoot} (from Cubes 1–21). Thus ${r1} + ${r2} + (${cRoot} × ${mult}) = ${ans}.`
+          });
+        }
+
+        // Q12 (Topic C): Non-Perfect Square Root Approximation + Cube/Square
+        {
+          const exactKList = [10, 12, 15, 16, 20, 25, 30, 40, 50, 60];
+          const k = exactKList[m % exactKList.length];
+          const dChoices = [2, 3, 4, 6, 8];
+          const d = dChoices[Math.floor(m / 10) % dChoices.length];
+          const sign = (m % 2 === 0) ? 1 : -1;
+          const nonPerfectN = k * k + sign * d;
+          const approxRoot = k + sign * (d / (2 * k));
+          const cubeBase = 3 + (m % 19);
+          const cubeVal = CUBES_1_TO_21[cubeBase];
+          const extraAdd = m * 5;
+          const totalVal = approxRoot + cubeVal + extraAdd;
+          const ansStr = totalVal.toFixed(2);
+          const { options, correctIndex } = buildOptions(
+            ansStr,
+            [
+              (totalVal + 0.25).toFixed(2),
+              (totalVal - 0.25).toFixed(2),
+              (totalVal + 0.50).toFixed(2),
+              (totalVal - 0.40).toFixed(2)
+            ],
+            rng
+          );
+          questions.push({
+            topicCode: "C",
+            topicName: "Squares, Square-Roots (Perfect & Non-Perfect) & Cubes (1–21)",
+            difficulty: "Tough",
+            question: `Using the non-perfect square root approximation √(A ± B) ≈ √A ± B/(2√A), find the value of √${nonPerfectN} + ${cubeBase}³ + ${extraAdd} (correct to 2 decimal places):`,
+            options,
+            correctIndex,
+            solution: `Nearest perfect square to ${nonPerfectN} is ${k}² = ${k * k}. By formula: √${nonPerfectN} = √(${k * k} ${sign > 0 ? '+' : '−'} ${d}) ≈ ${k} ${sign > 0 ? '+' : '−'} ${d}/(2×${k}) = ${approxRoot.toFixed(2)}. Adding ${cubeBase}³ = ${cubeVal} and ${extraAdd} gives ${ansStr}.`
+          });
+        }
+
+        // =================================================================
+        // TOPIC D: Simplification on Surds & Indices, BODMAS Rule & Approximation (4 Qs)
+        // =================================================================
+
+        // Q13 (Topic D): Surds & Indices using exact PDF Powers (Bases 2, 3, 5, 7, 11)
+        {
+          const p2 = PDF_SURDS_BASE2[3 + (m % 9)];
+          const p3 = PDF_SURDS_BASE3[2 + ((m * 2) % 6)];
+          const p5 = PDF_SURDS_BASE5[2 + ((m * 3) % 4)];
+          const p11 = PDF_SURDS_BASE11[1 + (m % 3)];
+          const kAdd = m * 3;
+          const ans = (p2.exp * p3.exp) + (p5.exp * p11.exp) + 49 + kAdd;
+          const { options, correctIndex } = buildOptions(
+            String(ans),
+            [String(ans + p2.exp), String(ans - p3.exp), String(ans + 6), String(ans - 4)],
+            rng
+          );
+          questions.push({
+            topicCode: "D",
+            topicName: "Surds & Indices, BODMAS Rule & Approximation",
+            difficulty: "Easy",
+            question: `Given the index relations 2ᵃ = ${p2.val}, 3ᵇ = ${p3.val}, 5ᶜ = ${p5.val}, and 11ᵈ = ${p11.val}, find the exact value of (a × b) + (c × d) + (⁴√2401 × 7) + ${kAdd}:`,
+            options,
+            correctIndex,
+            solution: `From the Surds & Indices power table: ${p2.val} = 2^${p2.exp} (a = ${p2.exp}), ${p3.val} = 3^${p3.exp} (b = ${p3.exp}), ${p5.val} = 5^${p5.exp} (c = ${p5.exp}), ${p11.val} = 11^${p11.exp} (d = ${p11.exp}), and 2401 = 7⁴ so ⁴√2401 × 7 = 49. Thus (${p2.exp} × ${p3.exp}) + (${p5.exp} × ${p11.exp}) + 49 + ${kAdd} = ${ans}.`
+          });
+        }
+
+        // Q14 (Topic D): Surds & Indices Fractional Exponent Simplification with PDF Values
+        {
+          const templates = [
+            {
+              expr: `(4096)^(1/4) × (6561)^(1/4) + (15625)^(1/3) − (14641)^(1/4)`,
+              baseVal: 8 * 9 + 25 - 11,
+              expl: `(4096)^(1/4) = (8⁴)^(1/4) = 8; (6561)^(1/4) = (9⁴)^(1/4) = 9; (15625)^(1/3) = (25³)^(1/3) = 25; (14641)^(1/4) = (11⁴)^(1/4) = 11. Base value = 8×9 + 25 − 11 = 86`
+            },
+            {
+              expr: `(4096)^(1/3) + (729)^(1/3) × (2401)^(1/4) − (1024)^(1/5)`,
+              baseVal: 16 + 9 * 7 - 4,
+              expl: `4096 = 16³ ⇒ (4096)^(1/3) = 16; 729 = 9³ ⇒ (729)^(1/3) = 9; 2401 = 7⁴ ⇒ (2401)^(1/4) = 7; 1024 = 4⁵ ⇒ (1024)^(1/5) = 4. Base value = 16 + 63 − 4 = 75`
+            },
+            {
+              expr: `(15625)^(1/6) × (2187)^(1/7) × (2048)^(1/11) + (1331)^(1/3) × (625)^(1/4)`,
+              baseVal: 5 * 3 * 2 + 11 * 5,
+              expl: `15625 = 5⁶, 2187 = 3⁷, 2048 = 2¹¹, 1331 = 11³, 625 = 5⁴. Base value = (5 × 3 × 2) + (11 × 5) = 30 + 55 = 85`
+            },
+            {
+              expr: `(6561)^(1/8) × (3125)^(1/5) × (512)^(1/3) + (256)^(1/4) × (343)^(1/3)`,
+              baseVal: 3 * 5 * 8 + 4 * 7,
+              expl: `6561 = 3⁸, 3125 = 5⁵, 512 = 8³, 256 = 4⁴, 343 = 7³. Base value = (3 × 5 × 8) + (4 × 7) = 120 + 28 = 148`
+            },
+            {
+              expr: `(4096)^(1/6) × (729)^(1/2) + (2401)^(1/2) − (14641)^(1/2)`,
+              baseVal: 4 * 27 + 49 - 121,
+              expl: `4096 = 4⁶ ⇒ 4; 729 = 27² ⇒ 27; 2401 = 49² ⇒ 49; 14641 = 121² ⇒ 121. Base value = 108 + 49 − 121 = 36`
+            }
+          ];
+          const tpl = templates[m % templates.length];
+          const kMult = 2 + (m % 7);
+          const extraAdd = (m * 3) + 5;
+          const ans = tpl.baseVal * kMult + extraAdd;
+          const { options, correctIndex } = buildOptions(
+            String(ans),
+            [String(ans + kMult), String(ans - kMult), String(ans + 12), String(ans - 9)],
+            rng
+          );
+          questions.push({
+            topicCode: "D",
+            topicName: "Surds & Indices, BODMAS Rule & Approximation",
+            difficulty: "Moderate",
+            question: `Simplify using laws of Surds & Indices: ${kMult} × [ ${tpl.expr} ] + ${extraAdd} = ?`,
+            options,
+            correctIndex,
+            solution: `${tpl.expl}. Multiplying by ${kMult} and adding ${extraAdd}: ${kMult} × ${tpl.baseVal} + ${extraAdd} = ${ans}.`
+          });
+        }
+
+        // Q15 (Topic D): Nested BODMAS Rule with 'of', Brackets & Division
+        {
+          const p = 4 + (m % 9);
+          const q = 3 + ((m * 2) % 7);
+          const r = 5 + (m % 6);
+          const ofVal = p * q;
+          const dividend = ofVal * r;
+          const innerAdd = 18 + m;
+          const braceMult = 3 + (m % 4);
+          const outerStart = 650 + m * 15;
+          const bracketVal = innerAdd + r * braceMult;
+          const ans = outerStart - bracketVal;
+          const { options, correctIndex } = buildOptions(
+            String(ans),
+            [
+              String(outerStart - (innerAdd + (dividend / p) * q * braceMult)),
+              String(ans + braceMult * 2),
+              String(ans - r),
+              String(ans + 15)
+            ],
+            rng
+          );
+          questions.push({
+            topicCode: "D",
+            topicName: "Surds & Indices, BODMAS Rule & Approximation",
+            difficulty: "Moderate",
+            question: `Apply the BODMAS rule to evaluate: ${outerStart} − [ ${innerAdd} + { (${dividend} ÷ (${p} of ${q})) × ${braceMult} } ] = ?`,
+            options,
+            correctIndex,
+            solution: `By BODMAS, evaluate 'of' before '÷': (${p} of ${q}) = ${p * q}. Then ${dividend} ÷ ${p * q} = ${r}. Next, curly braces: ${r} × ${braceMult} = ${r * braceMult}. Square brackets: ${innerAdd} + ${r * braceMult} = ${bracketVal}. Finally: ${outerStart} − ${bracketVal} = ${ans}.`
+          });
+        }
+
+        // Q16 (Topic D): High-Speed Approximation with Surds & Percentages
+        {
+          const pct = 15 + (m % 12) * 5;
+          const baseNum = (20 + m) * 20;
+          const approxNum = (baseNum - 0.03).toFixed(2);
+          const pctApprox = (pct + 0.02).toFixed(2);
+          const surdItem = PDF_SURDS_BASE2[4 + (m % 7)];
+          const divFactor = 8;
+          const term1 = (pct * baseNum) / 100;
+          const term2 = surdItem.val / divFactor;
+          const sqRootBase = 14 + (m % 15);
+          const sqValApprox = (sqRootBase * sqRootBase + 0.04).toFixed(2);
+          const ans = term1 + term2 - sqRootBase;
+          const { options, correctIndex } = buildOptions(
+            String(ans),
+            [String(ans + 8), String(ans - 6), String(ans + 14), String(ans - 12)],
+            rng
+          );
+          questions.push({
+            topicCode: "D",
+            topicName: "Surds & Indices, BODMAS Rule & Approximation",
+            difficulty: "Tough",
+            question: `Find the approximate value (?) in the expression: ${pctApprox}% of ${approxNum} + (${surdItem.val}.02 ÷ 7.99) − √${sqValApprox} ≈ ?`,
+            options,
+            correctIndex,
+            solution: `Approximate each value to its nearest integer: ${pct}% of ${baseNum} = ${term1}; ${surdItem.val} ÷ 8 = ${term2} (since ${surdItem.val} = 2^${surdItem.exp} and 8 = 2³); √${sqRootBase * sqRootBase} = ${sqRootBase}. Result ≈ ${term1} + ${term2} − ${sqRootBase} = ${ans}.`
+          });
+        }
+
+        // =================================================================
+        // TOPIC E: Basic Problems on Percentage, Average, Profit & Loss, SI & CI, Ratio & Proportion, Age, Mixture (5 Qs)
+        // =================================================================
+
+        // Q17 (Topic E): Profit & Loss / Marked Price & Percentage Discount
+        {
+          const cpUnit = 100 + m * 20;
+          const markupPct = 40 + (m % 4) * 10;
+          const discPct = 15 + (m % 3) * 5;
+          const mp = (cpUnit * (100 + markupPct)) / 100;
+          const sp = (mp * (100 - discPct)) / 100;
+          const profit = sp - cpUnit;
+          const ansStr = Number.isInteger(profit) ? `₹${profit}` : `₹${profit.toFixed(2)}`;
+          const { options, correctIndex } = buildOptions(
+            ansStr,
+            [
+              Number.isInteger(profit) ? `₹${profit + 25}` : `₹${(profit + 15).toFixed(2)}`,
+              Number.isInteger(profit) ? `₹${profit - 20}` : `₹${(profit - 12.5).toFixed(2)}`,
+              Number.isInteger(profit) ? `₹${profit + 40}` : `₹${(profit + 27.5).toFixed(2)}`,
+              Number.isInteger(profit) ? `₹${profit - 35}` : `₹${(profit - 22.5).toFixed(2)}`
+            ],
+            rng
+          );
+          questions.push({
+            topicCode: "E",
+            topicName: "Percentage, Average, Profit & Loss, SI/CI, Ratio, Age & Mixture",
+            difficulty: "Moderate",
+            question: `A trader buys an article for ₹${cpUnit}, marks it ${markupPct}% above the cost price, and allows a percentage discount of ${discPct}% on the marked price. Find the net profit earned (in ₹):`,
+            options,
+            correctIndex,
+            solution: `Cost Price (CP) = ₹${cpUnit}. Marked Price (MP) = ${cpUnit} × ${(100 + markupPct) / 100} = ₹${mp}. Selling Price (SP) = ${mp} × ${(100 - discPct) / 100} = ₹${sp}. Net Profit = SP − CP = ₹${sp} − ₹${cpUnit} = ${ansStr}.`
+          });
+        }
+
+        // Q18 (Topic E): Average & Deviation Replacement
+        {
+          const nStudents = 15 + (m % 16);
+          const initAvg = 45 + m;
+          const wrongRead = 28 + (m % 25);
+          const actualRead = wrongRead + nStudents * (2 + (m % 4));
+          const diff = actualRead - wrongRead;
+          const inc = diff / nStudents;
+          const ans = initAvg + inc;
+          const { options, correctIndex } = buildOptions(
+            String(ans),
+            [String(ans + 1), String(ans - 1), String(ans + 2), String(initAvg - inc)],
+            rng
+          );
+          questions.push({
+            topicCode: "E",
+            topicName: "Percentage, Average, Profit & Loss, SI/CI, Ratio, Age & Mixture",
+            difficulty: "Moderate",
+            question: `The average score of ${nStudents} candidates in a speed calculation test was calculated as ${initAvg}. Later, it was discovered that one candidate's score was misread as ${wrongRead} instead of the actual score of ${actualRead}. Find the correct average:`,
+            options,
+            correctIndex,
+            solution: `Net increase in total score = ${actualRead} − ${wrongRead} = +${diff}. Increase in average = ${diff} ÷ ${nStudents} = +${inc}. Correct average = ${initAvg} + ${inc} = ${ans}.`
+          });
+        }
+
+        // Q19 (Topic E): Ratio & Proportion and Ages
+        {
+          const rA = 2 + (m % 7);
+          const rB = rA + 1 + (m % 4);
+          const kMult = 4 + Math.floor(m / 4);
+          const ageA = rA * kMult;
+          const ageB = rB * kMult;
+          const yearsHence = 3 + (m % 9);
+          const newA = ageA + yearsHence;
+          const newB = ageB + yearsHence;
+          const g = gcd(newA, newB);
+          const nrA = newA / g;
+          const nrB = newB / g;
+          const sumAges = ageA + ageB;
+          const { options, correctIndex } = buildOptions(
+            `${sumAges} years`,
+            [`${sumAges + (rA + rB)} years`, `${sumAges - (rA + rB)} years`, `${sumAges + 6} years`, `${sumAges - 4} years`],
+            rng
+          );
+          questions.push({
+            topicCode: "E",
+            topicName: "Percentage, Average, Profit & Loss, SI/CI, Ratio, Age & Mixture",
+            difficulty: "Moderate",
+            question: `In Batch #${m}, the present ages of A and B are in the ratio ${rA} : ${rB}. If the difference between their present ages is ${ageB - ageA} years (and after ${yearsHence} years their ages will be in the ratio ${nrA} : ${nrB}), find the sum of their present ages:`,
+            options,
+            correctIndex,
+            solution: `Difference in ratio parts = ${rB} − ${rA} = ${rB - rA} parts = ${ageB - ageA} years ⇒ 1 part = ${kMult} years. Sum of present ages = (${rA} + ${rB}) × ${kMult} = ${sumAges} years.`
+          });
+        }
+
+        // Q20 (Topic E): Compound Interest & Simple Interest using PDF Surd Power Principals
+        {
+          const ciScenarios = [
+            { rateStr: "4%", den: 25, desc: "25³ = 15625" },
+            { rateStr: "12.5%", den: 8, desc: "8³ = 512" },
+            { rateStr: "14(2/7)%", den: 7, desc: "7³ = 343" },
+            { rateStr: "9(1/11)%", den: 11, desc: "11³ = 1331" },
+            { rateStr: "11(1/9)%", den: 9, desc: "9³ = 729" }
+          ];
+          const sc = ciScenarios[m % ciScenarios.length];
+          const d = sc.den;
+          const k = m;
+          const P = d * d * d * k;
+          const diff3Yr = k * (3 * d + 1);
+          const { options, correctIndex } = buildOptions(
+            `₹${diff3Yr}`,
+            [`₹${diff3Yr + k}`, `₹${diff3Yr - k}`, `₹${diff3Yr + 3 * k}`, `₹${k * 3 * d}`],
+            rng
+          );
+          questions.push({
+            topicCode: "E",
+            topicName: "Percentage, Average, Profit & Loss, SI/CI, Ratio, Age & Mixture",
+            difficulty: "Tough",
+            question: `Find the exact difference between the Compound Interest (compounded annually) and Simple Interest on a principal of ₹${P.toLocaleString('en-IN')} at ${sc.rateStr} per annum for 3 years:`,
+            options,
+            correctIndex,
+            solution: `Rate R = ${sc.rateStr} = 1/${d}. Since Principal P = ₹${P} = ${k} × ${d}³ (${sc.desc}), for 3 years at rate 1/${d}, the difference (CI − SI) is ${k} × (3×${d} + 1) = ${k} × ${3 * d + 1} = ₹${diff3Yr}.`
+          });
+        }
+
+        // Q21 (Topic E): Mixture & Alligation Repeated Replacement using PDF Powers
+        {
+          const mixConfigs = [
+            { b: 5, n: 3, bPow: 125, remPow: 64, label: "5³ = 125 and 4³ = 64" },
+            { b: 3, n: 4, bPow: 81, remPow: 16, label: "3⁴ = 81 and 2⁴ = 16" },
+            { b: 4, n: 3, bPow: 64, remPow: 27, label: "4³ = 64 and 3³ = 27" },
+            { b: 5, n: 4, bPow: 625, remPow: 256, label: "5⁴ = 625 and 4⁴ = 256" },
+            { b: 11, n: 2, bPow: 121, remPow: 100, label: "11² = 121 and 10² = 100" }
+          ];
+          const mc = mixConfigs[m % mixConfigs.length];
+          const mult = m;
+          const initVol = mc.bPow * mult;
+          const drawVol = (mc.bPow / mc.b) * mult;
+          const finalPure = mc.remPow * mult;
+          const waterAddedNet = initVol - finalPure;
+          const { options, correctIndex } = buildOptions(
+            `${finalPure} L`,
+            [`${waterAddedNet} L`, `${finalPure + mult * 5} L`, `${finalPure - mult * 3} L`, `${finalPure + 12} L`],
+            rng
+          );
+          questions.push({
+            topicCode: "E",
+            topicName: "Percentage, Average, Profit & Loss, SI/CI, Ratio, Age & Mixture",
+            difficulty: "Tough",
+            question: `A vessel contains ${initVol} litres of pure milk. ${drawVol} litres of milk is taken out and replaced with an equal quantity of water. If this process is repeated ${mc.n} times in total, find the quantity of pure milk left in the vessel:`,
+            options,
+            correctIndex,
+            solution: `Fraction removed each time = ${drawVol}/${initVol} = 1/${mc.b}. Using Surds/Powers (${mc.label}): Remaining milk after ${mc.n} operations = ${initVol} × (1 − 1/${mc.b})^${mc.n} = ${initVol} × (${mc.remPow}/${mc.bPow}) = ${finalPure} L.`
+          });
+        }
+
+        // =================================================================
+        // TOPIC F: Basic problems on Mensuration 2D/3D, Trigonometry & Pythagorean Triplets (4 Qs)
+        // =================================================================
+
+        // Q22 (Topic F): Pythagorean Triplets Direct & Formula Application (PDF Pages 3–4)
+        {
+          const trip1 = PDF_TRIPLETS[m % PDF_TRIPLETS.length];
+          const [a, b, c] = trip1;
+          const kScale = 1 + Math.floor(m / PDF_TRIPLETS.length);
+          const extraK = m + 2;
+          const perim = (a + b + c) * kScale;
+          const twoInradius = (a + b - c) * kScale;
+          const ans = perim + twoInradius + extraK;
+          const { options, correctIndex } = buildOptions(
+            `${ans} cm`,
+            [`${ans + c} cm`, `${ans - a} cm`, `${perim} cm`, `${ans + 8} cm`],
+            rng
+          );
+          questions.push({
+            topicCode: "F",
+            topicName: "Mensuration 2D/3D, Trigonometry & Pythagorean Triplets",
+            difficulty: "Easy",
+            question: `In a right-angled triangle formed by the Pythagorean triplet (${a * kScale} cm, ${b * kScale} cm, ${c * kScale} cm), if P is its perimeter and r is its inradius, evaluate (P + 2r + ${extraK} cm):`,
+            options,
+            correctIndex,
+            solution: `From the Pythagorean Triplet (${a}, ${b}, ${c}) scaled by ${kScale}: legs are ${a * kScale} and ${b * kScale}, hypotenuse = ${c * kScale}. Perimeter P = ${perim} cm, and 2r = a + b − c = ${twoInradius} cm. Thus P + 2r + ${extraK} = ${perim} + ${twoInradius} + ${extraK} = ${ans} cm.`
+          });
+        }
+
+        // Q23 (Topic F): Trigonometry with PDF Pythagorean Triplets
+        {
+          const trip2 = PDF_TRIPLETS[(m * 3 + 5) % PDF_TRIPLETS.length];
+          const [opp, adj, hyp] = trip2;
+          const c1 = 2 + (m % 7);
+          const c2 = 1 + Math.floor(m / 7);
+          const ans = c1 * opp + c2 * adj + opp;
+          const { options, correctIndex } = buildOptions(
+            String(ans),
+            [String(ans + opp), String(ans - adj), String(c1 * adj + c2 * opp + adj), String(ans + 10)],
+            rng
+          );
+          questions.push({
+            topicCode: "F",
+            topicName: "Mensuration 2D/3D, Trigonometry & Pythagorean Triplets",
+            difficulty: "Moderate",
+            question: `In a right-angled triangle ABC (right-angled at B), if tan θ = ${opp}/${adj} (where θ is acute), evaluate: (${c1} × ${hyp} sin θ) + (${c2} × ${hyp} cos θ) + (${adj} tan θ) = ?`,
+            options,
+            correctIndex,
+            solution: `By the Pythagorean Triplet (${opp}, ${adj}, ${hyp}), since tan θ = ${opp}/${adj}, hypotenuse = ${hyp}, so sin θ = ${opp}/${hyp} and cos θ = ${adj}/${hyp}. Substituting gives: (${c1} × ${opp}) + (${c2} × ${adj}) + ${opp} = ${ans}.`
+          });
+        }
+
+        // Q24 (Topic F): Mensuration 2D (Rhombus with Primitive PDF Triplets)
+        {
+          const trip3 = PRIMITIVE_TRIPLETS[m % PRIMITIVE_TRIPLETS.length];
+          const [halfD1, halfD2, side] = trip3;
+          const scale = 1 + Math.floor((m - 1) / PRIMITIVE_TRIPLETS.length);
+          const d1 = 2 * halfD1 * scale;
+          const d2 = 2 * halfD2 * scale;
+          const s = side * scale;
+          const kPerim = 1 + (m % 5);
+          const areaRhombus = (d1 * d2) / 2;
+          const perimRhombus = 4 * s;
+          const ans = areaRhombus + kPerim * perimRhombus;
+          const { options, correctIndex } = buildOptions(
+            String(ans),
+            [String(areaRhombus), String(ans + 2 * s), String(ans - 2 * s), String(d1 * d2 + perimRhombus)],
+            rng
+          );
+          questions.push({
+            topicCode: "F",
+            topicName: "Mensuration 2D/3D, Trigonometry & Pythagorean Triplets",
+            difficulty: "Tough",
+            question: `The diagonals of a rhombus measure ${d1} cm and ${d2} cm respectively. If A is the area of the rhombus (in cm²) and P is its perimeter (in cm), find the value of (A + ${kPerim}P):`,
+            options,
+            correctIndex,
+            solution: `Half-diagonals are ${halfD1 * scale} cm and ${halfD2 * scale} cm. By Pythagorean Triplet (${halfD1}, ${halfD2}, ${side}), each side of the rhombus = ${s} cm. Area A = ½ × ${d1} × ${d2} = ${areaRhombus} cm². Perimeter P = 4 × ${s} = ${perimRhombus} cm. Total (A + ${kPerim}P) = ${areaRhombus} + ${kPerim * perimRhombus} = ${ans}.`
+          });
+        }
+
+        // Q25 (Topic F): Mensuration 3D (Right Circular Cone with PDF Triplets)
+        {
+          const trip4 = PDF_TRIPLETS[(m * 11 + 4) % PDF_TRIPLETS.length];
+          const [rBase, hBase, lBase] = trip4;
+          const kCsa = 1 + Math.floor(m / 15);
+          const kVol = 3 * (1 + (m % 4));
+          const csaOverPi = rBase * lBase;
+          const volOverPi = (rBase * rBase * hBase) / 3;
+          const ans = kCsa * csaOverPi + kVol * volOverPi + m;
+          const { options, correctIndex } = buildOptions(
+            String(ans),
+            [String(ans + rBase * hBase), String(ans - csaOverPi), String(csaOverPi + rBase * hBase), String(ans + 100)],
+            rng
+          );
+          questions.push({
+            topicCode: "F",
+            topicName: "Mensuration 2D/3D, Trigonometry & Pythagorean Triplets",
+            difficulty: "Tough",
+            question: `A right circular cone has a base radius of ${rBase} cm and a vertical height of ${hBase} cm. If C denotes its curved surface area and V denotes its volume, find the exact value of (${kCsa}C ÷ π) + (${kVol}V ÷ π) + ${m}:`,
+            options,
+            correctIndex,
+            solution: `From the Pythagorean Triplet (${rBase}, ${hBase}, ${lBase}), slant height l = √(${rBase}² + ${hBase}²) = ${lBase} cm. Now C ÷ π = r × l = ${rBase} × ${lBase} = ${csaOverPi}, and 3V ÷ π = r² × h = ${rBase}² × ${hBase} = ${rBase * rBase * hBase}. Thus ${kCsa}×(${csaOverPi}) + ${kVol / 3}×(${rBase * rBase * hBase}) + ${m} = ${ans}.`
+          });
+        }
+
+        // Calibrate Difficulty per mock:
+        // Easy: 3 to 5, Moderate: 10 to 12, Tough: remaining (8 to 12)
+        const targetEasy = 3 + (m % 3);
+        const targetMod = 10 + ((m + 1) % 3);
+        const easyIndices = [21, 4, 12, 8, 0];
+        let currEasy = 5;
+        let ePtr = 0;
+        while (currEasy > targetEasy) {
+          questions[easyIndices[ePtr]].difficulty = "Tough";
+          currEasy--;
+          ePtr++;
+        }
+        const modIndices = [14, 22, 18, 13, 10, 6];
+        let currMod = 12;
+        let mPtr = 0;
+        while (currMod > targetMod) {
+          questions[modIndices[mPtr]].difficulty = "Tough";
+          currMod--;
+          mPtr++;
+        }
+
+        // Deterministic shuffle so topics A–F and difficulties are mixed
+        for (let i = questions.length - 1; i > 0; i--) {
+          const j = rng() % (i + 1);
+          const tmp = questions[i];
+          questions[i] = questions[j];
+          questions[j] = tmp;
+        }
+
+        return questions.map((q, idx) => ({
+          id: `M${mockId}_Q${idx + 1}`,
+          qNo: idx + 1,
+          ...q
+        }));
+      }
+
+      // -------------------------------------------------------------------
+      // 3. STATE MANAGEMENT & PERSISTENCE
+      // -------------------------------------------------------------------
+      const STORAGE_KEY = "math_calc_boost_100_mocks_v1";
+      let savedHistory = {};
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) savedHistory = JSON.parse(raw) || {};
+      } catch (e) {
+        savedHistory = {};
+      }
+
+      function saveAttemptHistory(mockId, resultSummary) {
+        savedHistory[mockId] = resultSummary;
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(savedHistory));
+        } catch (e) {
+          // ignore storage quota errors in sandboxed iframe
+        }
+      }
+
+      // Active Exam State
+      let activeExam = {
+        mockId: 1,
+        questions: [],
+        currentIndex: 0,
+        selectedOptions: [], // null or 0..3
+        markedReview: [],    // boolean
+        visited: [],         // boolean
+        remainingSeconds: 900, // 15 * 60 = 900 seconds
+        timerInterval: null,
+        submitted: false,
+        autoSubmitted: false
+      };
+
+      let currentMockFilter = "all";
+      let currentSolFilter = "all";
+
+      // -------------------------------------------------------------------
+      // 4. DASHBOARD RENDERING
+      // -------------------------------------------------------------------
+      function updateDashboardMetrics() {
+        const completedIds = Object.keys(savedHistory);
+        const count = completedIds.length;
+        document.getElementById("stat-completed-count").textContent = `${count} / 100`;
+
+        if (count === 0) {
+          document.getElementById("stat-avg-accuracy").textContent = "Avg Accuracy: —";
+          document.getElementById("stat-best-score").textContent = "— / 50";
+          document.getElementById("stat-avg-score").textContent = "Avg Score: —";
+          return;
+        }
+
+        let bestScore = -999;
+        let sumScore = 0;
+        let sumAcc = 0;
+        for (const id of completedIds) {
+          const item = savedHistory[id];
+          if (item.score > bestScore) bestScore = item.score;
+          sumScore += item.score;
+          sumAcc += item.accuracy;
+        }
+        const avgScore = (sumScore / count).toFixed(2);
+        const avgAcc = (sumAcc / count).toFixed(1);
+        document.getElementById("stat-best-score").textContent = `${bestScore.toFixed(2)} / 50`;
+        document.getElementById("stat-avg-score").textContent = `Avg Score: ${avgScore}`;
+        document.getElementById("stat-avg-accuracy").textContent = `Avg Accuracy: ${avgAcc}%`;
+      }
+
+      function renderMocksGrid() {
+        const grid = document.getElementById("mocks-grid");
+        grid.innerHTML = "";
+
+        for (let m = 1; m <= 100; m++) {
+          const hist = savedHistory[m];
+          const isAttempted = Boolean(hist);
+
+          if (currentMockFilter === "1-20" && (m < 1 || m > 20)) continue;
+          if (currentMockFilter === "21-40" && (m < 21 || m > 40)) continue;
+          if (currentMockFilter === "41-60" && (m < 41 || m > 60)) continue;
+          if (currentMockFilter === "61-80" && (m < 61 || m > 80)) continue;
+          if (currentMockFilter === "81-100" && (m < 81 || m > 100)) continue;
+          if (currentMockFilter === "attempted" && !isAttempted) continue;
+          if (currentMockFilter === "unattempted" && isAttempted) continue;
+
+          const meta = getMockMetadata(m);
+          const card = document.createElement("div");
+          card.className = `mock-card ${isAttempted ? "completed-card" : ""}`;
+
+          const padM = String(m).padStart(2, "0");
+          const statusBadge = isAttempted
+            ? `<span class="px-2 py-0.5 text-[11px] font-bold rounded bg-green-100 text-green-800 border border-green-300 font-mono-num">${hist.score.toFixed(2)} / 50</span>`
+            : `<span class="px-2 py-0.5 text-[11px] font-semibold rounded bg-slate-100 text-slate-600">25 MCQs • 15m</span>`;
+
+          const subInfo = isAttempted
+            ? `<div class="text-[11px] text-green-700 font-medium mt-1">Accuracy: ${hist.accuracy.toFixed(1)}% • Correct: ${hist.correct}/25 • Wrong: ${hist.incorrect}</div>`
+            : `<div class="text-[11px] text-slate-500 mt-1">Easy: ${meta.easyCount} • Mod: ${meta.modCount} • Tough: ${meta.toughCount}</div>`;
+
+          card.innerHTML = `
+            <div>
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-sm font-extrabold text-slate-900">Mock Test #${padM}</span>
+                ${statusBadge}
+              </div>
+              <div class="text-xs text-blue-700 font-semibold mt-1">
+                Topics A, B, C, D, E &amp; F
+              </div>
+              ${subInfo}
+            </div>
+            <div class="mt-3.5 pt-2.5 border-t border-slate-100 flex items-center gap-2">
+              <button data-start-mock="${m}" class="btn-edu ${isAttempted ? 'btn-outline-blue' : 'btn-blue'} w-full text-xs py-1.5">
+                ${isAttempted ? 'Retake Mock #' + padM : 'Start Mock #' + padM}
+              </button>
+            </div>
+          `;
+          grid.appendChild(card);
+        }
+
+        if (grid.children.length === 0) {
+          grid.innerHTML = `
+            <div class="col-span-full bg-white border border-slate-200 rounded-xl p-8 text-center text-slate-500 text-sm">
+              No mock tests match this filter yet. Select "All 100 Mocks" to view all tests.
+            </div>
+          `;
+        }
+      }
+
+      // -------------------------------------------------------------------
+      // 5. EXAM INTERFACE & STRICT 15:00 COUNTDOWN TIMER
+      // -------------------------------------------------------------------
+      function clearExamTimer() {
+        if (activeExam.timerInterval) {
+          clearInterval(activeExam.timerInterval);
+          activeExam.timerInterval = null;
+        }
+      }
+
+      function formatMMSS(totalSec) {
+        const s = Math.max(0, Math.floor(totalSec));
+        const mm = String(Math.floor(s / 60)).padStart(2, "0");
+        const ss = String(s % 60).padStart(2, "0");
+        return { mm, ss };
+      }
+
+      function updateTimerUI() {
+        const { mm, ss } = formatMMSS(activeExam.remainingSeconds);
+        const hrEl = document.getElementById("timer-hr");
+        const minEl = document.getElementById("timer-min");
+        const secEl = document.getElementById("timer-sec");
+
+        hrEl.textContent = "00";
+        minEl.textContent = mm;
+        secEl.textContent = ss;
+
+        const isUrgent = activeExam.remainingSeconds <= 120;
+        minEl.classList.toggle("timer-urgent", isUrgent);
+        secEl.classList.toggle("timer-urgent", isUrgent);
+      }
+
+      function startMockExam(mockId) {
+        const m = Math.max(1, Math.min(100, parseInt(mockId, 10) || 1));
+        clearExamTimer();
+
+        const qs = generateMockQuestions(m);
+        activeExam = {
+          mockId: m,
+          questions: qs,
+          currentIndex: 0,
+          selectedOptions: new Array(25).fill(null),
+          markedReview: new Array(25).fill(false),
+          visited: new Array(25).fill(false),
+          remainingSeconds: 15 * 60, // Strictly 15 Minutes (900 seconds)
+          timerInterval: null,
+          submitted: false,
+          autoSubmitted: false
+        };
+        activeExam.visited[0] = true;
+
+        const padM = String(m).padStart(2, "0");
+        document.getElementById("exam-header-title").textContent =
+          `SSC / Eduquity Pattern — Mathematical Calculation Boost Mock Test - ${padM}`;
+        document.getElementById("palette-mock-tag").textContent = `M-${padM}`;
+
+        // Switch views
+        document.getElementById("view-dashboard").classList.add("hidden");
+        document.getElementById("view-result").classList.add("hidden");
+        document.getElementById("view-exam").classList.remove("hidden");
+        window.scrollTo(0, 0);
+
+        updateTimerUI();
+        renderActiveQuestion();
+        renderPalette();
+
+        // Start 1-second interval timer
+        activeExam.timerInterval = setInterval(function() {
+          if (activeExam.submitted) {
+            clearExamTimer();
+            return;
+          }
+          activeExam.remainingSeconds--;
+          updateTimerUI();
+
+          if (activeExam.remainingSeconds <= 0) {
+            activeExam.remainingSeconds = 0;
+            updateTimerUI();
+            clearExamTimer();
+            // Auto-submit immediately when 15 minutes complete
+            finalizeAndSubmitExam(true);
+          }
+        }, 1000);
+      }
+
+      function renderActiveQuestion() {
+        const idx = activeExam.currentIndex;
+        const q = activeExam.questions[idx];
+        activeExam.visited[idx] = true;
+
+        document.getElementById("exam-qno-label").textContent = `Question No. ${idx + 1}`;
+        document.getElementById("exam-mobile-progress").textContent = `Q ${idx + 1} / 25`;
+        document.getElementById("exam-topic-badge").textContent = `Topic ${q.topicCode}`;
+        document.getElementById("exam-topic-full").textContent = `Topic (${q.topicCode}): ${q.topicName}`;
+
+        const diffBadge = document.getElementById("exam-diff-badge");
+        diffBadge.textContent = q.difficulty;
+        if (q.difficulty === "Easy") {
+          diffBadge.className = "px-2 py-0.5 text-[11px] font-semibold rounded bg-green-50 text-green-700 border border-green-200";
+        } else if (q.difficulty === "Moderate") {
+          diffBadge.className = "px-2 py-0.5 text-[11px] font-semibold rounded bg-blue-50 text-blue-700 border border-blue-200";
+        } else {
+          diffBadge.className = "px-2 py-0.5 text-[11px] font-semibold rounded bg-slate-100 text-slate-800 border border-slate-300";
+        }
+
+        document.getElementById("exam-question-text").textContent = q.question;
+
+        // Render 4 options WITHOUT revealing correctness during the test
+        const optContainer = document.getElementById("exam-options-container");
+        optContainer.innerHTML = "";
+        const selectedOpt = activeExam.selectedOptions[idx];
+        const labels = ["A", "B", "C", "D"];
+
+        q.options.forEach((optText, optIdx) => {
+          const row = document.createElement("div");
+          const isSelected = selectedOpt === optIdx;
+          row.className = `option-row ${isSelected ? "selected" : ""}`;
+          row.setAttribute("role", "radio");
+          row.setAttribute("aria-checked", isSelected ? "true" : "false");
+          row.innerHTML = `
+            <div class="option-radio"></div>
+            <span class="text-xs font-bold px-2 py-0.5 rounded ${isSelected ? 'bg-blue-700 text-white' : 'bg-slate-100 text-slate-700'}">
+              ${labels[optIdx]}
+            </span>
+            <span class="text-sm sm:text-base font-medium text-slate-800 select-none">
+              ${optText}
+            </span>
+          `;
+          row.addEventListener("click", function() {
+            // Select option WITHOUT auto-jumping to next question and WITHOUT marking right/wrong
+            activeExam.selectedOptions[idx] = optIdx;
+            renderActiveQuestion();
+            renderPalette();
+          });
+          optContainer.appendChild(row);
+        });
+
+        // Update Previous / Next / Mark for Review buttons
+        document.getElementById("btn-prev-q").disabled = (idx === 0);
+        document.getElementById("btn-next-q").disabled = (idx === 24);
+
+        const reviewBtn = document.getElementById("btn-review-q");
+        if (activeExam.markedReview[idx]) {
+          reviewBtn.textContent = "Unmark Review";
+          reviewBtn.className = "btn-edu btn-blue";
+        } else {
+          reviewBtn.textContent = "Mark for Review";
+          reviewBtn.className = "btn-edu btn-outline-blue";
+        }
+      }
+
+      function renderPalette() {
+        const container = document.getElementById("palette-grid-container");
+        container.innerHTML = "";
+
+        let answeredCount = 0;
+        let notAnsweredCount = 0;
+        let reviewCount = 0;
+        let notVisitedCount = 0;
+
+        for (let i = 0; i < 25; i++) {
+          const hasAns = activeExam.selectedOptions[i] !== null;
+          const isRev = activeExam.markedReview[i];
+          const isVis = activeExam.visited[i];
+
+          let stateClass = "st-not-visited";
+          if (hasAns && isRev) {
+            stateClass = "st-answered-review";
+            answeredCount++;
+            reviewCount++;
+          } else if (hasAns) {
+            stateClass = "st-answered";
+            answeredCount++;
+          } else if (isRev) {
+            stateClass = "st-review";
+            reviewCount++;
+          } else if (isVis) {
+            stateClass = "st-not-answered";
+            notAnsweredCount++;
+          } else {
+            stateClass = "st-not-visited";
+            notVisitedCount++;
+          }
+
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = `palette-btn ${stateClass} ${i === activeExam.currentIndex ? "is-current" : ""}`;
+          btn.textContent = String(i + 1);
+          btn.addEventListener("click", function() {
+            activeExam.currentIndex = i;
+            renderActiveQuestion();
+            renderPalette();
+          });
+          container.appendChild(btn);
+        }
+
+        document.getElementById("header-answered-badge").textContent = String(answeredCount);
+        document.getElementById("leg-answered").textContent = String(answeredCount);
+        document.getElementById("leg-not-answered").textContent = String(notAnsweredCount);
+        document.getElementById("leg-review").textContent = String(reviewCount);
+        document.getElementById("leg-not-visited").textContent = String(notVisitedCount);
+        document.getElementById("side-attempted-count").textContent = `${answeredCount} / 25`;
+        document.getElementById("side-remaining-count").textContent = String(25 - answeredCount);
+      }
+
+      // -------------------------------------------------------------------
+      // 6. SUBMISSION & SCORE / ACCURACY / SOLUTION EVALUATION
+      // -------------------------------------------------------------------
+      function openSubmitConfirmationModal() {
+        let answered = 0;
+        let review = 0;
+        for (let i = 0; i < 25; i++) {
+          if (activeExam.selectedOptions[i] !== null) answered++;
+          if (activeExam.markedReview[i]) review++;
+        }
+        const { mm, ss } = formatMMSS(activeExam.remainingSeconds);
+        document.getElementById("mod-sub-answered").textContent = String(answered);
+        document.getElementById("mod-sub-unanswered").textContent = String(25 - answered);
+        document.getElementById("mod-sub-review").textContent = String(review);
+        document.getElementById("mod-sub-time").textContent = `${mm}:${ss}`;
+        document.getElementById("modal-submit").classList.remove("hidden");
+      }
+
+      function finalizeAndSubmitExam(isAutoSubmit) {
+        if (activeExam.submitted) return;
+        activeExam.submitted = true;
+        activeExam.autoSubmitted = Boolean(isAutoSubmit);
+        clearExamTimer();
+        document.getElementById("modal-submit").classList.add("hidden");
+
+        // Evaluate score (+2 for correct, -0.25 for incorrect, 0 for unattempted)
+        let correctCount = 0;
+        let incorrectCount = 0;
+        let unattemptedCount = 0;
+
+        const topicStats = {
+          A: { name: "Addition & Subtraction (Natural, Fractions, Decimals)", total: 0, correct: 0, incorrect: 0, skipped: 0, marks: 0 },
+          B: { name: "Multiplication & Division of Numbers", total: 0, correct: 0, incorrect: 0, skipped: 0, marks: 0 },
+          C: { name: "Squares, Square-Roots & Cubes (1–21)", total: 0, correct: 0, incorrect: 0, skipped: 0, marks: 0 },
+          D: { name: "Surds & Indices, BODMAS & Approximation", total: 0, correct: 0, incorrect: 0, skipped: 0, marks: 0 },
+          E: { name: "Percentage, Average, P&L, SI/CI, Ratio, Age, Mixture", total: 0, correct: 0, incorrect: 0, skipped: 0, marks: 0 },
+          F: { name: "Mensuration 2D/3D, Trigonometry & Triplets", total: 0, correct: 0, incorrect: 0, skipped: 0, marks: 0 }
+        };
+
+        const diffStats = {
+          Easy: { total: 0, correct: 0, incorrect: 0, skipped: 0 },
+          Moderate: { total: 0, correct: 0, incorrect: 0, skipped: 0 },
+          Tough: { total: 0, correct: 0, incorrect: 0, skipped: 0 }
+        };
+
+        activeExam.questions.forEach((q, i) => {
+          const userChoice = activeExam.selectedOptions[i];
+          const tStat = topicStats[q.topicCode];
+          const dStat = diffStats[q.difficulty];
+          tStat.total++;
+          dStat.total++;
+
+          if (userChoice === null) {
+            unattemptedCount++;
+            tStat.skipped++;
+            dStat.skipped++;
+          } else if (userChoice === q.correctIndex) {
+            correctCount++;
+            tStat.correct++;
+            tStat.marks += 2;
+            dStat.correct++;
+          } else {
+            incorrectCount++;
+            tStat.incorrect++;
+            tStat.marks -= 0.25;
+            dStat.incorrect++;
+          }
+        });
+
+        const attemptedCount = correctCount + incorrectCount;
+        const posMarks = correctCount * 2.0;
+        const negMarks = incorrectCount * 0.25;
+        const finalScore = posMarks - negMarks;
+        const accuracy = attemptedCount > 0 ? (correctCount / attemptedCount) * 100 : 0;
+        const timeSpentSec = 900 - activeExam.remainingSeconds;
+        const { mm: spentMM, ss: spentSS } = formatMMSS(timeSpentSec);
+
+        // Save to history
+        saveAttemptHistory(activeExam.mockId, {
+          score: finalScore,
+          accuracy,
+          correct: correctCount,
+          incorrect: incorrectCount,
+          unattempted: unattemptedCount,
+          timestamp: Date.now()
+        });
+
+        // Populate Result View Header & Cards
+        const padM = String(activeExam.mockId).padStart(2, "0");
+        const modeBadge = document.getElementById("res-submit-mode-badge");
+        if (isAutoSubmit) {
+          modeBadge.textContent = "Auto-Submitted (15:00 Timer Completed)";
+          modeBadge.className = "px-2.5 py-0.5 text-xs font-bold rounded bg-blue-100 text-blue-800 border border-blue-300";
+        } else {
+          modeBadge.textContent = "Test Submitted";
+          modeBadge.className = "px-2.5 py-0.5 text-xs font-bold rounded bg-green-100 text-green-800 border border-green-300";
+        }
+
+        document.getElementById("res-title").textContent =
+          `Mock Test #${padM} — Scorecard, Accuracy & Solution Analysis`;
+        document.getElementById("res-final-score").textContent = `${finalScore.toFixed(2)} / 50`;
+        document.getElementById("res-percentage-score").textContent = `${((finalScore / 50) * 100).toFixed(1)}% of Max Marks`;
+        document.getElementById("res-accuracy").textContent = `${accuracy.toFixed(1)}%`;
+        document.getElementById("res-attempted-sub").textContent = `${attemptedCount} / 25 Attempted`;
+        document.getElementById("res-correct-count").textContent = String(correctCount);
+        document.getElementById("res-positive-marks").textContent = `+${posMarks.toFixed(2)} Marks`;
+        document.getElementById("res-incorrect-count").textContent = String(incorrectCount);
+        document.getElementById("res-negative-marks").textContent = `−${negMarks.toFixed(2)} Penalty`;
+        document.getElementById("res-unattempted-count").textContent = String(unattemptedCount);
+        document.getElementById("res-time-taken").textContent = `${spentMM}:${spentSS}`;
+
+        document.getElementById("tab-inc-count").textContent = String(incorrectCount);
+        document.getElementById("tab-cor-count").textContent = String(correctCount);
+        document.getElementById("tab-unatt-count").textContent = String(unattemptedCount);
+
+        // Render Topic Breakdown Table
+        const topicTbody = document.getElementById("res-topic-tbody");
+        topicTbody.innerHTML = "";
+        ["A", "B", "C", "D", "E", "F"].forEach(code => {
+          const st = topicStats[code];
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td class="py-2 px-3 font-medium text-slate-800">
+              <span class="font-bold text-blue-700">(${code})</span> ${st.name}
+            </td>
+            <td class="py-2 px-2 text-center font-mono-num">${st.total}</td>
+            <td class="py-2 px-2 text-center font-bold text-green-700 font-mono-num">${st.correct}</td>
+            <td class="py-2 px-2 text-center font-bold text-red-600 font-mono-num">${st.incorrect}</td>
+            <td class="py-2 px-2 text-center text-slate-500 font-mono-num">${st.skipped}</td>
+            <td class="py-2 px-3 text-right font-bold font-mono-num ${st.marks >= 0 ? 'text-slate-900' : 'text-red-600'}">
+              ${st.marks >= 0 ? '+' : ''}${st.marks.toFixed(2)}
+            </td>
+          `;
+          topicTbody.appendChild(tr);
+        });
+
+        // Render Difficulty Breakdown
+        const diffBox = document.getElementById("res-diff-breakdown");
+        diffBox.innerHTML = "";
+        ["Easy", "Moderate", "Tough"].forEach(level => {
+          const d = diffStats[level];
+          const colorCls = level === "Easy" ? "text-green-700 bg-green-50 border-green-200"
+            : level === "Moderate" ? "text-blue-700 bg-blue-50 border-blue-200"
+            : "text-slate-800 bg-slate-100 border-slate-300";
+          const div = document.createElement("div");
+          div.className = "flex items-center justify-between p-2.5 rounded-lg border border-slate-200 text-xs";
+          div.innerHTML = `
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 rounded font-bold border ${colorCls}">${level}</span>
+              <span class="text-slate-600 font-mono-num">${d.total} Qs</span>
+            </div>
+            <div class="flex items-center gap-3 font-mono-num">
+              <span class="text-green-700 font-bold">✓ ${d.correct}</span>
+              <span class="text-red-600 font-bold">✗ ${d.incorrect}</span>
+              <span class="text-slate-500">○ ${d.skipped}</span>
+            </div>
+          `;
+          diffBox.appendChild(div);
+        });
+
+        // Reset filter to "all" (or user can click Incorrect Answers)
+        currentSolFilter = "all";
+        updateSolutionFilterTabStyles();
+        renderDetailedSolutionsList();
+
+        // Switch to Result View
+        document.getElementById("view-exam").classList.add("hidden");
+        document.getElementById("view-dashboard").classList.add("hidden");
+        document.getElementById("view-result").classList.remove("hidden");
+        window.scrollTo(0, 0);
+      }
+
+      function updateSolutionFilterTabStyles() {
+        document.querySelectorAll("#solution-filter-tabs .sol-tab").forEach(btn => {
+          const filter = btn.getAttribute("data-solfilter");
+          if (filter === currentSolFilter) {
+            btn.className = "sol-tab btn-edu btn-blue text-xs py-1.5 px-3";
+          } else {
+            btn.className = "sol-tab btn-edu btn-outline-slate text-xs py-1.5 px-3";
+          }
+        });
+      }
+
+      function renderDetailedSolutionsList() {
+        const container = document.getElementById("solutions-list-container");
+        container.innerHTML = "";
+        const labels = ["A", "B", "C", "D"];
+
+        let shown = 0;
+        activeExam.questions.forEach((q, idx) => {
+          const userOpt = activeExam.selectedOptions[idx];
+          const isUnattempted = (userOpt === null);
+          const isCorrect = (!isUnattempted && userOpt === q.correctIndex);
+          const isIncorrect = (!isUnattempted && userOpt !== q.correctIndex);
+
+          if (currentSolFilter === "incorrect" && !isIncorrect) return;
+          if (currentSolFilter === "correct" && !isCorrect) return;
+          if (currentSolFilter === "unattempted" && !isUnattempted) return;
+
+          shown++;
+          let statusBadge = "";
+          let borderClass = "border-slate-200";
+          if (isCorrect) {
+            statusBadge = `<span class="px-2.5 py-0.5 text-xs font-bold rounded bg-green-100 text-green-800 border border-green-300">Correct (+2.00)</span>`;
+            borderClass = "border-green-300";
+          } else if (isIncorrect) {
+            statusBadge = `<span class="px-2.5 py-0.5 text-xs font-bold rounded bg-red-100 text-red-700 border border-red-300">Incorrect (−0.25)</span>`;
+            borderClass = "border-red-300";
+          } else {
+            statusBadge = `<span class="px-2.5 py-0.5 text-xs font-semibold rounded bg-slate-100 text-slate-600 border border-slate-300">Unattempted (0.00)</span>`;
+          }
+
+          const optionsHtml = q.options.map((optText, oIdx) => {
+            const isRightOpt = (oIdx === q.correctIndex);
+            const isUserPicked = (oIdx === userOpt);
+
+            let optStyle = "border-slate-200 bg-white text-slate-700";
+            let tagHtml = "";
+            if (isRightOpt && isUserPicked) {
+              optStyle = "border-green-600 bg-green-50 text-green-900 font-semibold";
+              tagHtml = `<span class="ml-auto text-[11px] font-bold text-green-700">✓ Your Answer (Correct)</span>`;
+            } else if (isRightOpt) {
+              optStyle = "border-green-500 bg-green-50/70 text-green-900 font-semibold";
+              tagHtml = `<span class="ml-auto text-[11px] font-bold text-green-700">✓ Correct Answer</span>`;
+            } else if (isUserPicked && !isRightOpt) {
+              optStyle = "border-red-400 bg-red-50 text-red-900 font-semibold";
+              tagHtml = `<span class="ml-auto text-[11px] font-bold text-red-600">✗ Your Selected Option</span>`;
+            }
+
+            return `
+              <div class="flex items-center gap-2.5 px-3 py-2 rounded-lg border text-xs sm:text-sm ${optStyle}">
+                <span class="font-bold px-1.5 py-0.5 rounded bg-white/80 border border-slate-300 text-xs">${labels[oIdx]}</span>
+                <span>${optText}</span>
+                ${tagHtml}
+              </div>
+            `;
+          }).join("");
+
+          const card = document.createElement("div");
+          card.className = `rounded-xl border-2 ${borderClass} bg-white p-4 space-y-3 shadow-sm`;
+          card.innerHTML = `
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-extrabold text-slate-900">Question ${idx + 1}</span>
+                <span class="px-2 py-0.5 text-[11px] font-semibold rounded bg-blue-50 text-blue-700 border border-blue-200">
+                  Topic ${q.topicCode}: ${q.topicName}
+                </span>
+                <span class="px-2 py-0.5 text-[11px] font-semibold rounded bg-slate-100 text-slate-700">
+                  ${q.difficulty}
+                </span>
+              </div>
+              ${statusBadge}
+            </div>
+
+            <div class="text-sm sm:text-base font-semibold text-slate-900">
+              ${q.question}
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              ${optionsHtml}
+            </div>
+
+            <div class="bg-blue-50/70 border border-blue-200 rounded-lg p-3 text-xs sm:text-sm text-slate-800">
+              <span class="font-bold text-blue-800">Solution &amp; Fast Calculation Method:</span>
+              <span class="ml-1">${q.solution}</span>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+
+        if (shown === 0) {
+          container.innerHTML = `
+            <div class="p-8 text-center text-slate-500 text-sm bg-slate-50 rounded-xl border border-slate-200">
+              No questions found in this filter category for this mock test.
+            </div>
+          `;
+        }
+      }
+
+      // -------------------------------------------------------------------
+      // 7. EVENT LISTENERS & INITIALIZATION
+      // -------------------------------------------------------------------
+      function initEventListeners() {
+        // Delegated click for starting any mock from the 100-mock grid
+        document.getElementById("mocks-grid").addEventListener("click", function(e) {
+          const btn = e.target.closest("[data-start-mock]");
+          if (!btn) return;
+          const mockId = parseInt(btn.getAttribute("data-start-mock"), 10);
+          startMockExam(mockId);
+        });
+
+        // Range filter tabs on Dashboard
+        document.getElementById("mock-range-tabs").addEventListener("click", function(e) {
+          const btn = e.target.closest("[data-range]");
+          if (!btn) return;
+          currentMockFilter = btn.getAttribute("data-range");
+          document.querySelectorAll("#mock-range-tabs .range-tab").forEach(b => {
+            if (b.getAttribute("data-range") === currentMockFilter) {
+              b.className = "range-tab btn-edu btn-blue text-xs py-1.5 px-3";
+            } else {
+              b.className = "range-tab btn-edu btn-outline-slate text-xs py-1.5 px-3";
+            }
+          });
+          renderMocksGrid();
+        });
+
+        // Quick Start by Mock Number
+        document.getElementById("btn-quick-start").addEventListener("click", function() {
+          const input = document.getElementById("quick-jump-input");
+          const val = parseInt(input.value, 10);
+          if (!isNaN(val) && val >= 1 && val <= 100) {
+            startMockExam(val);
+          } else {
+            startMockExam(1);
+          }
+        });
+
+        // Exam Control Buttons (Previous, Next, Clear, Mark for Review, Submit)
+        document.getElementById("btn-prev-q").addEventListener("click", function() {
+          if (activeExam.currentIndex > 0) {
+            activeExam.currentIndex--;
+            renderActiveQuestion();
+            renderPalette();
+          }
+        });
+
+        document.getElementById("btn-next-q").addEventListener("click", function() {
+          if (activeExam.currentIndex < 24) {
+            activeExam.currentIndex++;
+            renderActiveQuestion();
+            renderPalette();
+          }
+        });
+
+        document.getElementById("btn-clear-q").addEventListener("click", function() {
+          activeExam.selectedOptions[activeExam.currentIndex] = null;
+          renderActiveQuestion();
+          renderPalette();
+        });
+
+        document.getElementById("btn-review-q").addEventListener("click", function() {
+          const idx = activeExam.currentIndex;
+          activeExam.markedReview[idx] = !activeExam.markedReview[idx];
+          // Do NOT jump to next question automatically per Requirement 3
+          renderActiveQuestion();
+          renderPalette();
+        });
+
+        document.getElementById("btn-submit-exam").addEventListener("click", openSubmitConfirmationModal);
+        document.getElementById("btn-side-submit").addEventListener("click", openSubmitConfirmationModal);
+
+        // Submit Modal Controls
+        document.getElementById("btn-close-submit-modal").addEventListener("click", function() {
+          document.getElementById("modal-submit").classList.add("hidden");
+        });
+        document.getElementById("btn-cancel-submit").addEventListener("click", function() {
+          document.getElementById("modal-submit").classList.add("hidden");
+        });
+        document.getElementById("btn-confirm-submit").addEventListener("click", function() {
+          finalizeAndSubmitExam(false);
+        });
+
+        // Exit Exam Modal Controls
+        document.getElementById("btn-abort-exam").addEventListener("click", function() {
+          document.getElementById("modal-exit-exam").classList.remove("hidden");
+        });
+        document.getElementById("btn-cancel-exit").addEventListener("click", function() {
+          document.getElementById("modal-exit-exam").classList.add("hidden");
+        });
+        document.getElementById("btn-confirm-exit").addEventListener("click", function() {
+          clearExamTimer();
+          document.getElementById("modal-exit-exam").classList.add("hidden");
+          document.getElementById("view-exam").classList.add("hidden");
+          document.getElementById("view-result").classList.add("hidden");
+          document.getElementById("view-dashboard").classList.remove("hidden");
+          updateDashboardMetrics();
+          renderMocksGrid();
+        });
+
+        // Result View Navigation Buttons
+        document.getElementById("btn-retake-mock").addEventListener("click", function() {
+          startMockExam(activeExam.mockId);
+        });
+        document.getElementById("btn-next-mock").addEventListener("click", function() {
+          const nextId = activeExam.mockId < 100 ? activeExam.mockId + 1 : 1;
+          startMockExam(nextId);
+        });
+        document.getElementById("btn-back-dashboard").addEventListener("click", function() {
+          clearExamTimer();
+          document.getElementById("view-result").classList.add("hidden");
+          document.getElementById("view-exam").classList.add("hidden");
+          document.getElementById("view-dashboard").classList.remove("hidden");
+          updateDashboardMetrics();
+          renderMocksGrid();
+        });
+
+        // Solution Filter Tabs in Result View
+        document.getElementById("solution-filter-tabs").addEventListener("click", function(e) {
+          const btn = e.target.closest("[data-solfilter]");
+          if (!btn) return;
+          currentSolFilter = btn.getAttribute("data-solfilter");
+          updateSolutionFilterTabStyles();
+          renderDetailedSolutionsList();
+        });
+
+        // Reference Sheet & Instructions Modals
+        document.getElementById("btn-open-ref-sheet").addEventListener("click", function() {
+          document.getElementById("modal-ref-sheet").classList.remove("hidden");
+        });
+        document.getElementById("btn-close-ref-modal").addEventListener("click", function() {
+          document.getElementById("modal-ref-sheet").classList.add("hidden");
+        });
+
+        document.getElementById("btn-open-syllabus").addEventListener("click", function() {
+          document.getElementById("modal-instructions").classList.remove("hidden");
+        });
+        document.getElementById("btn-exam-instructions").addEventListener("click", function() {
+          document.getElementById("modal-instructions").classList.remove("hidden");
+        });
+        document.getElementById("btn-close-inst-modal").addEventListener("click", function() {
+          document.getElementById("modal-instructions").classList.add("hidden");
+        });
+        document.getElementById("btn-ok-inst-modal").addEventListener("click", function() {
+          document.getElementById("modal-instructions").classList.add("hidden");
+        });
+
+        // Full Screen Toggle
+        document.getElementById("btn-toggle-fullscreen").addEventListener("click", function() {
+          try {
+            if (!document.fullscreenElement) {
+              document.documentElement.requestFullscreen().catch(function() {});
+            } else {
+              document.exitFullscreen().catch(function() {});
+            }
+          } catch (err) {}
+        });
+      }
+
+      // Initialize App on Load
+      window.addEventListener("DOMContentLoaded", function() {
+        initEventListeners();
+        updateDashboardMetrics();
+        renderMocksGrid();
+      });
+    })();
+  </script>
+</body>
+</html>
