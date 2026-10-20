@@ -786,6 +786,10 @@
             <span class="font-semibold text-yellow-400">Auth Session:</span>
             <span id="modalAuthStatusText" class="font-mono text-xs text-emerald-400">Checking...</span>
           </div>
+          <div class="flex items-center justify-between pt-1 border-t border-yellow-500/20">
+            <span class="font-semibold text-yellow-400">Sync Diagnostics:</span>
+            <span id="modalSyncDiagText" class="font-mono text-xs text-yellow-300">Checking local & cloud storage...</span>
+          </div>
         </div>
 
         <!-- Instant Fix for localhost:3000/#access_token=... Popup Redirect -->
@@ -2561,13 +2565,22 @@ create policy "Allow public insert and select" on public.mock_submissions
 
       // -------------------------------------------------------------------
       // 13. DUAL-LAYER SUPABASE CLOUD SYNC (USER_METADATA + SQL TABLE)
-      //     Works across Desktop & Mobile with ZERO manual SQL setup required!
+      //     Pushes & pulls both Auth user_metadata and mock_submissions rows
       // -------------------------------------------------------------------
       const STORAGE_KEY_AUTH_TOKEN = 'calc_booster_custom_jwt_v1';
+      const STORAGE_KEY_REFRESH_TOKEN = 'calc_booster_custom_refresh_v1';
       let customAccessToken = null;
+      let customRefreshToken = null;
       try {
         customAccessToken = localStorage.getItem(STORAGE_KEY_AUTH_TOKEN);
+        customRefreshToken = localStorage.getItem(STORAGE_KEY_REFRESH_TOKEN);
       } catch (e) {}
+
+      function getCurrentUserHandle() {
+        if (!currentUser) return 'Candidate';
+        const meta = currentUser.user_metadata || {};
+        return meta.user_name || meta.preferred_username || currentUser.email || 'GitHub User';
+      }
 
       async function getActiveAccessToken() {
         if (supabaseClient && supabaseClient.auth) {
@@ -2604,7 +2617,6 @@ create policy "Allow public insert and select" on public.mock_submissions
             const rItem = reviewMap[qNum];
             reconstructed.push(rItem.status === 'unattempted' ? null : rItem.userChoiceIndex);
           } else {
-            // Question was not in reviewItems, which means it was answered correctly!
             reconstructed.push(questions[i].correctIndex);
           }
         }
@@ -2649,7 +2661,6 @@ create policy "Allow public insert and select" on public.mock_submissions
         return reviewItems;
       }
 
-      // Convert a full submissionRecord into a compact object (~90 bytes) for Supabase Auth user_metadata
       function toCompactCloudEntry(sub) {
         return {
           s: Number(sub.score),
@@ -2661,11 +2672,10 @@ create policy "Allow public insert and select" on public.mock_submissions
           d: sub.scheduledDate || getMockRespectiveDate(sub.mockId),
           iso: sub.submittedAtISO || new Date().toISOString(),
           auto: sub.autoSubmitted ? 1 : 0,
-           picks: extractSelectedOptionsForMock(sub)
+          picks: extractSelectedOptionsForMock(sub)
         };
       }
 
-      // Expand a compact cloud entry back into a full submissionRecord with full solutions
       function fromCompactCloudEntry(mockId, compact) {
         const mId = Number(mockId);
         const picks = Array.isArray(compact.picks) ? compact.picks : [];
@@ -2706,26 +2716,48 @@ create policy "Allow public insert and select" on public.mock_submissions
         }
       }
 
-      // Bidirectional Cloud Sync:
-      // 1) Pulls live user_metadata.calc_booster_sync_v1 from Supabase Auth Server (GET /auth/v1/user)
-      // 2) Pulls rows from public.mock_submissions table (if created)
-      // 3) Merges with local submissionsByMock (keeping latest timestamp per mock)
-      // 4) Pushes any local desktop submissions missing from cloud back to Supabase Auth user_metadata & table!
+      function updateSyncDiagnosticsText(msg) {
+        const el = document.getElementById('modalSyncDiagText');
+        if (el) el.textContent = msg;
+      }
+
+      // Full Bidirectional Cloud Sync across BOTH:
+      //  Layer 1: Supabase Auth user_metadata (supabaseClient.auth.getUser / updateUser + REST fallback)
+      //  Layer 2: Supabase public.mock_submissions table (pulls AND pushes any missing local desktop mocks!)
       async function performBidirectionalCloudSync(showNotification) {
+        // Always re-read latest localStorage first so nothing in local storage is missed
+        const diskMap = loadSubmissionsMap();
+        Object.keys(diskMap).forEach(k => {
+          if (!submissionsByMock[k]) submissionsByMock[k] = diskMap[k];
+        });
+
         const token = await getActiveAccessToken();
-        if (!token && !currentUser) {
-          setCloudStatusIndicator('local', 'Sign In to Sync');
-          if (showNotification) showToast('Please login with GitHub first to sync across devices.');
-          return;
+        setCloudStatusIndicator('syncing', 'Syncing...');
+
+        let cloudUpdatedLocal = false;
+        let remoteCompactMap = {};
+        let authMetadataCount = 0;
+        let dbTableCount = 0;
+
+        // ---------------------------------------------------------------
+        // LAYER 1 READ: Official Supabase SDK getUser() + REST fallback
+        // ---------------------------------------------------------------
+        if (supabaseClient && supabaseClient.auth) {
+          try {
+            const { data, error } = await supabaseClient.auth.getUser();
+            if (!error && data && data.user) {
+              currentUser = data.user;
+              updateAuthUI();
+              const meta = data.user.user_metadata || {};
+              if (meta.calc_booster_sync_v1 && typeof meta.calc_booster_sync_v1 === 'object') {
+                remoteCompactMap = Object.assign({}, meta.calc_booster_sync_v1);
+                authMetadataCount = Object.keys(remoteCompactMap).length;
+              }
+            }
+          } catch (e) {}
         }
 
-        setCloudStatusIndicator('syncing', 'Syncing...');
-        let cloudUpdatedLocal = false;
-        let localHasUnsyncedForMetadata = false;
-        let remoteCompactMap = {};
-
-        // LAYER 1: Fetch fresh User object directly from Supabase Auth endpoint (never cached!)
-        if (token) {
+        if (token && Object.keys(remoteCompactMap).length === 0) {
           try {
             const res = await fetch('https://nmhrhyvsyprsacrnbgnd.supabase.co/auth/v1/user', {
               method: 'GET',
@@ -2743,14 +2775,15 @@ create policy "Allow public insert and select" on public.mock_submissions
                 updateAuthUI();
                 const meta = userObj.user_metadata || {};
                 if (meta.calc_booster_sync_v1 && typeof meta.calc_booster_sync_v1 === 'object') {
-                  remoteCompactMap = meta.calc_booster_sync_v1;
+                  remoteCompactMap = Object.assign({}, meta.calc_booster_sync_v1);
+                  authMetadataCount = Object.keys(remoteCompactMap).length;
                 }
               }
             }
           } catch (e) {}
         }
 
-        // Merge Layer 1 (Auth User Metadata) -> Local
+        // Merge Layer 1 (Auth user_metadata) -> Local
         Object.keys(remoteCompactMap).forEach(k => {
           const mId = Number(k);
           const remoteEntry = remoteCompactMap[k];
@@ -2765,38 +2798,61 @@ create policy "Allow public insert and select" on public.mock_submissions
           }
         });
 
-        // LAYER 2: Also check public.mock_submissions table (if user created it in SQL Editor)
+        // ---------------------------------------------------------------
+        // LAYER 2 READ & WRITE: public.mock_submissions Table
+        // IMPORTANT: Do NOT filter out rows with user_id = null (submitted before login)!
+        // ---------------------------------------------------------------
+        const remoteTableMockIds = new Set();
         if (supabaseClient) {
           try {
-            let query = supabaseClient.from('mock_submissions').select('*').order('submitted_at', { ascending: true });
-            if (currentUser && currentUser.id) {
-              query = query.eq('user_id', currentUser.id);
-            }
-            const { data, error } = await query;
-            if (!error && Array.isArray(data) && data.length > 0) {
+            const { data, error } = await supabaseClient
+              .from('mock_submissions')
+              .select('*')
+              .order('submitted_at', { ascending: true });
+
+            if (!error && Array.isArray(data)) {
+              const myId = currentUser ? currentUser.id : null;
+              const myHandle = getCurrentUserHandle();
+
               data.forEach(row => {
+                // Match if row belongs to this user OR was submitted on desktop before login (user_id is null)
+                const matchesUser = !myId || !row.user_id || row.user_id === myId || row.user_name === myHandle;
+                if (!matchesUser) return;
+
                 const mId = Number(row.mock_id);
                 if (!mId) return;
+                dbTableCount++;
+                if (myId && row.user_id === myId) {
+                  remoteTableMockIds.add(mId);
+                }
+
                 const localSub = submissionsByMock[mId];
                 const rowTime = new Date(row.submitted_at || 0).getTime();
                 const localTime = localSub ? new Date(localSub.submittedAtISO || 0).getTime() : 0;
+
                 if (!localSub || rowTime > localTime) {
-                  submissionsByMock[mId] = {
+                  const rawAnalysis = Array.isArray(row.analysis) ? row.analysis : [];
+                  const builtSub = {
                     mockId: mId,
                     mockName: row.mock_name || getMockTitle(mId),
                     sectionId: row.section_id || Math.ceil(mId / 10),
                     scheduledDate: row.scheduled_date || getMockRespectiveDate(mId),
-                    submittedAtISO: row.submitted_at,
-                    submittedAtFormatted: formatFullDateTime(new Date(row.submitted_at)),
+                    submittedAtISO: row.submitted_at || new Date().toISOString(),
+                    submittedAtFormatted: formatFullDateTime(new Date(row.submitted_at || Date.now())),
                     score: Number(row.score),
                     accuracy: Number(row.accuracy),
                     correctCount: Number(row.correct_count),
                     incorrectCount: Number(row.incorrect_count),
                     unattemptedCount: Number(row.unattempted_count),
                     timeTakenSeconds: Number(row.time_taken_seconds),
-                    reviewItems: Array.isArray(row.analysis) ? row.analysis : []
+                    reviewItems: rawAnalysis
                   };
-                  extractSelectedOptionsForMock(submissionsByMock[mId]);
+                  const picks = extractSelectedOptionsForMock(builtSub);
+                  // Ensure reviewItems has full question text & solutions
+                  if (rawAnalysis.length === 0 && (builtSub.incorrectCount > 0 || builtSub.unattemptedCount > 0)) {
+                    builtSub.reviewItems = reconstructReviewItemsFromChoices(mId, picks);
+                  }
+                  submissionsByMock[mId] = builtSub;
                   cloudUpdatedLocal = true;
                 }
               });
@@ -2804,12 +2860,22 @@ create policy "Allow public insert and select" on public.mock_submissions
           } catch (e) {}
         }
 
-        // Now check if Local has any submissions (like the desktop mock!) that aren't in remoteCompactMap yet or are newer
+        if (cloudUpdatedLocal) {
+          saveSubmissionsMap(submissionsByMock);
+          renderDashboardSections();
+        }
+
+        // ---------------------------------------------------------------
+        // PUSH LOCAL -> CLOUD (Both Layer 1 Auth Metadata AND Layer 2 Table!)
+        // This guarantees mocks submitted on Desktop before login get uploaded!
+        // ---------------------------------------------------------------
+        const localMockIds = Object.keys(submissionsByMock).map(Number).filter(Boolean);
+        let localHasUnsyncedForMetadata = false;
         const mergedCompactMap = Object.assign({}, remoteCompactMap);
-        Object.keys(submissionsByMock).forEach(k => {
-          const mId = Number(k);
+
+        localMockIds.forEach(mId => {
           const localSub = submissionsByMock[mId];
-          if (!mId || !localSub) return;
+          if (!localSub) return;
           const remoteEntry = mergedCompactMap[mId];
           const localTime = new Date(localSub.submittedAtISO || 0).getTime();
           const remoteTime = remoteEntry ? new Date(remoteEntry.iso || 0).getTime() : 0;
@@ -2819,69 +2885,101 @@ create policy "Allow public insert and select" on public.mock_submissions
           }
         });
 
-        if (cloudUpdatedLocal) {
-          saveSubmissionsMap(submissionsByMock);
-          renderDashboardSections();
+        // Push to Layer 2 (public.mock_submissions table) for any local mock not yet in table under currentUser.id
+        if (supabaseClient && localMockIds.length > 0) {
+          for (const mId of localMockIds) {
+            if (!remoteTableMockIds.has(mId)) {
+              const subRecord = submissionsByMock[mId];
+              try {
+                const payload = {
+                  user_id: currentUser ? currentUser.id : null,
+                  user_name: getCurrentUserHandle(),
+                  mock_id: subRecord.mockId,
+                  mock_name: subRecord.mockName,
+                  section_id: subRecord.sectionId,
+                  scheduled_date: subRecord.scheduledDate,
+                  submitted_at: subRecord.submittedAtISO,
+                  score: subRecord.score,
+                  accuracy: subRecord.accuracy,
+                  correct_count: subRecord.correctCount,
+                  incorrect_count: subRecord.incorrectCount,
+                  unattempted_count: subRecord.unattemptedCount,
+                  time_taken_seconds: subRecord.timeTakenSeconds,
+                  analysis: subRecord.reviewItems
+                };
+                const { error: insErr } = await supabaseClient.from('mock_submissions').insert([payload]);
+                if (!insErr) {
+                  remoteTableMockIds.add(mId);
+                  dbTableCount++;
+                }
+              } catch (e) {}
+            }
+          }
         }
 
-        // Push mergedCompactMap up to Supabase Auth User Metadata (PUT /auth/v1/user) so Phone & Desktop immediately share it!
-        if (token && (localHasUnsyncedForMetadata || showNotification)) {
-          try {
-            const putRes = await fetch('https://nmhrhyvsyprsacrnbgnd.supabase.co/auth/v1/user', {
-              method: 'PUT',
-              headers: {
-                'apikey': SUPABASE_KEY,
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
+        // Push to Layer 1 (Supabase Auth user_metadata) via official SDK + REST fallback
+        let authMetadataSaved = false;
+        if (localMockIds.length > 0 && (localHasUnsyncedForMetadata || showNotification)) {
+          if (supabaseClient && supabaseClient.auth && currentUser) {
+            try {
+              const { error: updErr } = await supabaseClient.auth.updateUser({
                 data: {
                   calc_booster_sync_v1: mergedCompactMap
                 }
-              })
-            });
-            if (putRes.ok) {
-              setCloudStatusIndicator('synced', `Cloud Synced (${Object.keys(submissionsByMock).length})`);
-              if (showNotification) {
-                showToast(`Synced ${Object.keys(submissionsByMock).length} mock(s) across your GitHub account!`);
+              });
+              if (!updErr) {
+                authMetadataSaved = true;
+                authMetadataCount = Object.keys(mergedCompactMap).length;
               }
-              return;
-            }
-          } catch (e) {}
+            } catch (e) {}
+          }
+
+          if (!authMetadataSaved && token) {
+            try {
+              const putRes = await fetch('https://nmhrhyvsyprsacrnbgnd.supabase.co/auth/v1/user', {
+                method: 'PUT',
+                headers: {
+                  'apikey': SUPABASE_KEY,
+                  'Authorization': `Bearer ${token}`,
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  data: {
+                    calc_booster_sync_v1: mergedCompactMap
+                  }
+                })
+              });
+              if (putRes.ok) {
+                authMetadataSaved = true;
+                authMetadataCount = Object.keys(mergedCompactMap).length;
+              }
+            } catch (e) {}
+          }
         }
 
-        const totalSynced = Object.keys(submissionsByMock).length;
-        setCloudStatusIndicator('synced', `Cloud Synced (${totalSynced})`);
-        if (showNotification) {
-          showToast(`Cloud sync complete (${totalSynced} mock(s) synced).`);
+        const totalLocal = Object.keys(submissionsByMock).length;
+        updateDashboardKPIs();
+        renderDashboardSections();
+
+        updateSyncDiagnosticsText(
+          `Device: ${totalLocal} mock(s) | Cloud Auth: ${authMetadataCount} | Cloud DB: ${dbTableCount}`
+        );
+
+        if (currentUser || token) {
+          setCloudStatusIndicator('synced', `Cloud Synced (${totalLocal})`);
+          if (showNotification) {
+            showToast(`Synced ${totalLocal} mock(s) across devices! (Cloud Auth: ${authMetadataCount}, DB: ${dbTableCount})`);
+          }
+        } else {
+          setCloudStatusIndicator('local', `Local (${totalLocal})`);
+          if (showNotification) {
+            showToast(`Loaded ${totalLocal} mock(s). Sign in with GitHub to sync to your account.`);
+          }
         }
       }
 
       async function syncSubmissionToSupabase(subRecord) {
-        // 1. Immediately push via Dual-Layer Bidirectional Sync (Auth user_metadata + Table)
         await performBidirectionalCloudSync(false);
-
-        // 2. Also insert into public.mock_submissions if table exists
-        if (!supabaseClient) return;
-        try {
-          const payload = {
-            user_id: currentUser ? currentUser.id : null,
-            user_name: currentUser ? (currentUser.user_metadata?.user_name || currentUser.email || 'GitHub User') : 'Candidate',
-            mock_id: subRecord.mockId,
-            mock_name: subRecord.mockName,
-            section_id: subRecord.sectionId,
-            scheduled_date: subRecord.scheduledDate,
-            submitted_at: subRecord.submittedAtISO,
-            score: subRecord.score,
-            accuracy: subRecord.accuracy,
-            correct_count: subRecord.correctCount,
-            incorrect_count: subRecord.incorrectCount,
-            unattempted_count: subRecord.unattemptedCount,
-            time_taken_seconds: subRecord.timeTakenSeconds,
-            analysis: subRecord.reviewItems
-          };
-          await supabaseClient.from('mock_submissions').insert([payload]);
-        } catch (err) {}
       }
 
       async function fetchSubmissionsFromSupabase() {
@@ -2922,8 +3020,10 @@ create policy "Allow public insert and select" on public.mock_submissions
         }
 
         customAccessToken = accessToken;
+        customRefreshToken = refreshToken;
         try {
           localStorage.setItem(STORAGE_KEY_AUTH_TOKEN, accessToken);
+          if (refreshToken) localStorage.setItem(STORAGE_KEY_REFRESH_TOKEN, refreshToken);
         } catch (e) {}
 
         if (supabaseClient && supabaseClient.auth && refreshToken) {
@@ -2968,8 +3068,12 @@ create policy "Allow public insert and select" on public.mock_submissions
         }
         if (currentUser) {
           try { await supabaseClient.auth.signOut(); } catch (e) {}
-          try { localStorage.removeItem(STORAGE_KEY_AUTH_TOKEN); } catch (e) {}
+          try {
+            localStorage.removeItem(STORAGE_KEY_AUTH_TOKEN);
+            localStorage.removeItem(STORAGE_KEY_REFRESH_TOKEN);
+          } catch (e) {}
           customAccessToken = null;
+          customRefreshToken = null;
           currentUser = null;
           updateAuthUI();
           setCloudStatusIndicator('local', 'Signed Out');
@@ -2978,8 +3082,22 @@ create policy "Allow public insert and select" on public.mock_submissions
         }
         try {
           const isHttpOrigin = window.location.protocol === 'http:' || window.location.protocol === 'https:';
+          const isTopWindow = (window.self === window.top);
           const redirectTarget = isHttpOrigin ? (window.location.origin + window.location.pathname) : undefined;
 
+          // When running as a normal top-level web page (localhost or deployed URL), redirect in the SAME tab
+          // so the session and localStorage stay in the exact same window!
+          if (isHttpOrigin && isTopWindow) {
+            await supabaseClient.auth.signInWithOAuth({
+              provider: 'github',
+              options: {
+                redirectTo: redirectTarget
+              }
+            });
+            return;
+          }
+
+          // Inside a sandboxed iframe (like Canvas preview), open popup + modal helper
           const { data, error } = await supabaseClient.auth.signInWithOAuth({
             provider: 'github',
             options: {
@@ -3010,10 +3128,10 @@ create policy "Allow public insert and select" on public.mock_submissions
         const candName = document.getElementById('examCandidateName');
         const modalAuth = document.getElementById('modalAuthStatusText');
         if (currentUser) {
-          const handle = currentUser.user_metadata?.user_name || currentUser.user_metadata?.preferred_username || currentUser.email || 'GitHub User';
+          const handle = getCurrentUserHandle();
           if (txt) txt.textContent = handle;
           if (candName) candName.textContent = handle;
-          if (modalAuth) modalAuth.textContent = `Authenticated as ${handle} (Cross-Device Sync Active)`;
+          if (modalAuth) modalAuth.textContent = `Authenticated as ${handle} (ID: ${String(currentUser.id).slice(0, 8)}...)`;
         } else {
           if (txt) txt.textContent = 'GitHub Login';
           if (candName) candName.textContent = 'Candidate';
@@ -3021,31 +3139,71 @@ create policy "Allow public insert and select" on public.mock_submissions
         }
       }
 
-      if (supabaseClient && supabaseClient.auth) {
-        supabaseClient.auth.getSession().then(({ data }) => {
-          if (data && data.session) {
-            currentUser = data.session.user;
-            currentUser.access_token = data.session.access_token;
-            updateAuthUI();
-            performBidirectionalCloudSync(false);
-          } else if (customAccessToken) {
-            performBidirectionalCloudSync(false);
-          } else {
+      // Initialize Session & Trigger Immediate Bidirectional Cloud Sync
+      async function initAuthAndCloudSync() {
+        // 1. Check if URL hash contains #access_token=... from OAuth redirect
+        if (window.location.hash && window.location.hash.includes('access_token=')) {
+          const hashCopy = window.location.hash;
+          await applyOAuthUrlOrHash(hashCopy);
+          try {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+          } catch (e) {}
+          return;
+        }
+
+        // 2. Check existing Supabase session
+        if (supabaseClient && supabaseClient.auth) {
+          try {
+            const { data } = await supabaseClient.auth.getSession();
+            if (data && data.session && data.session.user) {
+              currentUser = data.session.user;
+              currentUser.access_token = data.session.access_token;
+              updateAuthUI();
+              await performBidirectionalCloudSync(false);
+              return;
+            }
+          } catch (e) {}
+        }
+
+        // 3. Fallback to saved custom token if present
+        if (customAccessToken) {
+          if (supabaseClient && supabaseClient.auth && customRefreshToken) {
+            try {
+              await supabaseClient.auth.setSession({
+                access_token: customAccessToken,
+                refresh_token: customRefreshToken
+              });
+            } catch (e) {}
+          }
+          const claims = decodeJwtPayload(customAccessToken);
+          if (claims && claims.sub) {
+            currentUser = {
+              id: claims.sub,
+              email: claims.email || '',
+              user_metadata: claims.user_metadata || { user_name: claims.email || 'GitHub User' },
+              access_token: customAccessToken
+            };
             updateAuthUI();
           }
-        }).catch(() => {});
+        }
 
-        supabaseClient.auth.onAuthStateChange((_event, session) => {
+        updateAuthUI();
+        await performBidirectionalCloudSync(false);
+      }
+
+      if (supabaseClient && supabaseClient.auth) {
+        supabaseClient.auth.onAuthStateChange((event, session) => {
           if (session && session.user) {
             currentUser = session.user;
             currentUser.access_token = session.access_token;
             updateAuthUI();
-            performBidirectionalCloudSync(false);
+            if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+              performBidirectionalCloudSync(false);
+            }
           }
         });
       }
 
-      // Auto-sync whenever user switches back to tab or unlocks phone screen
       document.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'visible' && !currentExam.active) {
           performBidirectionalCloudSync(false);
@@ -3137,21 +3295,6 @@ create policy "Allow public insert and select" on public.mock_submissions
           applyOAuthUrlOrHash(e.target.value);
         }
       });
-
-      // Automatically detect #access_token=... if user opened the app on localhost:3000 or configured Site URL
-      if (window.location.hash && window.location.hash.includes('access_token=')) {
-        const hashCopy = window.location.hash;
-        if (window.opener && window.opener !== window) {
-          try {
-            window.opener.postMessage({ type: 'CALC_BOOSTER_OAUTH_HASH', hash: hashCopy }, '*');
-            window.close();
-          } catch (e) {}
-        }
-        applyOAuthUrlOrHash(hashCopy);
-        try {
-          history.replaceState(null, '', window.location.pathname + window.location.search);
-        } catch (e) {}
-      }
 
       window.addEventListener('message', (event) => {
         if (event.data && event.data.type === 'CALC_BOOSTER_OAUTH_HASH' && event.data.hash) {
@@ -3310,6 +3453,7 @@ create policy "Allow public insert and select" on public.mock_submissions
       updateClockUI();
       renderDashboardSections();
       syncWithInternetTime();
+      initAuthAndCloudSync();
     })();
   </script>
 </body>
