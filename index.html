@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -9,7 +10,9 @@
   <!-- Google Fonts: Inter & JetBrains Mono & Cinzel for Premium Metallic Gold Accents -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap"
+    rel="stylesheet">
   <!-- Supabase JS SDK v2 -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js"></script>
   <script>
@@ -42,7 +45,7 @@
   <style>
     :root {
       --gold-gradient: linear-gradient(135deg, #F7E5A9 0%, #D4AF37 35%, #AA7C11 70%, #F3E5AB 100%);
-      --gold-border: linear-gradient(135deg, rgba(247,229,169,0.65), rgba(212,175,55,0.25), rgba(170,124,17,0.65));
+      --gold-border: linear-gradient(135deg, rgba(247, 229, 169, 0.65), rgba(212, 175, 55, 0.25), rgba(170, 124, 17, 0.65));
       --gold-glow: 0 10px 30px -5px rgba(212, 175, 55, 0.22);
     }
 
@@ -127,19 +130,33 @@
 
     /* Subtle Shimmer Animation */
     @keyframes goldShimmer {
-      0% { background-position: -200% 0; }
-      100% { background-position: 200% 0; }
+      0% {
+        background-position: -200% 0;
+      }
+
+      100% {
+        background-position: 200% 0;
+      }
     }
 
     .shimmer-badge {
-      background: linear-gradient(90deg, rgba(212,175,55,0.15) 25%, rgba(247,229,169,0.38) 50%, rgba(212,175,55,0.15) 75%);
+      background: linear-gradient(90deg, rgba(212, 175, 55, 0.15) 25%, rgba(247, 229, 169, 0.38) 50%, rgba(212, 175, 55, 0.15) 75%);
       background-size: 200% 100%;
       animation: goldShimmer 5s infinite linear;
     }
 
     @keyframes pulseDot {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.35); opacity: 0.55; }
+
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      50% {
+        transform: scale(1.35);
+        opacity: 0.55;
+      }
     }
 
     .live-dot {
@@ -147,8 +164,15 @@
     }
 
     @keyframes fadeSlideUp {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .animate-fade-up {
@@ -244,6 +268,7 @@
       border: 1px solid #4a148c;
       border-radius: 9999px;
     }
+
     .palette-answered-marked::after {
       content: '';
       position: absolute;
@@ -268,18 +293,22 @@
       width: 7px;
       height: 7px;
     }
+
     ::-webkit-scrollbar-track {
       background: rgba(0, 0, 0, 0.08);
     }
+
     ::-webkit-scrollbar-thumb {
       background: rgba(212, 175, 55, 0.45);
       border-radius: 4px;
     }
+
     body.exam-mode ::-webkit-scrollbar-thumb {
       background: #94a3b8;
     }
   </style>
 </head>
+
 <body class="dashboard-dark min-h-screen flex flex-col">
 
   <!-- ===================================================================== -->
@@ -287,17 +316,22 @@
   <!-- ===================================================================== -->
   <div id="dashboardView" class="flex-1 flex flex-col min-h-screen">
     <!-- Top Navigation Bar -->
-    <header class="sticky top-0 z-30 backdrop-blur-md bg-opacity-90 border-b border-yellow-600/30 transition-colors" id="dashboardHeader">
+    <header class="sticky top-0 z-30 backdrop-blur-md bg-opacity-90 border-b border-yellow-600/30 transition-colors"
+      id="dashboardHeader">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
         <!-- Brand Logo -->
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-lg bg-metallic-gold flex items-center justify-center shadow-md font-display font-extrabold text-lg tracking-wider">
+          <div
+            class="w-10 h-10 rounded-lg bg-metallic-gold flex items-center justify-center shadow-md font-display font-extrabold text-lg tracking-wider">
             ∑
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <h1 class="font-display font-bold text-base sm:text-lg tracking-wide text-metallic-gold">CALC. BOOSTER</h1>
-              <span class="hidden sm:inline-block text-[10px] font-mono uppercase tracking-widest px-2 py-0.5 rounded shimmer-badge text-yellow-500 border border-yellow-500/30">100 Mocks • 2,500 MCQs</span>
+              <h1 class="font-display font-bold text-base sm:text-lg tracking-wide text-metallic-gold">CALC. BOOSTER
+              </h1>
+              <span
+                class="hidden sm:inline-block text-[10px] font-mono uppercase tracking-widest px-2 py-0.5 rounded shimmer-badge text-yellow-500 border border-yellow-500/30">100
+                Mocks • 2,500 MCQs</span>
             </div>
             <p class="text-[11px] opacity-70 hidden sm:block">High-Speed Mathematical Calculation Mastery Suite</p>
           </div>
@@ -306,7 +340,9 @@
         <!-- Right Controls: Internet Synced Clock, Supabase/GitHub Login, Theme Toggle -->
         <div class="flex items-center gap-2 sm:gap-3">
           <!-- Live Internet Synced Date & Time Badge -->
-          <div id="internetClockBadge" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg border border-yellow-500/30 bg-black/20 text-xs font-mono" title="Synced with Internet Time Server">
+          <div id="internetClockBadge"
+            class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg border border-yellow-500/30 bg-black/20 text-xs font-mono"
+            title="Synced with Internet Time Server">
             <span class="w-2 h-2 rounded-full bg-emerald-400 live-dot" id="syncStatusDot"></span>
             <span id="internetDateDisplay" class="font-semibold text-yellow-400">Syncing Date...</span>
             <span class="opacity-40">|</span>
@@ -314,30 +350,58 @@
           </div>
 
           <!-- History / Submissions Button -->
-          <button id="openHistoryBtn" type="button" class="px-3 py-1.5 rounded-lg border border-yellow-500/35 hover:border-yellow-400 text-xs font-semibold flex items-center gap-1.5 transition">
-            <svg class="w-3.5 h-3.5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+          <button id="openHistoryBtn" type="button"
+            class="px-3 py-1.5 rounded-lg border border-yellow-500/35 hover:border-yellow-400 text-xs font-semibold flex items-center gap-1.5 transition">
+            <svg class="w-3.5 h-3.5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
             <span>Submissions (<span id="navSubmittedCount">0</span>)</span>
           </button>
 
           <!-- GitHub / Supabase Auth & Cross-Device Sync Buttons -->
           <div id="authContainer" class="flex items-center gap-1.5">
-            <button id="githubLoginBtn" type="button" class="px-3 py-1.5 rounded-lg bg-metallic-gold hover:opacity-95 text-xs font-bold flex items-center gap-1.5 shadow transition">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            <button id="githubLoginBtn" type="button"
+              class="px-3 py-1.5 rounded-lg bg-metallic-gold hover:opacity-95 text-xs font-bold flex items-center gap-1.5 shadow transition">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+              </svg>
               <span id="githubLoginText">GitHub Login</span>
             </button>
-            <button id="headerCloudSyncBtn" type="button" class="px-2.5 py-1.5 rounded-lg border border-yellow-500/35 hover:border-yellow-400 text-yellow-400 text-xs font-semibold flex items-center gap-1 transition" title="Sync Mocks Across Desktop & Mobile Devices">
-              <svg id="headerSyncIcon" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            <button id="headerCloudSyncBtn" type="button"
+              class="px-2.5 py-1.5 rounded-lg border border-yellow-500/35 hover:border-yellow-400 text-yellow-400 text-xs font-semibold flex items-center gap-1 transition"
+              title="Sync Mocks Across Desktop & Mobile Devices">
+              <svg id="headerSyncIcon" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
               <span class="hidden sm:inline">Sync</span>
             </button>
-            <button id="supabaseInfoBtn" type="button" class="p-1.5 rounded-lg border border-yellow-500/35 hover:border-yellow-400 text-yellow-500 transition" title="Supabase Cloud Sync & SQL Setup">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"/></svg>
+            <button id="supabaseInfoBtn" type="button"
+              class="p-1.5 rounded-lg border border-yellow-500/35 hover:border-yellow-400 text-yellow-500 transition"
+              title="Supabase Cloud Sync & SQL Setup">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" />
+              </svg>
             </button>
           </div>
 
           <!-- Dashboard Theme Toggle (Hidden automatically during Exam Mode) -->
-          <button id="dashboardThemeToggle" type="button" class="p-2 rounded-lg border border-yellow-500/40 hover:border-yellow-400 transition flex items-center justify-center" title="Toggle Dashboard Theme (Dark / Light)">
-            <svg id="themeIconSun" class="w-4 h-4 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-            <svg id="themeIconMoon" class="w-4 h-4 text-amber-700 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+          <button id="dashboardThemeToggle" type="button"
+            class="p-2 rounded-lg border border-yellow-500/40 hover:border-yellow-400 transition flex items-center justify-center"
+            title="Toggle Dashboard Theme (Dark / Light)">
+            <svg id="themeIconSun" class="w-4 h-4 text-yellow-400" fill="none" stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <svg id="themeIconMoon" class="w-4 h-4 text-amber-700 hidden" fill="none" stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
           </button>
         </div>
       </div>
@@ -349,7 +413,8 @@
       <section class="gold-card rounded-2xl p-5 sm:p-7 mb-8 overflow-hidden relative">
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
           <div class="space-y-2 max-w-2xl">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono uppercase tracking-wider border border-yellow-500/40 bg-yellow-500/10 text-yellow-400">
+            <div
+              class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono uppercase tracking-wider border border-yellow-500/40 bg-yellow-500/10 text-yellow-400">
               <span>SSC / TCS Pattern Assessment</span>
               <span>•</span>
               <span id="mobileDateSyncText">Internet Date Synced</span>
@@ -358,7 +423,8 @@
               <span class="text-metallic-gold">Mathematical Calculation Boosting</span> Test Series
             </h2>
             <p class="text-xs sm:text-sm opacity-80 leading-relaxed">
-              10 Categorized Sections • 100 Distinct Mocks (2,500 Total Problems) • 25 MCQs per Mock • +2.00 Correct / -0.25 Negative Marking • 15:00 Strict Countdown Timer.
+              10 Categorized Sections • 100 Distinct Mocks (2,500 Total Problems) • 25 MCQs per Mock • +2.00 Correct /
+              -0.25 Negative Marking • 15:00 Strict Countdown Timer.
             </p>
           </div>
 
@@ -366,11 +432,13 @@
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 shrink-0">
             <div class="p-3.5 rounded-xl border border-yellow-500/30 bg-black/20 text-center">
               <div class="text-[11px] uppercase tracking-wider opacity-70 font-mono">Completed</div>
-              <div class="text-xl sm:text-2xl font-bold text-metallic-gold mt-0.5"><span id="statCompletedMocks">0</span><span class="text-xs opacity-60">/100</span></div>
+              <div class="text-xl sm:text-2xl font-bold text-metallic-gold mt-0.5"><span
+                  id="statCompletedMocks">0</span><span class="text-xs opacity-60">/100</span></div>
             </div>
             <div class="p-3.5 rounded-xl border border-yellow-500/30 bg-black/20 text-center">
               <div class="text-[11px] uppercase tracking-wider opacity-70 font-mono">Avg Score</div>
-              <div class="text-xl sm:text-2xl font-bold text-metallic-gold mt-0.5"><span id="statAvgScore">0.00</span><span class="text-xs opacity-60">/50</span></div>
+              <div class="text-xl sm:text-2xl font-bold text-metallic-gold mt-0.5"><span
+                  id="statAvgScore">0.00</span><span class="text-xs opacity-60">/50</span></div>
             </div>
             <div class="p-3.5 rounded-xl border border-yellow-500/30 bg-black/20 text-center">
               <div class="text-[11px] uppercase tracking-wider opacity-70 font-mono">Avg Accuracy</div>
@@ -378,7 +446,8 @@
             </div>
             <div class="p-3.5 rounded-xl border border-yellow-500/30 bg-black/20 text-center">
               <div class="text-[11px] uppercase tracking-wider opacity-70 font-mono">Cloud Sync</div>
-              <div class="text-xs sm:text-sm font-semibold mt-1.5 flex items-center justify-center gap-1.5" id="statCloudStatus">
+              <div class="text-xs sm:text-sm font-semibold mt-1.5 flex items-center justify-center gap-1.5"
+                id="statCloudStatus">
                 <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
                 <span>Supabase Ready</span>
               </div>
@@ -390,12 +459,16 @@
       <!-- Breadcrumb / Navigation between 10 Sections Grid and Selected Section's 10 Mocks -->
       <div class="flex flex-wrap items-center justify-between gap-4 mb-5">
         <div class="flex items-center gap-2">
-          <button id="backToSectionsBtn" type="button" class="hidden px-3.5 py-2 rounded-xl bg-metallic-gold font-bold text-xs flex items-center gap-1.5 shadow hover:opacity-95 transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15 19l-7-7 7-7"/></svg>
+          <button id="backToSectionsBtn" type="button"
+            class="hidden px-3.5 py-2 rounded-xl bg-metallic-gold font-bold text-xs flex items-center gap-1.5 shadow hover:opacity-95 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15 19l-7-7 7-7" />
+            </svg>
             <span>All 10 Sections</span>
           </button>
           <div>
-            <h3 id="dashboardSectionTitle" class="text-lg sm:text-xl font-display font-bold tracking-wide text-metallic-gold">
+            <h3 id="dashboardSectionTitle"
+              class="text-lg sm:text-xl font-display font-bold tracking-wide text-metallic-gold">
               Select a Section (10 Sections • 10 Mocks Each)
             </h3>
             <p id="dashboardSectionSubtitle" class="text-xs opacity-75">
@@ -412,12 +485,14 @@
       </div>
 
       <!-- LEVEL 1: 10 SECTIONS GRID (Default View - Never lists all 100 mocks flat on main dashboard) -->
-      <div id="sectionsGridContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-5 animate-fade-up">
+      <div id="sectionsGridContainer"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-5 animate-fade-up">
         <!-- Populated dynamically with the 10 Sections (Section 01 to Section 10) -->
       </div>
 
       <!-- LEVEL 2: 10 MOCKS INSIDE THE SELECTED SECTION (Shown only when a section is clicked) -->
-      <div id="sectionMocksContainer" class="hidden grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-5 animate-fade-up">
+      <div id="sectionMocksContainer"
+        class="hidden grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-5 animate-fade-up">
         <!-- Populated dynamically with the 10 Mocks of the active section (e.g., Calc. Booster- 01 to 10) -->
       </div>
     </main>
@@ -460,21 +535,32 @@
         </div>
 
         <!-- Pause Button -->
-        <button id="examPauseBtn" type="button" class="px-2.5 sm:px-3 py-1.5 rounded bg-amber-500 hover:bg-amber-600 text-white font-semibold text-xs flex items-center gap-1 shadow-sm transition">
-          <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+        <button id="examPauseBtn" type="button"
+          class="px-2.5 sm:px-3 py-1.5 rounded bg-amber-500 hover:bg-amber-600 text-white font-semibold text-xs flex items-center gap-1 shadow-sm transition">
+          <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd"
+              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z"
+              clip-rule="evenodd" />
+          </svg>
           <span>Pause</span>
         </button>
 
         <!-- Exit / Enter Full Screen Button -->
-        <button id="examFullscreenBtn" type="button" class="px-2.5 sm:px-3 py-1.5 rounded bg-slate-700 hover:bg-slate-800 text-white font-semibold text-xs flex items-center gap-1 shadow-sm transition">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        <button id="examFullscreenBtn" type="button"
+          class="px-2.5 sm:px-3 py-1.5 rounded bg-slate-700 hover:bg-slate-800 text-white font-semibold text-xs flex items-center gap-1 shadow-sm transition">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
           <span id="examFullscreenBtnText">Exit Full Screen</span>
         </button>
 
         <!-- Candidate Profile Mini Box (Desktop) -->
         <div class="hidden lg:flex items-center gap-2 pl-2 border-l border-blue-300/30">
-          <div class="w-8 h-8 rounded-full bg-slate-200 border border-white flex items-center justify-center text-slate-700">
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>
+          <div
+            class="w-8 h-8 rounded-full bg-slate-200 border border-white flex items-center justify-center text-slate-700">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+            </svg>
           </div>
           <div class="text-left leading-tight">
             <div id="examCandidateName" class="text-xs font-semibold text-white truncate max-w-[110px]">Candidate</div>
@@ -500,7 +586,8 @@
         </div>
 
         <!-- Question Number Header -->
-        <div class="px-4 sm:px-6 py-2.5 bg-[#f8fafc] border-b border-slate-300 flex items-center justify-between shrink-0">
+        <div
+          class="px-4 sm:px-6 py-2.5 bg-[#f8fafc] border-b border-slate-300 flex items-center justify-between shrink-0">
           <div class="font-bold text-sm sm:text-base text-slate-900">
             Question No. <span id="examQuestionNumber">1</span> of 25
           </div>
@@ -511,7 +598,8 @@
 
         <!-- Question Stem & 4 Radio Options Area -->
         <div class="flex-1 overflow-y-auto p-4 sm:p-8 space-y-6">
-          <div id="examQuestionText" class="text-base sm:text-lg font-medium text-slate-900 leading-relaxed select-text">
+          <div id="examQuestionText"
+            class="text-base sm:text-lg font-medium text-slate-900 leading-relaxed select-text">
             <!-- Question text injected here -->
           </div>
 
@@ -521,25 +609,31 @@
         </div>
 
         <!-- Bottom Action Bar (Exact required buttons: Previous Question, Next Question, Clear, Mark for Review, Submit) -->
-        <div class="bg-[#e9eef4] border-t border-slate-300 px-3 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-2 shrink-0">
+        <div
+          class="bg-[#e9eef4] border-t border-slate-300 px-3 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-2 shrink-0">
           <div class="flex flex-wrap items-center gap-2">
-            <button id="examMarkReviewBtn" type="button" class="px-3.5 py-2 rounded border border-slate-400 bg-white hover:bg-slate-100 text-slate-800 font-semibold text-xs sm:text-sm transition shadow-sm">
+            <button id="examMarkReviewBtn" type="button"
+              class="px-3.5 py-2 rounded border border-slate-400 bg-white hover:bg-slate-100 text-slate-800 font-semibold text-xs sm:text-sm transition shadow-sm">
               Mark for Review
             </button>
-            <button id="examClearBtn" type="button" class="px-3.5 py-2 rounded border border-slate-400 bg-white hover:bg-slate-100 text-slate-800 font-semibold text-xs sm:text-sm transition shadow-sm">
+            <button id="examClearBtn" type="button"
+              class="px-3.5 py-2 rounded border border-slate-400 bg-white hover:bg-slate-100 text-slate-800 font-semibold text-xs sm:text-sm transition shadow-sm">
               Clear
             </button>
           </div>
 
           <div class="flex flex-wrap items-center gap-2">
-            <button id="examPrevBtn" type="button" class="px-3.5 py-2 rounded border border-slate-400 bg-white hover:bg-slate-100 text-slate-800 font-semibold text-xs sm:text-sm transition shadow-sm disabled:opacity-40">
+            <button id="examPrevBtn" type="button"
+              class="px-3.5 py-2 rounded border border-slate-400 bg-white hover:bg-slate-100 text-slate-800 font-semibold text-xs sm:text-sm transition shadow-sm disabled:opacity-40">
               Previous Question
             </button>
-            <button id="examNextBtn" type="button" class="px-4 py-2 rounded bg-[#286090] hover:bg-[#1e4b73] text-white font-semibold text-xs sm:text-sm transition shadow-sm">
+            <button id="examNextBtn" type="button"
+              class="px-4 py-2 rounded bg-[#286090] hover:bg-[#1e4b73] text-white font-semibold text-xs sm:text-sm transition shadow-sm">
               Next Question
             </button>
             <!-- Submit button also visible on bottom bar for mobile accessibility -->
-            <button id="examSubmitBottomBtn" type="button" class="md:hidden px-4 py-2 rounded bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs sm:text-sm transition shadow-sm">
+            <button id="examSubmitBottomBtn" type="button"
+              class="md:hidden px-4 py-2 rounded bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs sm:text-sm transition shadow-sm">
               Submit
             </button>
           </div>
@@ -547,25 +641,30 @@
       </div>
 
       <!-- RIGHT PANE: Small-sized Question Number Palette (Hidden on mobile phones via CSS & responsive classes) -->
-      <aside id="examPaletteSidebar" class="hidden md:flex w-64 lg:w-72 bg-[#eef3f8] border-l border-slate-300 flex-col shrink-0 select-none">
+      <aside id="examPaletteSidebar"
+        class="hidden md:flex w-64 lg:w-72 bg-[#eef3f8] border-l border-slate-300 flex-col shrink-0 select-none">
         <!-- Legend Header -->
         <div class="p-3 bg-white border-b border-slate-300">
           <div class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Legend</div>
           <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-700">
             <div class="flex items-center gap-1.5">
-              <span class="palette-btn palette-answered !w-6 !h-6 !text-[11px] !cursor-default" id="legendAnsweredCount">0</span>
+              <span class="palette-btn palette-answered !w-6 !h-6 !text-[11px] !cursor-default"
+                id="legendAnsweredCount">0</span>
               <span>Answered</span>
             </div>
             <div class="flex items-center gap-1.5">
-              <span class="palette-btn palette-not-answered !w-6 !h-6 !text-[11px] !cursor-default" id="legendNotAnsweredCount">0</span>
+              <span class="palette-btn palette-not-answered !w-6 !h-6 !text-[11px] !cursor-default"
+                id="legendNotAnsweredCount">0</span>
               <span>Not Answered</span>
             </div>
             <div class="flex items-center gap-1.5">
-              <span class="palette-btn palette-marked !w-6 !h-6 !text-[11px] !cursor-default" id="legendMarkedCount">0</span>
+              <span class="palette-btn palette-marked !w-6 !h-6 !text-[11px] !cursor-default"
+                id="legendMarkedCount">0</span>
               <span>Marked</span>
             </div>
             <div class="flex items-center gap-1.5">
-              <span class="palette-btn palette-not-visited !w-6 !h-6 !text-[11px] !cursor-default" id="legendNotVisitedCount">25</span>
+              <span class="palette-btn palette-not-visited !w-6 !h-6 !text-[11px] !cursor-default"
+                id="legendNotVisitedCount">25</span>
               <span>Not Visited</span>
             </div>
           </div>
@@ -585,7 +684,8 @@
 
         <!-- Submit Test Area -->
         <div class="p-3 bg-white border-t border-slate-300">
-          <button id="examSubmitSidebarBtn" type="button" class="w-full py-2.5 rounded bg-[#286090] hover:bg-[#1e4b73] text-white font-bold text-sm shadow transition">
+          <button id="examSubmitSidebarBtn" type="button"
+            class="w-full py-2.5 rounded bg-[#286090] hover:bg-[#1e4b73] text-white font-bold text-sm shadow transition">
             Submit
           </button>
         </div>
@@ -593,20 +693,28 @@
     </div>
 
     <!-- PAUSE OVERLAY MODAL (Blocks question view while paused) -->
-    <div id="examPauseOverlay" class="hidden fixed inset-0 z-50 bg-slate-900/90 backdrop-blur-md flex items-center justify-center p-4">
+    <div id="examPauseOverlay"
+      class="hidden fixed inset-0 z-50 bg-slate-900/90 backdrop-blur-md flex items-center justify-center p-4">
       <div class="bg-white rounded-xl max-w-md w-full p-6 text-center shadow-2xl border border-slate-200">
         <div class="w-12 h-12 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mx-auto mb-3">
-          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd"
+              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z"
+              clip-rule="evenodd" />
+          </svg>
         </div>
         <h3 class="text-lg font-bold text-slate-900">Mock Assessment Paused</h3>
         <p class="text-xs text-slate-600 mt-1">
-          The countdown timer is paused at <span id="pausedTimeRemaining" class="font-mono font-bold text-slate-900">15:00</span>.
+          The countdown timer is paused at <span id="pausedTimeRemaining"
+            class="font-mono font-bold text-slate-900">15:00</span>.
         </p>
         <div class="mt-5 flex items-center justify-center gap-3">
-          <button id="resumeExamBtn" type="button" class="px-5 py-2.5 rounded-lg bg-[#286090] hover:bg-[#1e4b73] text-white font-bold text-sm shadow transition">
+          <button id="resumeExamBtn" type="button"
+            class="px-5 py-2.5 rounded-lg bg-[#286090] hover:bg-[#1e4b73] text-white font-bold text-sm shadow transition">
             Resume Mock
           </button>
-          <button id="abortExamFromPauseBtn" type="button" class="px-4 py-2.5 rounded-lg border border-slate-300 hover:bg-slate-100 text-slate-700 font-semibold text-sm transition">
+          <button id="abortExamFromPauseBtn" type="button"
+            class="px-4 py-2.5 rounded-lg border border-slate-300 hover:bg-slate-100 text-slate-700 font-semibold text-sm transition">
             Return to Dashboard
           </button>
         </div>
@@ -614,7 +722,8 @@
     </div>
 
     <!-- SUBMIT CONFIRMATION MODAL (In-page modal, no browser confirm()) -->
-    <div id="examSubmitModal" class="hidden fixed inset-0 z-50 bg-slate-900/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div id="examSubmitModal"
+      class="hidden fixed inset-0 z-50 bg-slate-900/75 backdrop-blur-sm flex items-center justify-center p-4">
       <div class="bg-white rounded-xl max-w-md w-full p-6 shadow-2xl border border-slate-200 text-slate-900">
         <h3 class="text-lg font-bold text-slate-900">Submit Mock Assessment?</h3>
         <p class="text-xs text-slate-600 mt-1">Review your attempt summary before final submission:</p>
@@ -633,10 +742,12 @@
           </div>
         </div>
         <div class="flex items-center justify-end gap-3 mt-4">
-          <button id="cancelSubmitModalBtn" type="button" class="px-4 py-2 rounded border border-slate-300 hover:bg-slate-100 text-slate-700 font-semibold text-xs sm:text-sm">
+          <button id="cancelSubmitModalBtn" type="button"
+            class="px-4 py-2 rounded border border-slate-300 hover:bg-slate-100 text-slate-700 font-semibold text-xs sm:text-sm">
             Continue Test
           </button>
-          <button id="confirmSubmitModalBtn" type="button" class="px-5 py-2 rounded bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs sm:text-sm shadow">
+          <button id="confirmSubmitModalBtn" type="button"
+            class="px-5 py-2 rounded bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs sm:text-sm shadow">
             Confirm & Submit
           </button>
         </div>
@@ -651,16 +762,21 @@
     <div class="max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
       <!-- Top Action Bar -->
       <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
-        <button id="backFromAnalysisBtn" type="button" class="px-4 py-2 rounded-xl bg-metallic-gold font-bold text-xs sm:text-sm flex items-center gap-2 shadow hover:opacity-95 transition">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15 19l-7-7 7-7"/></svg>
+        <button id="backFromAnalysisBtn" type="button"
+          class="px-4 py-2 rounded-xl bg-metallic-gold font-bold text-xs sm:text-sm flex items-center gap-2 shadow hover:opacity-95 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15 19l-7-7 7-7" />
+          </svg>
           <span>Back to Dashboard</span>
         </button>
 
         <div class="flex items-center gap-2">
-          <span id="analysisSyncBadge" class="px-3 py-1 rounded-lg border border-emerald-500/40 bg-emerald-500/10 text-emerald-400 text-xs font-mono">
+          <span id="analysisSyncBadge"
+            class="px-3 py-1 rounded-lg border border-emerald-500/40 bg-emerald-500/10 text-emerald-400 text-xs font-mono">
             Saved & Synced
           </span>
-          <button id="retakeMockBtn" type="button" class="px-4 py-2 rounded-xl border border-yellow-500/40 hover:border-yellow-400 text-xs sm:text-sm font-semibold transition">
+          <button id="retakeMockBtn" type="button"
+            class="px-4 py-2 rounded-xl border border-yellow-500/40 hover:border-yellow-400 text-xs sm:text-sm font-semibold transition">
             Retake This Mock
           </button>
         </div>
@@ -668,9 +784,11 @@
 
       <!-- Scorecard Card -->
       <div class="gold-card rounded-2xl p-5 sm:p-7 mb-8">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-yellow-500/20 pb-5 mb-5">
+        <div
+          class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-yellow-500/20 pb-5 mb-5">
           <div>
-            <div class="text-xs font-mono uppercase tracking-wider text-yellow-500" id="analysisSectionLabel">Section 01</div>
+            <div class="text-xs font-mono uppercase tracking-wider text-yellow-500" id="analysisSectionLabel">Section 01
+            </div>
             <h2 id="analysisMockTitle" class="text-2xl sm:text-3xl font-display font-bold text-metallic-gold mt-0.5">
               Calc. Booster- 01 — Evaluation Report
             </h2>
@@ -681,7 +799,8 @@
           <div class="flex items-center gap-3">
             <div class="px-4 py-3 rounded-xl bg-metallic-gold text-center min-w-[120px] shadow-lg">
               <div class="text-[10px] font-mono uppercase tracking-wider font-bold opacity-80">Final Score</div>
-              <div class="text-2xl sm:text-3xl font-extrabold font-mono"><span id="analysisScoreVal">0.00</span><span class="text-sm font-normal">/50</span></div>
+              <div class="text-2xl sm:text-3xl font-extrabold font-mono"><span id="analysisScoreVal">0.00</span><span
+                  class="text-sm font-normal">/50</span></div>
             </div>
           </div>
         </div>
@@ -718,18 +837,22 @@
             Solutions & Analysis (Incorrect & Un-Attempted Questions Only)
           </h3>
           <p class="text-xs opacity-75">
-            Showing detailed step-by-step mathematical solutions exclusively for incorrectly answered and un-attempted questions.
+            Showing detailed step-by-step mathematical solutions exclusively for incorrectly answered and un-attempted
+            questions.
           </p>
         </div>
 
         <div class="flex items-center gap-2">
-          <button type="button" data-filter="all" class="analysis-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-metallic-gold">
+          <button type="button" data-filter="all"
+            class="analysis-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-metallic-gold">
             All Reviewable (<span id="filterCountAll">0</span>)
           </button>
-          <button type="button" data-filter="incorrect" class="analysis-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold border border-red-500/40 text-red-400 hover:bg-red-500/10">
+          <button type="button" data-filter="incorrect"
+            class="analysis-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold border border-red-500/40 text-red-400 hover:bg-red-500/10">
             Incorrect (<span id="filterCountIncorrect">0</span>)
           </button>
-          <button type="button" data-filter="unattempted" class="analysis-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold border border-amber-500/40 text-amber-400 hover:bg-amber-500/10">
+          <button type="button" data-filter="unattempted"
+            class="analysis-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold border border-amber-500/40 text-amber-400 hover:bg-amber-500/10">
             Un-attempted (<span id="filterCountUnattempted">0</span>)
           </button>
         </div>
@@ -745,15 +868,19 @@
   <!-- ===================================================================== -->
   <!-- MODAL: SUBMISSION HISTORY & SUPABASE CLOUD SYNC                       -->
   <!-- ===================================================================== -->
-  <div id="historyModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+  <div id="historyModal"
+    class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="gold-card rounded-2xl max-w-4xl w-full max-h-[85vh] flex flex-col overflow-hidden">
       <div class="p-4 sm:p-5 border-b border-yellow-500/25 flex items-center justify-between">
         <div>
           <h3 class="font-display font-bold text-lg text-metallic-gold">Mock Submission History & Analysis</h3>
           <p class="text-xs opacity-75">Synced with Internet Time & Supabase Project (nmhrhyvsyprsacrnbgnd)</p>
         </div>
-        <button id="closeHistoryModalBtn" type="button" class="p-1.5 rounded-lg border border-yellow-500/30 hover:border-yellow-400">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        <button id="closeHistoryModalBtn" type="button"
+          class="p-1.5 rounded-lg border border-yellow-500/30 hover:border-yellow-400">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
         </button>
       </div>
       <div id="historyListContainer" class="p-4 sm:p-5 overflow-y-auto space-y-3 flex-1">
@@ -765,15 +892,19 @@
   <!-- ===================================================================== -->
   <!-- MODAL: SUPABASE & GITHUB AUTH CONFIGURATION                           -->
   <!-- ===================================================================== -->
-  <div id="supabaseModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+  <div id="supabaseModal"
+    class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="gold-card rounded-2xl max-w-2xl w-full max-h-[88vh] flex flex-col overflow-hidden">
       <div class="p-4 sm:p-5 border-b border-yellow-500/25 flex items-center justify-between">
         <div>
           <h3 class="font-display font-bold text-lg text-metallic-gold">Supabase Cloud & GitHub Auth Status</h3>
           <p class="text-xs opacity-75">Connected to https://nmhrhyvsyprsacrnbgnd.supabase.co</p>
         </div>
-        <button id="closeSupabaseModalBtn" type="button" class="p-1.5 rounded-lg border border-yellow-500/30 hover:border-yellow-400">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        <button id="closeSupabaseModalBtn" type="button"
+          class="p-1.5 rounded-lg border border-yellow-500/30 hover:border-yellow-400">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
         </button>
       </div>
       <div class="p-4 sm:p-6 overflow-y-auto space-y-4 text-xs sm:text-sm">
@@ -788,36 +919,52 @@
           </div>
           <div class="flex items-center justify-between pt-1 border-t border-yellow-500/20">
             <span class="font-semibold text-yellow-400">Sync Diagnostics:</span>
-            <span id="modalSyncDiagText" class="font-mono text-xs text-yellow-300">Checking local & cloud storage...</span>
+            <span id="modalSyncDiagText" class="font-mono text-xs text-yellow-300">Checking local & cloud
+              storage...</span>
           </div>
         </div>
 
         <!-- Instant Fix for localhost:3000/#access_token=... Popup Redirect -->
         <div class="p-4 rounded-xl border border-emerald-500/40 bg-emerald-950/25 space-y-2.5">
           <div class="flex items-center justify-between gap-2">
-            <span class="font-bold text-emerald-400 text-xs sm:text-sm">Got "localhost:3000 refused to connect" in the GitHub popup?</span>
-            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">INSTANT FIX</span>
+            <span class="font-bold text-emerald-400 text-xs sm:text-sm">Got "localhost:3000 refused to connect" in the
+              GitHub popup?</span>
+            <span
+              class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">INSTANT
+              FIX</span>
           </div>
           <p class="text-xs opacity-85 leading-relaxed">
-            Supabase defaults to redirecting to <code class="text-yellow-300 font-mono">http://localhost:3000/#access_token=...</code> after GitHub approves your login. Your token is already in that popup's address bar! Copy the full URL from the popup window and paste it below to complete sign-in immediately:
+            Supabase defaults to redirecting to <code
+              class="text-yellow-300 font-mono">http://localhost:3000/#access_token=...</code> after GitHub approves
+            your login. Your token is already in that popup's address bar! Copy the full URL from the popup window and
+            paste it below to complete sign-in immediately:
           </p>
           <div class="flex flex-col sm:flex-row gap-2">
-            <input id="oauthCallbackUrlInput" type="text" placeholder="Paste http://localhost:3000/#access_token=eyJ... here" class="flex-1 px-3 py-2 rounded-lg bg-black/60 border border-yellow-500/40 text-xs font-mono text-white focus:outline-none focus:border-yellow-400" />
-            <button id="completeOauthUrlBtn" type="button" class="px-4 py-2 rounded-lg bg-metallic-gold font-bold text-xs shrink-0 hover:opacity-95 transition">
+            <input id="oauthCallbackUrlInput" type="text"
+              placeholder="Paste http://localhost:3000/#access_token=eyJ... here"
+              class="flex-1 px-3 py-2 rounded-lg bg-black/60 border border-yellow-500/40 text-xs font-mono text-white focus:outline-none focus:border-yellow-400" />
+            <button id="completeOauthUrlBtn" type="button"
+              class="px-4 py-2 rounded-lg bg-metallic-gold font-bold text-xs shrink-0 hover:opacity-95 transition">
               Complete Sign-In
             </button>
           </div>
           <p class="text-[11px] opacity-70 font-mono">
-            Tip: To avoid pasting in the future, either run <code class="text-yellow-300">npx serve -l 3000</code> in your folder, or in Supabase Dashboard → Authentication → URL Configuration, change <strong>Site URL</strong> to your actual local server URL (e.g. <code class="text-yellow-300">http://127.0.0.1:5500/calc_booster_exam_app.html</code>).
+            Tip: To avoid pasting in the future, either run <code class="text-yellow-300">npx serve -l 3000</code> in
+            your folder, or in Supabase Dashboard → Authentication → URL Configuration, change <strong>Site URL</strong>
+            to your actual local server URL (e.g. <code
+              class="text-yellow-300">http://127.0.0.1:5500/calc_booster_exam_app.html</code>).
           </p>
         </div>
 
         <div class="space-y-2">
           <div class="flex items-center justify-between">
-            <span class="font-semibold text-yellow-400">Supabase SQL Schema (Run once in Supabase SQL Editor if table is not created yet):</span>
-            <button id="copySqlSchemaBtn" type="button" class="px-2.5 py-1 rounded bg-metallic-gold font-bold text-xs">Copy SQL</button>
+            <span class="font-semibold text-yellow-400">Supabase SQL Schema (Run once in Supabase SQL Editor if table is
+              not created yet):</span>
+            <button id="copySqlSchemaBtn" type="button"
+              class="px-2.5 py-1 rounded bg-metallic-gold font-bold text-xs">Copy SQL</button>
           </div>
-          <pre id="supabaseSqlCode" class="p-3 rounded-xl bg-black/60 border border-yellow-500/25 font-mono text-[11px] overflow-x-auto text-emerald-300 select-all">create table if not exists public.mock_submissions (
+          <pre id="supabaseSqlCode"
+            class="p-3 rounded-xl bg-black/60 border border-yellow-500/25 font-mono text-[11px] overflow-x-auto text-emerald-300 select-all">create table if not exists public.mock_submissions (
   id uuid default gen_random_uuid() primary key,
   user_id uuid references auth.users(id),
   user_name text,
@@ -840,10 +987,12 @@ create policy "Allow public insert and select" on public.mock_submissions
         </div>
 
         <div class="flex flex-wrap items-center justify-between gap-2 pt-2">
-          <button id="modalTriggerGithubBtn" type="button" class="px-4 py-2 rounded-xl bg-metallic-gold font-bold text-xs flex items-center gap-2">
+          <button id="modalTriggerGithubBtn" type="button"
+            class="px-4 py-2 rounded-xl bg-metallic-gold font-bold text-xs flex items-center gap-2">
             <span>Sign in with GitHub OAuth</span>
           </button>
-          <button id="syncNowBtn" type="button" class="px-4 py-2 rounded-xl border border-yellow-500/40 hover:border-yellow-400 font-semibold text-xs">
+          <button id="syncNowBtn" type="button"
+            class="px-4 py-2 rounded-xl border border-yellow-500/40 hover:border-yellow-400 font-semibold text-xs">
             Sync Local Submissions to Cloud Now
           </button>
         </div>
@@ -852,7 +1001,8 @@ create policy "Allow public insert and select" on public.mock_submissions
   </div>
 
   <!-- Toast Notification -->
-  <div id="toastBanner" class="hidden fixed bottom-5 right-5 z-50 px-4 py-3 rounded-xl bg-slate-900 border border-yellow-500/50 text-white text-xs sm:text-sm font-medium shadow-2xl flex items-center gap-2.5">
+  <div id="toastBanner"
+    class="hidden fixed bottom-5 right-5 z-50 px-4 py-3 rounded-xl bg-slate-900 border border-yellow-500/50 text-white text-xs sm:text-sm font-medium shadow-2xl flex items-center gap-2.5">
     <span class="w-2 h-2 rounded-full bg-yellow-400"></span>
     <span id="toastMessage">Notification</span>
   </div>
@@ -861,7 +1011,7 @@ create policy "Allow public insert and select" on public.mock_submissions
   <!-- APPLICATION LOGIC & DETERMINISTIC 2,500-PROBLEM GENERATOR ENGINE      -->
   <!-- ===================================================================== -->
   <script>
-    (function() {
+    (function () {
       'use strict';
 
       // -------------------------------------------------------------------
@@ -1109,7 +1259,7 @@ create policy "Allow public insert and select" on public.mock_submissions
       function createSeededRng(seed) {
         let s = (seed * 2654435761) >>> 0;
         if (s === 0) s = 123456789;
-        return function() {
+        return function () {
           s ^= s << 13;
           s ^= s >>> 17;
           s ^= s << 5;
@@ -1147,7 +1297,7 @@ create policy "Allow public insert and select" on public.mock_submissions
         }
         let step = 1;
         while (candidates.length < 3) {
-          const extraVal = typeof correctValue === 'number' ? (correctValue + step * 10) : ( step );
+          const extraVal = typeof correctValue === 'number' ? (correctValue + step * 10) : (step);
           const s = fmt(extraVal);
           if (s !== correctStr && !candidates.includes(s)) {
             candidates.push(s);
@@ -2062,7 +2212,7 @@ create policy "Allow public insert and select" on public.mock_submissions
       try {
         const savedTheme = localStorage.getItem(STORAGE_KEY_THEME);
         if (savedTheme === 'light') dashboardDarkMode = false;
-      } catch (e) {}
+      } catch (e) { }
 
       // -------------------------------------------------------------------
       // 11. EXAM ENGINE (TCS / EDUQUITY SSC PATTERN)
@@ -2072,12 +2222,12 @@ create policy "Allow public insert and select" on public.mock_submissions
           const el = document.documentElement;
           if (!document.fullscreenElement) {
             if (el.requestFullscreen) {
-              el.requestFullscreen().catch(() => {});
+              el.requestFullscreen().catch(() => { });
             } else if (el.webkitRequestFullscreen) {
               el.webkitRequestFullscreen();
             }
           }
-        } catch (e) {}
+        } catch (e) { }
         updateFullscreenBtnLabel();
       }
 
@@ -2085,12 +2235,12 @@ create policy "Allow public insert and select" on public.mock_submissions
         try {
           if (document.fullscreenElement) {
             if (document.exitFullscreen) {
-              document.exitFullscreen().catch(() => {});
+              document.exitFullscreen().catch(() => { });
             } else if (document.webkitExitFullscreen) {
               document.webkitExitFullscreen();
             }
           }
-        } catch (e) {}
+        } catch (e) { }
         updateFullscreenBtnLabel();
       }
 
@@ -2496,8 +2646,8 @@ create policy "Allow public insert and select" on public.mock_submissions
               <div class="text-lg font-display font-bold text-metallic-gold">No Questions in This Filter</div>
               <p class="text-xs opacity-75 mt-1">
                 ${allItems.length === 0
-                  ? 'Perfect 25/25 score! All questions were answered correctly (solutions are shown only for incorrect and un-attempted questions).'
-                  : 'Switch filter tabs above to view incorrect or un-attempted questions.'}
+              ? 'Perfect 25/25 score! All questions were answered correctly (solutions are shown only for incorrect and un-attempted questions).'
+              : 'Switch filter tabs above to view incorrect or un-attempted questions.'}
               </p>
             </div>
           `;
@@ -2574,7 +2724,7 @@ create policy "Allow public insert and select" on public.mock_submissions
       try {
         customAccessToken = localStorage.getItem(STORAGE_KEY_AUTH_TOKEN);
         customRefreshToken = localStorage.getItem(STORAGE_KEY_REFRESH_TOKEN);
-      } catch (e) {}
+      } catch (e) { }
 
       function getCurrentUserHandle() {
         if (!currentUser) return 'Candidate';
@@ -2589,7 +2739,7 @@ create policy "Allow public insert and select" on public.mock_submissions
             if (data && data.session && data.session.access_token) {
               return data.session.access_token;
             }
-          } catch (e) {}
+          } catch (e) { }
         }
         if (currentUser && currentUser.access_token) {
           return currentUser.access_token;
@@ -2754,7 +2904,7 @@ create policy "Allow public insert and select" on public.mock_submissions
                 authMetadataCount = Object.keys(remoteCompactMap).length;
               }
             }
-          } catch (e) {}
+          } catch (e) { }
         }
 
         if (token && Object.keys(remoteCompactMap).length === 0) {
@@ -2780,7 +2930,7 @@ create policy "Allow public insert and select" on public.mock_submissions
                 }
               }
             }
-          } catch (e) {}
+          } catch (e) { }
         }
 
         // Merge Layer 1 (Auth user_metadata) -> Local
@@ -2857,7 +3007,7 @@ create policy "Allow public insert and select" on public.mock_submissions
                 }
               });
             }
-          } catch (e) {}
+          } catch (e) { }
         }
 
         if (cloudUpdatedLocal) {
@@ -2912,7 +3062,7 @@ create policy "Allow public insert and select" on public.mock_submissions
                   remoteTableMockIds.add(mId);
                   dbTableCount++;
                 }
-              } catch (e) {}
+              } catch (e) { }
             }
           }
         }
@@ -2931,7 +3081,7 @@ create policy "Allow public insert and select" on public.mock_submissions
                 authMetadataSaved = true;
                 authMetadataCount = Object.keys(mergedCompactMap).length;
               }
-            } catch (e) {}
+            } catch (e) { }
           }
 
           if (!authMetadataSaved && token) {
@@ -2953,7 +3103,7 @@ create policy "Allow public insert and select" on public.mock_submissions
                 authMetadataSaved = true;
                 authMetadataCount = Object.keys(mergedCompactMap).length;
               }
-            } catch (e) {}
+            } catch (e) { }
           }
         }
 
@@ -3024,7 +3174,7 @@ create policy "Allow public insert and select" on public.mock_submissions
         try {
           localStorage.setItem(STORAGE_KEY_AUTH_TOKEN, accessToken);
           if (refreshToken) localStorage.setItem(STORAGE_KEY_REFRESH_TOKEN, refreshToken);
-        } catch (e) {}
+        } catch (e) { }
 
         if (supabaseClient && supabaseClient.auth && refreshToken) {
           try {
@@ -3040,7 +3190,7 @@ create policy "Allow public insert and select" on public.mock_submissions
               document.getElementById('supabaseModal').classList.add('hidden');
               return true;
             }
-          } catch (e) {}
+          } catch (e) { }
         }
 
         const claims = decodeJwtPayload(accessToken);
@@ -3067,11 +3217,11 @@ create policy "Allow public insert and select" on public.mock_submissions
           return;
         }
         if (currentUser) {
-          try { await supabaseClient.auth.signOut(); } catch (e) {}
+          try { await supabaseClient.auth.signOut(); } catch (e) { }
           try {
             localStorage.removeItem(STORAGE_KEY_AUTH_TOKEN);
             localStorage.removeItem(STORAGE_KEY_REFRESH_TOKEN);
-          } catch (e) {}
+          } catch (e) { }
           customAccessToken = null;
           customRefreshToken = null;
           currentUser = null;
@@ -3147,7 +3297,7 @@ create policy "Allow public insert and select" on public.mock_submissions
           await applyOAuthUrlOrHash(hashCopy);
           try {
             history.replaceState(null, '', window.location.pathname + window.location.search);
-          } catch (e) {}
+          } catch (e) { }
           return;
         }
 
@@ -3162,7 +3312,7 @@ create policy "Allow public insert and select" on public.mock_submissions
               await performBidirectionalCloudSync(false);
               return;
             }
-          } catch (e) {}
+          } catch (e) { }
         }
 
         // 3. Fallback to saved custom token if present
@@ -3173,7 +3323,7 @@ create policy "Allow public insert and select" on public.mock_submissions
                 access_token: customAccessToken,
                 refresh_token: customRefreshToken
               });
-            } catch (e) {}
+            } catch (e) { }
           }
           const claims = decodeJwtPayload(customAccessToken);
           if (claims && claims.sub) {
@@ -3272,7 +3422,7 @@ create policy "Allow public insert and select" on public.mock_submissions
         dashboardDarkMode = !dashboardDarkMode;
         try {
           localStorage.setItem(STORAGE_KEY_THEME, dashboardDarkMode ? 'dark' : 'light');
-        } catch (e) {}
+        } catch (e) { }
         applyDashboardTheme();
       });
 
@@ -3457,4 +3607,5 @@ create policy "Allow public insert and select" on public.mock_submissions
     })();
   </script>
 </body>
+
 </html>
