@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Calc. Booster — Mathematical Calculation Boosting Assessment Platform</title>
+  <!-- Working Embedded SVG Favicon (Exam Interface Light-Blue Standard) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2338bdf8'/%3E%3Cstop offset='100%25' stop-color='%23286090'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Crect x='4' y='4' width='56' height='56' rx='11' fill='none' stroke='%23bae6fd' stroke-width='2' stroke-opacity='0.6'/%3E%3Ctext x='32' y='43' font-family='Inter,Arial,sans-serif' font-size='30' font-weight='800' fill='%23ffffff' text-anchor='middle'%3E%26sum;%3C/text%3E%3C/svg%3E" />
+  <link rel="shortcut icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23286090'/%3E%3Ctext x='32' y='43' font-family='Inter,Arial,sans-serif' font-size='30' font-weight='800' fill='%2338bdf8' text-anchor='middle'%3E%26sum;%3C/text%3E%3C/svg%3E" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23286090'/%3E%3Ctext x='32' y='43' font-family='Inter,Arial,sans-serif' font-size='30' font-weight='800' fill='%2338bdf8' text-anchor='middle'%3E%26sum;%3C/text%3E%3C/svg%3E" />
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <!-- Google Fonts: Inter & JetBrains Mono & Cinzel for Premium Metallic Gold Accents -->
@@ -23,19 +27,20 @@
           fontFamily: {
             sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
             mono: ['JetBrains Mono', 'monospace'],
-            display: ['Cinzel', 'serif']
+            display: ['Inter', 'system-ui', '-apple-system', 'sans-serif']
           },
           colors: {
-            gold: {
-              100: '#FBF3D5',
-              200: '#F5E29E',
-              300: '#EBD06E',
-              400: '#DFBD46',
-              500: '#D4AF37',
-              600: '#B58E24',
-              700: '#8F6C17',
-              800: '#6A4E0F',
-              900: '#483408'
+            exam: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#286090',
+              800: '#1d4970',
+              900: '#1b4366'
             }
           }
         }
@@ -44,9 +49,12 @@
   </script>
   <style>
     :root {
-      --gold-gradient: linear-gradient(135deg, #F7E5A9 0%, #D4AF37 35%, #AA7C11 70%, #F3E5AB 100%);
-      --gold-border: linear-gradient(135deg, rgba(247, 229, 169, 0.65), rgba(212, 175, 55, 0.25), rgba(170, 124, 17, 0.65));
-      --gold-glow: 0 10px 30px -5px rgba(212, 175, 55, 0.22);
+      --exam-blue-primary: #286090;
+      --exam-blue-dark: #1d4970;
+      --exam-blue-light: #38bdf8;
+      --exam-blue-soft: #e9eef4;
+      --exam-blue-gradient: linear-gradient(135deg, #0284c7 0%, #286090 100%);
+      --exam-blue-glow: 0 8px 24px -4px rgba(40, 96, 144, 0.22);
     }
 
     * {
@@ -59,25 +67,22 @@
       margin: 0;
       padding: 0;
       overflow-x: hidden;
-      transition: background-color 0.25s ease, color 0.25s ease;
+      transition: background-color 0.2s ease, color 0.2s ease;
     }
 
-    /* Dashboard Dark & Light Themes */
-    body.dashboard-dark {
-      background-color: #090B10;
-      background-image:
-        radial-gradient(circle at 15% 10%, rgba(212, 175, 55, 0.09) 0%, transparent 40%),
-        radial-gradient(circle at 85% 20%, rgba(170, 124, 17, 0.07) 0%, transparent 45%),
-        linear-gradient(180deg, #090B10 0%, #0E121B 100%);
-      color: #F3F4F6;
-    }
-
+    /* Dashboard Light & Dark Themes (Matched to TCS / Eduquity Exam Interface) */
     body.dashboard-light {
-      background-color: #FAF8F2;
+      background-color: #F4F6F9;
+      background-image: none;
+      color: #111827;
+    }
+
+    body.dashboard-dark {
+      background-color: #0f172a;
       background-image:
-        radial-gradient(circle at 15% 10%, rgba(212, 175, 55, 0.14) 0%, transparent 40%),
-        linear-gradient(180deg, #FAF8F2 0%, #F2EFE4 100%);
-      color: #18181B;
+        radial-gradient(circle at 15% 10%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
+        linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+      color: #f8fafc;
     }
 
     /* Strictly Light Theme for TCS / Eduquity Exam Interface */
@@ -88,61 +93,79 @@
       user-select: none;
     }
 
-    /* Metallic Gold Utilities */
+    /* Exam Interface Light-Blue Accent Utilities */
     .text-metallic-gold {
-      background: var(--gold-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: #1d4970;
+    }
+
+    body.dashboard-dark .text-metallic-gold {
+      color: #38bdf8;
     }
 
     .bg-metallic-gold {
-      background: var(--gold-gradient);
-      color: #090B10;
+      background: #286090;
+      color: #ffffff !important;
+      border: 1px solid #1d4970;
+    }
+
+    .bg-metallic-gold:hover {
+      background: #1e4b73;
     }
 
     .border-metallic-gold {
-      border: 1px solid rgba(212, 175, 55, 0.38);
+      border: 1px solid #93c5fd;
     }
 
     .gold-card {
       position: relative;
-      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.28s ease;
-    }
-
-    body.dashboard-dark .gold-card {
-      background: linear-gradient(160deg, rgba(22, 27, 38, 0.92) 0%, rgba(14, 18, 26, 0.96) 100%);
-      border: 1px solid rgba(212, 175, 55, 0.26);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     }
 
     body.dashboard-light .gold-card {
-      background: linear-gradient(160deg, #FFFFFF 0%, #FDFBF5 100%);
-      border: 1px solid rgba(181, 142, 36, 0.35);
-      box-shadow: 0 6px 24px rgba(143, 108, 23, 0.08);
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+    }
+
+    body.dashboard-dark .gold-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
     }
 
     .gold-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(212, 175, 55, 0.72);
-      box-shadow: var(--gold-glow);
-    }
-
-    /* Subtle Shimmer Animation */
-    @keyframes goldShimmer {
-      0% {
-        background-position: -200% 0;
-      }
-
-      100% {
-        background-position: 200% 0;
-      }
+      transform: translateY(-2px);
+      border-color: #38bdf8;
+      box-shadow: var(--exam-blue-glow);
     }
 
     .shimmer-badge {
-      background: linear-gradient(90deg, rgba(212, 175, 55, 0.15) 25%, rgba(247, 229, 169, 0.38) 50%, rgba(212, 175, 55, 0.15) 75%);
-      background-size: 200% 100%;
-      animation: goldShimmer 5s infinite linear;
+      background: rgba(56, 189, 248, 0.18);
+    }
+
+    /* Exam-style Sub-bar and Inner Stat Boxes on Dashboard */
+    .exam-subbar {
+      background: #e9eef4;
+      border: 1px solid #cbd5e1;
+      color: #1e293b;
+    }
+
+    body.dashboard-dark .exam-subbar {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #e2e8f0;
+    }
+
+    .exam-stat-box {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      color: #0f172a;
+    }
+
+    body.dashboard-dark .exam-stat-box {
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      color: #f8fafc;
     }
 
     @keyframes pulseDot {
@@ -299,7 +322,7 @@
     }
 
     ::-webkit-scrollbar-thumb {
-      background: rgba(212, 175, 55, 0.45);
+      background: #38bdf8;
       border-radius: 4px;
     }
 
@@ -309,50 +332,49 @@
   </style>
 </head>
 
-<body class="dashboard-dark min-h-screen flex flex-col">
+<body class="dashboard-light min-h-screen flex flex-col">
 
   <!-- ===================================================================== -->
-  <!-- VIEW 1: PREMIUM DASHBOARD (DARK BY DEFAULT + METALLIC GOLD + TOGGLE) -->
+  <!-- VIEW 1: EXAM-INTERFACE STANDARD DASHBOARD (TCS LIGHT-BLUE ACCENTS)    -->
   <!-- ===================================================================== -->
   <div id="dashboardView" class="flex-1 flex flex-col min-h-screen">
-    <!-- Top Navigation Bar -->
-    <header class="sticky top-0 z-30 backdrop-blur-md bg-opacity-90 border-b border-yellow-600/30 transition-colors"
+    <!-- Top TCS / Exam-Style Navigation Bar -->
+    <header class="tcs-header sticky top-0 z-30 shadow-sm select-none"
       id="dashboardHeader">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
-        <!-- Brand Logo -->
-        <div class="flex items-center gap-3">
+      <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between gap-3">
+        <!-- Brand Logo (Matches Exam Header) -->
+        <div class="flex items-center gap-3 min-w-0">
           <div
-            class="w-10 h-10 rounded-lg bg-metallic-gold flex items-center justify-center shadow-md font-display font-extrabold text-lg tracking-wider">
+            class="w-9 h-9 sm:w-10 sm:h-10 rounded bg-white/15 border border-sky-300/40 flex items-center justify-center shadow-sm font-extrabold text-white text-lg tracking-wider shrink-0">
             ∑
           </div>
-          <div>
+          <div class="truncate">
             <div class="flex items-center gap-2">
-              <h1 class="font-display font-bold text-base sm:text-lg tracking-wide text-metallic-gold">CALC. BOOSTER
-              </h1>
+              <h1 class="font-bold text-sm sm:text-lg tracking-tight text-white truncate">CALC. BOOSTER</h1>
               <span
-                class="hidden sm:inline-block text-[10px] font-mono uppercase tracking-widest px-2 py-0.5 rounded shimmer-badge text-yellow-500 border border-yellow-500/30">100
+                class="hidden sm:inline-block text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-[#1b4366] text-sky-200 border border-sky-300/30">100
                 Mocks • 2,500 MCQs</span>
             </div>
-            <p class="text-[11px] opacity-70 hidden sm:block">High-Speed Mathematical Calculation Mastery Suite</p>
+            <p class="text-[11px] text-sky-100/90 hidden sm:block truncate">SSC / TCS Pattern Mathematical Calculation Assessment Portal</p>
           </div>
         </div>
 
-        <!-- Right Controls: Internet Synced Clock, Supabase/GitHub Login, Theme Toggle -->
-        <div class="flex items-center gap-2 sm:gap-3">
-          <!-- Live Internet Synced Date & Time Badge -->
+        <!-- Right Controls: Internet Synced Clock, Submissions, GitHub/Supabase Auth, Theme Toggle -->
+        <div class="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+          <!-- Live Internet Synced Date & Time Badge (Matches Exam Timer Box) -->
           <div id="internetClockBadge"
-            class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg border border-yellow-500/30 bg-black/20 text-xs font-mono"
+            class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded bg-[#1b4366] border border-sky-300/30 text-xs font-mono text-white"
             title="Synced with Internet Time Server">
             <span class="w-2 h-2 rounded-full bg-emerald-400 live-dot" id="syncStatusDot"></span>
-            <span id="internetDateDisplay" class="font-semibold text-yellow-400">Syncing Date...</span>
+            <span id="internetDateDisplay" class="font-semibold text-sky-200">Syncing Date...</span>
             <span class="opacity-40">|</span>
-            <span id="internetTimeDisplay" class="opacity-85">--:--:--</span>
+            <span id="internetTimeDisplay" class="text-white font-bold">--:--:--</span>
           </div>
 
           <!-- History / Submissions Button -->
           <button id="openHistoryBtn" type="button"
-            class="px-3 py-1.5 rounded-lg border border-yellow-500/35 hover:border-yellow-400 text-xs font-semibold flex items-center gap-1.5 transition">
-            <svg class="w-3.5 h-3.5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            class="px-2.5 sm:px-3 py-1.5 rounded bg-[#1b4366] hover:bg-[#153450] border border-sky-300/35 text-white text-xs font-semibold flex items-center gap-1.5 transition shadow-sm">
+            <svg class="w-3.5 h-3.5 text-sky-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
@@ -362,7 +384,7 @@
           <!-- GitHub / Supabase Auth & Cross-Device Sync Buttons -->
           <div id="authContainer" class="flex items-center gap-1.5">
             <button id="githubLoginBtn" type="button"
-              class="px-3 py-1.5 rounded-lg bg-metallic-gold hover:opacity-95 text-xs font-bold flex items-center gap-1.5 shadow transition">
+              class="px-2.5 sm:px-3 py-1.5 rounded bg-sky-500 hover:bg-sky-600 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition">
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                 <path fill-rule="evenodd" clip-rule="evenodd"
                   d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
@@ -370,16 +392,16 @@
               <span id="githubLoginText">GitHub Login</span>
             </button>
             <button id="headerCloudSyncBtn" type="button"
-              class="px-2.5 py-1.5 rounded-lg border border-yellow-500/35 hover:border-yellow-400 text-yellow-400 text-xs font-semibold flex items-center gap-1 transition"
+              class="px-2.5 py-1.5 rounded bg-[#1b4366] hover:bg-[#153450] border border-sky-300/35 text-sky-200 text-xs font-semibold flex items-center gap-1 transition"
               title="Sync Mocks Across Desktop & Mobile Devices">
-              <svg id="headerSyncIcon" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg id="headerSyncIcon" class="w-3.5 h-3.5 text-sky-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
               </svg>
               <span class="hidden sm:inline">Sync</span>
             </button>
             <button id="supabaseInfoBtn" type="button"
-              class="p-1.5 rounded-lg border border-yellow-500/35 hover:border-yellow-400 text-yellow-500 transition"
+              class="p-1.5 rounded bg-[#1b4366] hover:bg-[#153450] border border-sky-300/35 text-sky-200 transition"
               title="Supabase Cloud Sync & SQL Setup">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -390,14 +412,14 @@
 
           <!-- Dashboard Theme Toggle (Hidden automatically during Exam Mode) -->
           <button id="dashboardThemeToggle" type="button"
-            class="p-2 rounded-lg border border-yellow-500/40 hover:border-yellow-400 transition flex items-center justify-center"
-            title="Toggle Dashboard Theme (Dark / Light)">
-            <svg id="themeIconSun" class="w-4 h-4 text-yellow-400" fill="none" stroke="currentColor"
+            class="p-1.5 sm:p-2 rounded bg-[#1b4366] hover:bg-[#153450] border border-sky-300/35 text-sky-200 transition flex items-center justify-center"
+            title="Toggle Dashboard Theme (Light / Dark)">
+            <svg id="themeIconSun" class="w-4 h-4 text-sky-300 hidden" fill="none" stroke="currentColor"
               viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
             </svg>
-            <svg id="themeIconMoon" class="w-4 h-4 text-amber-700 hidden" fill="none" stroke="currentColor"
+            <svg id="themeIconMoon" class="w-4 h-4 text-sky-200" fill="none" stroke="currentColor"
               viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
@@ -407,48 +429,66 @@
       </div>
     </header>
 
+    <!-- Exam-Interface Subheader Bar -->
+    <div class="tcs-subheader border-b border-slate-300">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-wrap items-center justify-between gap-2 text-xs">
+        <div class="flex items-center gap-2">
+          <span class="font-semibold text-slate-600">Assessment Series:</span>
+          <span class="tcs-section-pill">Calc. Booster (100 Mocks)</span>
+          <span id="mobileDateSyncText" class="text-[11px] font-mono text-[#286090] font-semibold hidden sm:inline">• Internet Date Synced</span>
+        </div>
+        <div class="font-semibold text-slate-700 flex items-center gap-3">
+          <span>Questions: <strong class="text-[#286090]">25 MCQs</strong></span>
+          <span>•</span>
+          <span>Time: <strong class="text-[#286090]">15:00 Mins</strong></span>
+          <span>•</span>
+          <span>Marks: <span class="text-emerald-700 font-bold">+2.00</span> / <span class="text-red-600 font-bold">-0.25</span></span>
+        </div>
+      </div>
+    </div>
+
     <!-- Main Dashboard Content -->
-    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-      <!-- Hero Banner & Live Metrics -->
-      <section class="gold-card rounded-2xl p-5 sm:p-7 mb-8 overflow-hidden relative">
-        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-          <div class="space-y-2 max-w-2xl">
-            <div
-              class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono uppercase tracking-wider border border-yellow-500/40 bg-yellow-500/10 text-yellow-400">
-              <span>SSC / TCS Pattern Assessment</span>
-              <span>•</span>
-              <span id="mobileDateSyncText">Internet Date Synced</span>
-            </div>
-            <h2 class="text-2xl sm:text-3xl font-display font-bold tracking-tight">
-              <span class="text-metallic-gold">Mathematical Calculation Boosting</span> Test Series
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-7">
+      <!-- Hero Banner & Live Metrics (Styled as Exam Assessment Summary Panel) -->
+      <section class="gold-card rounded-lg overflow-hidden mb-6">
+        <div class="bg-[#e9eef4] dark:bg-slate-800 border-b border-slate-300 dark:border-slate-700 px-4 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-[#286090] dark:bg-sky-400"></span>
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">Candidate Performance & Assessment Overview</span>
+          </div>
+          <span class="text-[11px] font-mono text-[#286090] dark:text-sky-300 font-semibold">SSC / TCS CBT Standard Interface</span>
+        </div>
+        <div class="p-4 sm:p-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+          <div class="space-y-1.5 max-w-2xl">
+            <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-[#1d4970] dark:text-sky-300">
+              Mathematical Calculation Boosting Assessment Suite
             </h2>
             <p class="text-xs sm:text-sm opacity-80 leading-relaxed">
-              10 Categorized Sections • 100 Distinct Mocks (2,500 Total Problems) • 25 MCQs per Mock • +2.00 Correct /
-              -0.25 Negative Marking • 15:00 Strict Countdown Timer.
+              10 Categorized Sections • 100 Distinct Mocks (2,500 Total Problems) • 25 MCQs per Mock • +2.00 Correct / -0.25 Negative Marking • 15:00 Strict Countdown Timer.
             </p>
           </div>
 
           <!-- KPI Summary Stats -->
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 shrink-0">
-            <div class="p-3.5 rounded-xl border border-yellow-500/30 bg-black/20 text-center">
-              <div class="text-[11px] uppercase tracking-wider opacity-70 font-mono">Completed</div>
-              <div class="text-xl sm:text-2xl font-bold text-metallic-gold mt-0.5"><span
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 shrink-0">
+            <div class="p-3 rounded-lg exam-stat-box text-center min-w-[115px]">
+              <div class="text-[11px] uppercase tracking-wider opacity-70 font-mono font-semibold">Completed</div>
+              <div class="text-xl sm:text-2xl font-bold text-[#286090] dark:text-sky-400 mt-0.5"><span
                   id="statCompletedMocks">0</span><span class="text-xs opacity-60">/100</span></div>
             </div>
-            <div class="p-3.5 rounded-xl border border-yellow-500/30 bg-black/20 text-center">
-              <div class="text-[11px] uppercase tracking-wider opacity-70 font-mono">Avg Score</div>
-              <div class="text-xl sm:text-2xl font-bold text-metallic-gold mt-0.5"><span
+            <div class="p-3 rounded-lg exam-stat-box text-center min-w-[115px]">
+              <div class="text-[11px] uppercase tracking-wider opacity-70 font-mono font-semibold">Avg Score</div>
+              <div class="text-xl sm:text-2xl font-bold text-[#286090] dark:text-sky-400 mt-0.5"><span
                   id="statAvgScore">0.00</span><span class="text-xs opacity-60">/50</span></div>
             </div>
-            <div class="p-3.5 rounded-xl border border-yellow-500/30 bg-black/20 text-center">
-              <div class="text-[11px] uppercase tracking-wider opacity-70 font-mono">Avg Accuracy</div>
-              <div class="text-xl sm:text-2xl font-bold text-metallic-gold mt-0.5" id="statAvgAccuracy">0.0%</div>
+            <div class="p-3 rounded-lg exam-stat-box text-center min-w-[115px]">
+              <div class="text-[11px] uppercase tracking-wider opacity-70 font-mono font-semibold">Avg Accuracy</div>
+              <div class="text-xl sm:text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-0.5" id="statAvgAccuracy">0.0%</div>
             </div>
-            <div class="p-3.5 rounded-xl border border-yellow-500/30 bg-black/20 text-center">
-              <div class="text-[11px] uppercase tracking-wider opacity-70 font-mono">Cloud Sync</div>
-              <div class="text-xs sm:text-sm font-semibold mt-1.5 flex items-center justify-center gap-1.5"
+            <div class="p-3 rounded-lg exam-stat-box text-center min-w-[130px]">
+              <div class="text-[11px] uppercase tracking-wider opacity-70 font-mono font-semibold">Cloud Sync</div>
+              <div class="text-xs sm:text-sm font-semibold mt-1.5 flex items-center justify-center gap-1.5 text-[#286090] dark:text-sky-300"
                 id="statCloudStatus">
-                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
                 <span>Supabase Ready</span>
               </div>
             </div>
@@ -457,10 +497,10 @@
       </section>
 
       <!-- Breadcrumb / Navigation between 10 Sections Grid and Selected Section's 10 Mocks -->
-      <div class="flex flex-wrap items-center justify-between gap-4 mb-5">
-        <div class="flex items-center gap-2">
+      <div class="exam-subbar rounded-lg px-4 py-3 flex flex-wrap items-center justify-between gap-4 mb-5">
+        <div class="flex items-center gap-3">
           <button id="backToSectionsBtn" type="button"
-            class="hidden px-3.5 py-2 rounded-xl bg-metallic-gold font-bold text-xs flex items-center gap-1.5 shadow hover:opacity-95 transition">
+            class="hidden px-3.5 py-2 rounded bg-[#286090] hover:bg-[#1e4b73] text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15 19l-7-7 7-7" />
             </svg>
@@ -468,17 +508,17 @@
           </button>
           <div>
             <h3 id="dashboardSectionTitle"
-              class="text-lg sm:text-xl font-display font-bold tracking-wide text-metallic-gold">
+              class="text-base sm:text-lg font-bold tracking-tight text-[#1d4970] dark:text-sky-300">
               Select a Section (10 Sections • 10 Mocks Each)
             </h3>
-            <p id="dashboardSectionSubtitle" class="text-xs opacity-75">
+            <p id="dashboardSectionSubtitle" class="text-xs opacity-80">
               Choose any section below to view its 10 scheduled mocks with internet-synced daily dates.
             </p>
           </div>
         </div>
 
         <div class="flex items-center gap-2 text-xs font-mono">
-          <span class="px-2.5 py-1 rounded-md border border-yellow-500/30 bg-yellow-500/10 text-yellow-400">
+          <span class="px-2.5 py-1 rounded border border-sky-600/30 bg-sky-500/10 text-[#286090] dark:text-sky-300 font-semibold">
             50 Marks • 15 Mins • +2 / -0.25
           </span>
         </div>
@@ -498,10 +538,10 @@
     </main>
 
     <!-- Dashboard Footer -->
-    <footer class="border-t border-yellow-600/20 py-4 px-4 text-center text-xs opacity-65 mt-auto">
+    <footer class="bg-[#e9eef4] dark:bg-slate-900 border-t border-slate-300 dark:border-slate-800 py-3.5 px-4 text-center text-xs text-slate-600 dark:text-slate-400 mt-auto">
       <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
-        <span>Calc. Booster Assessment Suite • 100 Distinct Mocks (2,500 Problems)</span>
-        <span id="footerSyncInfo" class="font-mono">Internet Time Synced • Supabase Cloud Connected</span>
+        <span class="font-medium">Calc. Booster Assessment Suite • 100 Distinct Mocks (2,500 Problems)</span>
+        <span id="footerSyncInfo" class="font-mono text-[#286090] dark:text-sky-400 font-semibold">Internet Time Synced • Supabase Cloud Connected</span>
       </div>
     </footer>
   </div>
@@ -759,11 +799,23 @@
   <!-- VIEW 3: POST-SUBMISSION EVALUATION & SOLUTIONS (ONLY WRONG & UNATTEMPTED) -->
   <!-- ===================================================================== -->
   <div id="analysisView" class="hidden flex-1 flex-col min-h-screen">
+    <!-- Exam-Style Top Header for Analysis -->
+    <div class="tcs-header px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded bg-white/15 flex items-center justify-center font-bold text-sm text-white">∑</div>
+        <span class="font-bold text-sm sm:text-base text-white">Calc. Booster — Assessment Evaluation Report</span>
+      </div>
+      <span id="analysisSyncBadge"
+        class="px-3 py-1 rounded bg-[#1b4366] border border-sky-300/40 text-sky-200 text-xs font-mono font-semibold">
+        Saved & Synced
+      </span>
+    </div>
+
     <div class="max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
       <!-- Top Action Bar -->
       <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
         <button id="backFromAnalysisBtn" type="button"
-          class="px-4 py-2 rounded-xl bg-metallic-gold font-bold text-xs sm:text-sm flex items-center gap-2 shadow hover:opacity-95 transition">
+          class="px-4 py-2 rounded bg-metallic-gold font-bold text-xs sm:text-sm flex items-center gap-2 shadow-sm hover:opacity-95 transition">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15 19l-7-7 7-7" />
           </svg>
@@ -771,25 +823,21 @@
         </button>
 
         <div class="flex items-center gap-2">
-          <span id="analysisSyncBadge"
-            class="px-3 py-1 rounded-lg border border-emerald-500/40 bg-emerald-500/10 text-emerald-400 text-xs font-mono">
-            Saved & Synced
-          </span>
           <button id="retakeMockBtn" type="button"
-            class="px-4 py-2 rounded-xl border border-yellow-500/40 hover:border-yellow-400 text-xs sm:text-sm font-semibold transition">
+            class="px-4 py-2 rounded border border-[#286090] text-[#286090] dark:text-sky-300 dark:border-sky-400 hover:bg-sky-500/10 text-xs sm:text-sm font-semibold transition">
             Retake This Mock
           </button>
         </div>
       </div>
 
       <!-- Scorecard Card -->
-      <div class="gold-card rounded-2xl p-5 sm:p-7 mb-8">
+      <div class="gold-card rounded-lg p-5 sm:p-7 mb-8">
         <div
-          class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-yellow-500/20 pb-5 mb-5">
+          class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-700 pb-5 mb-5">
           <div>
-            <div class="text-xs font-mono uppercase tracking-wider text-yellow-500" id="analysisSectionLabel">Section 01
+            <div class="text-xs font-mono uppercase tracking-wider text-[#286090] dark:text-sky-400 font-bold" id="analysisSectionLabel">Section 01
             </div>
-            <h2 id="analysisMockTitle" class="text-2xl sm:text-3xl font-display font-bold text-metallic-gold mt-0.5">
+            <h2 id="analysisMockTitle" class="text-2xl sm:text-3xl font-bold text-metallic-gold mt-0.5">
               Calc. Booster- 01 — Evaluation Report
             </h2>
             <p id="analysisTimestampText" class="text-xs opacity-75 font-mono mt-1">
@@ -797,8 +845,8 @@
             </p>
           </div>
           <div class="flex items-center gap-3">
-            <div class="px-4 py-3 rounded-xl bg-metallic-gold text-center min-w-[120px] shadow-lg">
-              <div class="text-[10px] font-mono uppercase tracking-wider font-bold opacity-80">Final Score</div>
+            <div class="px-4 py-3 rounded-lg bg-metallic-gold text-center min-w-[120px] shadow">
+              <div class="text-[10px] font-mono uppercase tracking-wider font-bold opacity-90">Final Score</div>
               <div class="text-2xl sm:text-3xl font-extrabold font-mono"><span id="analysisScoreVal">0.00</span><span
                   class="text-sm font-normal">/50</span></div>
             </div>
@@ -807,36 +855,36 @@
 
         <!-- 5 Key Evaluation Metrics -->
         <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 sm:gap-4 text-center">
-          <div class="p-3.5 rounded-xl border border-yellow-500/25 bg-black/20">
-            <div class="text-[11px] font-mono uppercase opacity-70">Accuracy</div>
-            <div id="analysisAccuracyVal" class="text-xl font-bold text-yellow-400 mt-1">0.0%</div>
+          <div class="p-3.5 rounded-lg exam-stat-box">
+            <div class="text-[11px] font-mono uppercase opacity-70 font-semibold">Accuracy</div>
+            <div id="analysisAccuracyVal" class="text-xl font-bold text-[#286090] dark:text-sky-400 mt-1">0.0%</div>
           </div>
-          <div class="p-3.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10">
-            <div class="text-[11px] font-mono uppercase text-emerald-400">Correct (+2.0)</div>
-            <div id="analysisCorrectVal" class="text-xl font-bold text-emerald-400 mt-1">0</div>
+          <div class="p-3.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10">
+            <div class="text-[11px] font-mono uppercase text-emerald-700 dark:text-emerald-400 font-semibold">Correct (+2.0)</div>
+            <div id="analysisCorrectVal" class="text-xl font-bold text-emerald-700 dark:text-emerald-400 mt-1">0</div>
           </div>
-          <div class="p-3.5 rounded-xl border border-red-500/30 bg-red-500/10">
-            <div class="text-[11px] font-mono uppercase text-red-400">Incorrect (-0.25)</div>
-            <div id="analysisIncorrectVal" class="text-xl font-bold text-red-400 mt-1">0</div>
+          <div class="p-3.5 rounded-lg border border-red-500/30 bg-red-500/10">
+            <div class="text-[11px] font-mono uppercase text-red-600 dark:text-red-400 font-semibold">Incorrect (-0.25)</div>
+            <div id="analysisIncorrectVal" class="text-xl font-bold text-red-600 dark:text-red-400 mt-1">0</div>
           </div>
-          <div class="p-3.5 rounded-xl border border-amber-500/30 bg-amber-500/10">
-            <div class="text-[11px] font-mono uppercase text-amber-400">Un-attempted (0)</div>
-            <div id="analysisUnattemptedVal" class="text-xl font-bold text-amber-400 mt-1">0</div>
+          <div class="p-3.5 rounded-lg border border-amber-500/30 bg-amber-500/10">
+            <div class="text-[11px] font-mono uppercase text-amber-700 dark:text-amber-400 font-semibold">Un-attempted (0)</div>
+            <div id="analysisUnattemptedVal" class="text-xl font-bold text-amber-700 dark:text-amber-400 mt-1">0</div>
           </div>
-          <div class="p-3.5 rounded-xl border border-yellow-500/25 bg-black/20 col-span-2 sm:col-span-1">
-            <div class="text-[11px] font-mono uppercase opacity-70">Time Taken</div>
+          <div class="p-3.5 rounded-lg exam-stat-box col-span-2 sm:col-span-1">
+            <div class="text-[11px] font-mono uppercase opacity-70 font-semibold">Time Taken</div>
             <div id="analysisTimeVal" class="text-xl font-bold font-mono mt-1">00:00</div>
           </div>
         </div>
       </div>
 
       <!-- Solutions Filter Header (STRICTLY ONLY Incorrect & Un-attempted Questions) -->
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+      <div class="exam-subbar rounded-lg p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
         <div>
-          <h3 class="text-lg sm:text-xl font-display font-bold text-metallic-gold">
+          <h3 class="text-base sm:text-lg font-bold text-metallic-gold">
             Solutions & Analysis (Incorrect & Un-Attempted Questions Only)
           </h3>
-          <p class="text-xs opacity-75">
+          <p class="text-xs opacity-80">
             Showing detailed step-by-step mathematical solutions exclusively for incorrectly answered and un-attempted
             questions.
           </p>
@@ -844,15 +892,15 @@
 
         <div class="flex items-center gap-2">
           <button type="button" data-filter="all"
-            class="analysis-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-metallic-gold">
+            class="analysis-filter-btn px-3 py-1.5 rounded text-xs font-bold bg-metallic-gold">
             All Reviewable (<span id="filterCountAll">0</span>)
           </button>
           <button type="button" data-filter="incorrect"
-            class="analysis-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold border border-red-500/40 text-red-400 hover:bg-red-500/10">
+            class="analysis-filter-btn px-3 py-1.5 rounded text-xs font-semibold border border-red-500/40 text-red-600 dark:text-red-400 hover:bg-red-500/10">
             Incorrect (<span id="filterCountIncorrect">0</span>)
           </button>
           <button type="button" data-filter="unattempted"
-            class="analysis-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold border border-amber-500/40 text-amber-400 hover:bg-amber-500/10">
+            class="analysis-filter-btn px-3 py-1.5 rounded text-xs font-semibold border border-amber-500/40 text-amber-700 dark:text-amber-400 hover:bg-amber-500/10">
             Un-attempted (<span id="filterCountUnattempted">0</span>)
           </button>
         </div>
@@ -869,15 +917,15 @@
   <!-- MODAL: SUBMISSION HISTORY & SUPABASE CLOUD SYNC                       -->
   <!-- ===================================================================== -->
   <div id="historyModal"
-    class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="gold-card rounded-2xl max-w-4xl w-full max-h-[85vh] flex flex-col overflow-hidden">
-      <div class="p-4 sm:p-5 border-b border-yellow-500/25 flex items-center justify-between">
+    class="hidden fixed inset-0 z-50 bg-slate-900/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="gold-card rounded-xl max-w-4xl w-full max-h-[85vh] flex flex-col overflow-hidden shadow-2xl">
+      <div class="tcs-header p-4 sm:p-5 flex items-center justify-between">
         <div>
-          <h3 class="font-display font-bold text-lg text-metallic-gold">Mock Submission History & Analysis</h3>
-          <p class="text-xs opacity-75">Synced with Internet Time & Supabase Project (nmhrhyvsyprsacrnbgnd)</p>
+          <h3 class="font-bold text-base sm:text-lg text-white">Mock Submission History & Analysis</h3>
+          <p class="text-xs text-sky-100/90">Synced with Internet Time & Supabase Project (nmhrhyvsyprsacrnbgnd)</p>
         </div>
         <button id="closeHistoryModalBtn" type="button"
-          class="p-1.5 rounded-lg border border-yellow-500/30 hover:border-yellow-400">
+          class="p-1.5 rounded bg-white/15 hover:bg-white/25 text-white border border-sky-300/30">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
@@ -893,78 +941,78 @@
   <!-- MODAL: SUPABASE & GITHUB AUTH CONFIGURATION                           -->
   <!-- ===================================================================== -->
   <div id="supabaseModal"
-    class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="gold-card rounded-2xl max-w-2xl w-full max-h-[88vh] flex flex-col overflow-hidden">
-      <div class="p-4 sm:p-5 border-b border-yellow-500/25 flex items-center justify-between">
+    class="hidden fixed inset-0 z-50 bg-slate-900/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="gold-card rounded-xl max-w-2xl w-full max-h-[88vh] flex flex-col overflow-hidden shadow-2xl">
+      <div class="tcs-header p-4 sm:p-5 flex items-center justify-between">
         <div>
-          <h3 class="font-display font-bold text-lg text-metallic-gold">Supabase Cloud & GitHub Auth Status</h3>
-          <p class="text-xs opacity-75">Connected to https://nmhrhyvsyprsacrnbgnd.supabase.co</p>
+          <h3 class="font-bold text-base sm:text-lg text-white">Supabase Cloud & GitHub Auth Status</h3>
+          <p class="text-xs text-sky-100/90">Connected to https://nmhrhyvsyprsacrnbgnd.supabase.co</p>
         </div>
         <button id="closeSupabaseModalBtn" type="button"
-          class="p-1.5 rounded-lg border border-yellow-500/30 hover:border-yellow-400">
+          class="p-1.5 rounded bg-white/15 hover:bg-white/25 text-white border border-sky-300/30">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
       </div>
       <div class="p-4 sm:p-6 overflow-y-auto space-y-4 text-xs sm:text-sm">
-        <div class="p-3.5 rounded-xl border border-yellow-500/30 bg-black/25 space-y-1.5">
+        <div class="p-3.5 rounded-lg exam-stat-box space-y-1.5">
           <div class="flex items-center justify-between">
-            <span class="font-semibold text-yellow-400">Project URL:</span>
+            <span class="font-semibold text-[#286090] dark:text-sky-400">Project URL:</span>
             <span class="font-mono text-xs">https://nmhrhyvsyprsacrnbgnd.supabase.co</span>
           </div>
           <div class="flex items-center justify-between">
-            <span class="font-semibold text-yellow-400">Auth Session:</span>
-            <span id="modalAuthStatusText" class="font-mono text-xs text-emerald-400">Checking...</span>
+            <span class="font-semibold text-[#286090] dark:text-sky-400">Auth Session:</span>
+            <span id="modalAuthStatusText" class="font-mono text-xs text-emerald-600 dark:text-emerald-400 font-semibold">Checking...</span>
           </div>
-          <div class="flex items-center justify-between pt-1 border-t border-yellow-500/20">
-            <span class="font-semibold text-yellow-400">Sync Diagnostics:</span>
-            <span id="modalSyncDiagText" class="font-mono text-xs text-yellow-300">Checking local & cloud
+          <div class="flex items-center justify-between pt-1 border-t border-slate-300 dark:border-slate-700">
+            <span class="font-semibold text-[#286090] dark:text-sky-400">Sync Diagnostics:</span>
+            <span id="modalSyncDiagText" class="font-mono text-xs text-[#286090] dark:text-sky-300">Checking local & cloud
               storage...</span>
           </div>
         </div>
 
         <!-- Instant Fix for localhost:3000/#access_token=... Popup Redirect -->
-        <div class="p-4 rounded-xl border border-emerald-500/40 bg-emerald-950/25 space-y-2.5">
+        <div class="p-4 rounded-lg border border-sky-500/40 bg-sky-500/10 space-y-2.5">
           <div class="flex items-center justify-between gap-2">
-            <span class="font-bold text-emerald-400 text-xs sm:text-sm">Got "localhost:3000 refused to connect" in the
+            <span class="font-bold text-[#286090] dark:text-sky-300 text-xs sm:text-sm">Got "localhost:3000 refused to connect" in the
               GitHub popup?</span>
             <span
-              class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">INSTANT
+              class="px-2 py-0.5 rounded text-[10px] font-mono bg-sky-500/20 text-[#286090] dark:text-sky-300 border border-sky-500/30 font-bold">INSTANT
               FIX</span>
           </div>
           <p class="text-xs opacity-85 leading-relaxed">
             Supabase defaults to redirecting to <code
-              class="text-yellow-300 font-mono">http://localhost:3000/#access_token=...</code> after GitHub approves
+              class="text-[#286090] dark:text-sky-300 font-mono font-semibold">http://localhost:3000/#access_token=...</code> after GitHub approves
             your login. Your token is already in that popup's address bar! Copy the full URL from the popup window and
             paste it below to complete sign-in immediately:
           </p>
           <div class="flex flex-col sm:flex-row gap-2">
             <input id="oauthCallbackUrlInput" type="text"
               placeholder="Paste http://localhost:3000/#access_token=eyJ... here"
-              class="flex-1 px-3 py-2 rounded-lg bg-black/60 border border-yellow-500/40 text-xs font-mono text-white focus:outline-none focus:border-yellow-400" />
+              class="flex-1 px-3 py-2 rounded bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs font-mono text-slate-900 dark:text-white focus:outline-none focus:border-sky-500" />
             <button id="completeOauthUrlBtn" type="button"
-              class="px-4 py-2 rounded-lg bg-metallic-gold font-bold text-xs shrink-0 hover:opacity-95 transition">
+              class="px-4 py-2 rounded bg-metallic-gold font-bold text-xs shrink-0 hover:opacity-95 transition">
               Complete Sign-In
             </button>
           </div>
-          <p class="text-[11px] opacity-70 font-mono">
-            Tip: To avoid pasting in the future, either run <code class="text-yellow-300">npx serve -l 3000</code> in
+          <p class="text-[11px] opacity-75 font-mono">
+            Tip: To avoid pasting in the future, either run <code class="text-[#286090] dark:text-sky-300">npx serve -l 3000</code> in
             your folder, or in Supabase Dashboard → Authentication → URL Configuration, change <strong>Site URL</strong>
             to your actual local server URL (e.g. <code
-              class="text-yellow-300">http://127.0.0.1:5500/calc_booster_exam_app.html</code>).
+              class="text-[#286090] dark:text-sky-300">http://127.0.0.1:5500/calc_booster_exam_app.html</code>).
           </p>
         </div>
 
         <div class="space-y-2">
           <div class="flex items-center justify-between">
-            <span class="font-semibold text-yellow-400">Supabase SQL Schema (Run once in Supabase SQL Editor if table is
+            <span class="font-semibold text-[#286090] dark:text-sky-400">Supabase SQL Schema (Run once in Supabase SQL Editor if table is
               not created yet):</span>
             <button id="copySqlSchemaBtn" type="button"
               class="px-2.5 py-1 rounded bg-metallic-gold font-bold text-xs">Copy SQL</button>
           </div>
           <pre id="supabaseSqlCode"
-            class="p-3 rounded-xl bg-black/60 border border-yellow-500/25 font-mono text-[11px] overflow-x-auto text-emerald-300 select-all">create table if not exists public.mock_submissions (
+            class="p-3 rounded-lg bg-slate-900 border border-slate-700 font-mono text-[11px] overflow-x-auto text-sky-300 select-all">create table if not exists public.mock_submissions (
   id uuid default gen_random_uuid() primary key,
   user_id uuid references auth.users(id),
   user_name text,
@@ -988,11 +1036,11 @@ create policy "Allow public insert and select" on public.mock_submissions
 
         <div class="flex flex-wrap items-center justify-between gap-2 pt-2">
           <button id="modalTriggerGithubBtn" type="button"
-            class="px-4 py-2 rounded-xl bg-metallic-gold font-bold text-xs flex items-center gap-2">
+            class="px-4 py-2 rounded bg-metallic-gold font-bold text-xs flex items-center gap-2">
             <span>Sign in with GitHub OAuth</span>
           </button>
           <button id="syncNowBtn" type="button"
-            class="px-4 py-2 rounded-xl border border-yellow-500/40 hover:border-yellow-400 font-semibold text-xs">
+            class="px-4 py-2 rounded border border-[#286090] text-[#286090] dark:text-sky-300 dark:border-sky-400 hover:bg-sky-500/10 font-semibold text-xs">
             Sync Local Submissions to Cloud Now
           </button>
         </div>
@@ -1002,8 +1050,8 @@ create policy "Allow public insert and select" on public.mock_submissions
 
   <!-- Toast Notification -->
   <div id="toastBanner"
-    class="hidden fixed bottom-5 right-5 z-50 px-4 py-3 rounded-xl bg-slate-900 border border-yellow-500/50 text-white text-xs sm:text-sm font-medium shadow-2xl flex items-center gap-2.5">
-    <span class="w-2 h-2 rounded-full bg-yellow-400"></span>
+    class="hidden fixed bottom-5 right-5 z-50 px-4 py-3 rounded-lg bg-[#1b4366] border border-sky-400/50 text-white text-xs sm:text-sm font-medium shadow-2xl flex items-center gap-2.5">
+    <span class="w-2 h-2 rounded-full bg-sky-300"></span>
     <span id="toastMessage">Notification</span>
   </div>
 
@@ -1905,7 +1953,7 @@ create policy "Allow public insert and select" on public.mock_submissions
       // 7. STATE MANAGEMENT FOR DASHBOARD, SECTIONS, EXAM & ANALYSIS
       // -------------------------------------------------------------------
       let activeSectionId = null; // null = showing 10 Sections Grid; 1..10 = showing that section's 10 mocks
-      let dashboardDarkMode = true;
+      let dashboardDarkMode = false;
 
       // Active Exam State
       let currentExam = {
@@ -2023,31 +2071,33 @@ create policy "Allow public insert and select" on public.mock_submissions
             const dateRangeEnd = getMockRespectiveDate(endMock);
 
             html += `
-              <div class="gold-card rounded-2xl p-5 flex flex-col justify-between cursor-pointer group" data-section-id="${sec}">
+              <div class="gold-card rounded-lg overflow-hidden flex flex-col justify-between cursor-pointer group" data-section-id="${sec}">
                 <div>
-                  <div class="flex items-center justify-between gap-2 mb-3">
-                    <span class="px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-metallic-gold">
+                  <div class="bg-[#e9eef4] dark:bg-slate-800 border-b border-slate-300 dark:border-slate-700 px-4 py-2.5 flex items-center justify-between gap-2">
+                    <span class="tcs-section-pill !py-0.5 !px-2.5 !text-[11px] font-mono">
                       SECTION ${String(sec).padStart(2, '0')}
                     </span>
-                    <span class="text-xs font-mono opacity-75">${completedInSec}/10 Done</span>
+                    <span class="text-xs font-mono font-semibold text-slate-700 dark:text-slate-300">${completedInSec}/10 Done</span>
                   </div>
-                  <h4 class="font-display font-bold text-base sm:text-lg text-metallic-gold group-hover:underline">
-                    Calc. Booster ${String(startMock).padStart(2, '0')} – ${String(endMock).padStart(2, '0')}
-                  </h4>
-                  <p class="text-xs opacity-75 mt-1">
-                    10 Distinct Mocks • 250 MCQs
-                  </p>
-                  <div class="mt-3 pt-2.5 border-t border-yellow-500/20 text-[11px] font-mono opacity-80 flex items-center justify-between">
-                    <span>Schedule:</span>
-                    <span class="text-yellow-400">${dateRangeStart} – ${dateRangeEnd}</span>
+                  <div class="p-4">
+                    <h4 class="font-bold text-base sm:text-lg text-metallic-gold group-hover:underline">
+                      Calc. Booster ${String(startMock).padStart(2, '0')} – ${String(endMock).padStart(2, '0')}
+                    </h4>
+                    <p class="text-xs opacity-75 mt-1">
+                      10 Distinct Mocks • 250 MCQs
+                    </p>
+                    <div class="mt-3 pt-2.5 border-t border-slate-200 dark:border-slate-700 text-[11px] font-mono flex items-center justify-between">
+                      <span class="opacity-75">Schedule:</span>
+                      <span class="text-[#286090] dark:text-sky-400 font-semibold">${dateRangeStart} – ${dateRangeEnd}</span>
+                    </div>
                   </div>
                 </div>
 
-                <div class="mt-4">
-                  <div class="w-full h-1.5 rounded-full bg-yellow-500/15 overflow-hidden mb-3">
-                    <div class="h-full bg-metallic-gold transition-all duration-300" style="width: ${progressPct}%"></div>
+                <div class="px-4 pb-4">
+                  <div class="w-full h-1.5 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden mb-3">
+                    <div class="h-full bg-[#286090] dark:bg-sky-400 transition-all duration-300" style="width: ${progressPct}%"></div>
                   </div>
-                  <button type="button" class="w-full py-2 rounded-xl border border-yellow-500/40 group-hover:bg-metallic-gold group-hover:text-black font-bold text-xs transition flex items-center justify-center gap-1.5">
+                  <button type="button" class="w-full py-2 rounded bg-[#286090] hover:bg-[#1e4b73] text-white font-semibold text-xs transition flex items-center justify-center gap-1.5 shadow-sm">
                     <span>Open 10 Mocks</span>
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 5l7 7-7 7"/></svg>
                   </button>
@@ -2088,36 +2138,38 @@ create policy "Allow public insert and select" on public.mock_submissions
 
             if (sub) {
               html += `
-                <div class="gold-card rounded-2xl p-4 sm:p-5 flex flex-col justify-between">
+                <div class="gold-card rounded-lg overflow-hidden flex flex-col justify-between">
                   <div>
-                    <div class="flex items-center justify-between gap-1 mb-2">
-                      <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                    <div class="bg-[#e9eef4] dark:bg-slate-800 border-b border-slate-300 dark:border-slate-700 px-3.5 py-2 flex items-center justify-between gap-1">
+                      <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-600 text-white">
                         SUBMITTED
                       </span>
-                      <span class="text-[11px] font-mono text-yellow-400" title="Internet-Synced Mock Date">
+                      <span class="text-[11px] font-mono font-semibold text-[#286090] dark:text-sky-300" title="Internet-Synced Mock Date">
                         ${respectiveDate}
                       </span>
                     </div>
-                    <h4 class="font-display font-bold text-base text-metallic-gold">${title}</h4>
-                    <div class="mt-2.5 p-2.5 rounded-xl bg-black/25 border border-yellow-500/20 text-xs space-y-1 font-mono">
-                      <div class="flex justify-between">
-                        <span class="opacity-70">Score:</span>
-                        <span class="font-bold text-yellow-400">${Number(sub.score).toFixed(2)} / 50</span>
-                      </div>
-                      <div class="flex justify-between">
-                        <span class="opacity-70">Accuracy:</span>
-                        <span class="font-semibold text-emerald-400">${Number(sub.accuracy).toFixed(1)}%</span>
-                      </div>
-                      <div class="text-[10px] opacity-65 truncate" title="${sub.submittedAtFormatted || ''}">
-                        ${sub.submittedAtFormatted || respectiveDate}
+                    <div class="p-4">
+                      <h4 class="font-bold text-base text-metallic-gold">${title}</h4>
+                      <div class="mt-2.5 p-2.5 rounded exam-stat-box text-xs space-y-1 font-mono">
+                        <div class="flex justify-between">
+                          <span class="opacity-75">Score:</span>
+                          <span class="font-bold text-[#286090] dark:text-sky-400">${Number(sub.score).toFixed(2)} / 50</span>
+                        </div>
+                        <div class="flex justify-between">
+                          <span class="opacity-75">Accuracy:</span>
+                          <span class="font-semibold text-emerald-600 dark:text-emerald-400">${Number(sub.accuracy).toFixed(1)}%</span>
+                        </div>
+                        <div class="text-[10px] opacity-65 truncate" title="${sub.submittedAtFormatted || ''}">
+                          ${sub.submittedAtFormatted || respectiveDate}
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <div class="mt-3.5 grid grid-cols-2 gap-2">
-                    <button type="button" data-review-mock="${m}" class="py-2 px-2 rounded-xl border border-yellow-500/45 hover:border-yellow-400 font-bold text-xs transition">
+                  <div class="px-4 pb-4 grid grid-cols-2 gap-2">
+                    <button type="button" data-review-mock="${m}" class="py-2 px-2 rounded border border-[#286090] text-[#286090] dark:border-sky-400 dark:text-sky-300 hover:bg-sky-500/10 font-bold text-xs transition">
                       Analysis
                     </button>
-                    <button type="button" data-start-mock="${m}" class="py-2 px-2 rounded-xl bg-metallic-gold font-bold text-xs hover:opacity-95 transition">
+                    <button type="button" data-start-mock="${m}" class="py-2 px-2 rounded bg-metallic-gold font-bold text-xs hover:opacity-95 transition">
                       Re-Attempt
                     </button>
                   </div>
@@ -2125,23 +2177,25 @@ create policy "Allow public insert and select" on public.mock_submissions
               `;
             } else {
               html += `
-                <div class="gold-card rounded-2xl p-4 sm:p-5 flex flex-col justify-between">
+                <div class="gold-card rounded-lg overflow-hidden flex flex-col justify-between">
                   <div>
-                    <div class="flex items-center justify-between gap-1 mb-2">
-                      <span class="px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider border border-yellow-500/30 text-yellow-400">
+                    <div class="bg-[#e9eef4] dark:bg-slate-800 border-b border-slate-300 dark:border-slate-700 px-3.5 py-2 flex items-center justify-between gap-1">
+                      <span class="px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider bg-[#286090] text-white font-semibold">
                         25 MCQs • 50M
                       </span>
-                      <span class="text-[11px] font-mono text-yellow-400" title="Respective Day's Date (Internet Synced)">
+                      <span class="text-[11px] font-mono font-semibold text-[#286090] dark:text-sky-300" title="Respective Day's Date (Internet Synced)">
                         ${respectiveDate}
                       </span>
                     </div>
-                    <h4 class="font-display font-bold text-base text-metallic-gold">${title}</h4>
-                    <p class="text-xs opacity-75 mt-1.5">
-                      Duration: 15 Mins • +2.0 / -0.25
-                    </p>
+                    <div class="p-4">
+                      <h4 class="font-bold text-base text-metallic-gold">${title}</h4>
+                      <p class="text-xs opacity-75 mt-1.5">
+                        Duration: 15 Mins • +2.0 / -0.25
+                      </p>
+                    </div>
                   </div>
-                  <div class="mt-4">
-                    <button type="button" data-start-mock="${m}" class="w-full py-2.5 rounded-xl bg-metallic-gold font-bold text-xs shadow hover:opacity-95 transition flex items-center justify-center gap-1.5">
+                  <div class="px-4 pb-4">
+                    <button type="button" data-start-mock="${m}" class="w-full py-2.5 rounded bg-metallic-gold font-bold text-xs shadow-sm hover:opacity-95 transition flex items-center justify-center gap-1.5">
                       <span>Start Mock Test</span>
                       <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                     </button>
@@ -2177,13 +2231,14 @@ create policy "Allow public insert and select" on public.mock_submissions
       // -------------------------------------------------------------------
       function applyDashboardTheme() {
         const body = document.body;
+        const root = document.documentElement;
         const sun = document.getElementById('themeIconSun');
         const moon = document.getElementById('themeIconMoon');
-        const header = document.getElementById('dashboardHeader');
 
         if (currentExam.active) {
           body.classList.remove('dashboard-dark', 'dashboard-light');
           body.classList.add('exam-mode');
+          root.classList.remove('dark');
           return;
         }
 
@@ -2191,26 +2246,21 @@ create policy "Allow public insert and select" on public.mock_submissions
         if (dashboardDarkMode) {
           body.classList.add('dashboard-dark');
           body.classList.remove('dashboard-light');
+          root.classList.add('dark');
           if (sun) sun.classList.remove('hidden');
           if (moon) moon.classList.add('hidden');
-          if (header) {
-            header.classList.remove('bg-white/90');
-            header.classList.add('bg-[#090B10]/90');
-          }
         } else {
           body.classList.add('dashboard-light');
           body.classList.remove('dashboard-dark');
+          root.classList.remove('dark');
           if (sun) sun.classList.add('hidden');
           if (moon) moon.classList.remove('hidden');
-          if (header) {
-            header.classList.add('bg-white/90');
-            header.classList.remove('bg-[#090B10]/90');
-          }
         }
       }
 
       try {
         const savedTheme = localStorage.getItem(STORAGE_KEY_THEME);
+        if (savedTheme === 'dark') dashboardDarkMode = true;
         if (savedTheme === 'light') dashboardDarkMode = false;
       } catch (e) { }
 
@@ -2659,24 +2709,24 @@ create policy "Allow public insert and select" on public.mock_submissions
         filtered.forEach(item => {
           const isInc = item.status === 'incorrect';
           const statusBadge = isInc
-            ? `<span class="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-red-500/20 text-red-400 border border-red-500/30">INCORRECT (-0.25 Mark)</span>`
-            : `<span class="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30">UN-ATTEMPTED (0 Mark)</span>`;
+            ? `<span class="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/30">INCORRECT (-0.25 Mark)</span>`
+            : `<span class="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30">UN-ATTEMPTED (0 Mark)</span>`;
 
           let optionsHtml = '';
           for (let i = 0; i < 4; i++) {
             const isCorrectOpt = (i === item.correctIndex);
             const isUserWrongOpt = (isInc && i === item.userChoiceIndex);
-            let optStyle = 'border-yellow-500/20 bg-black/15 opacity-80';
+            let optStyle = 'border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 opacity-85';
             let tag = '';
             if (isCorrectOpt) {
-              optStyle = 'border-emerald-500 bg-emerald-500/15 text-emerald-300 font-semibold';
-              tag = '<span class="ml-auto text-[11px] font-mono font-bold text-emerald-400">✓ Correct Answer</span>';
+              optStyle = 'border-emerald-500 bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 font-semibold';
+              tag = '<span class="ml-auto text-[11px] font-mono font-bold text-emerald-600 dark:text-emerald-400">✓ Correct Answer</span>';
             } else if (isUserWrongOpt) {
-              optStyle = 'border-red-500 bg-red-500/15 text-red-300 font-semibold';
-              tag = '<span class="ml-auto text-[11px] font-mono font-bold text-red-400">✗ Your Selection</span>';
+              optStyle = 'border-red-500 bg-red-500/10 text-red-800 dark:text-red-300 font-semibold';
+              tag = '<span class="ml-auto text-[11px] font-mono font-bold text-red-600 dark:text-red-400">✗ Your Selection</span>';
             }
             optionsHtml += `
-              <div class="p-2.5 rounded-xl border ${optStyle} flex items-center gap-2.5 text-xs sm:text-sm">
+              <div class="p-2.5 rounded-lg border ${optStyle} flex items-center gap-2.5 text-xs sm:text-sm">
                 <span class="w-6 h-6 rounded-full border border-current flex items-center justify-center text-xs font-mono font-bold shrink-0">${labels[i]}</span>
                 <span>${item.options[i]}</span>
                 ${tag}
@@ -2685,9 +2735,9 @@ create policy "Allow public insert and select" on public.mock_submissions
           }
 
           html += `
-            <div class="gold-card rounded-2xl p-5 sm:p-6 space-y-4">
-              <div class="flex flex-wrap items-center justify-between gap-2 border-b border-yellow-500/20 pb-3">
-                <div class="font-display font-bold text-sm sm:text-base text-metallic-gold">
+            <div class="gold-card rounded-lg p-5 sm:p-6 space-y-4">
+              <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-700 pb-3">
+                <div class="font-bold text-sm sm:text-base text-metallic-gold">
                   Question No. ${item.qNumber}
                 </div>
                 ${statusBadge}
@@ -2701,8 +2751,8 @@ create policy "Allow public insert and select" on public.mock_submissions
                 ${optionsHtml}
               </div>
 
-              <div class="p-4 rounded-xl bg-black/35 border border-yellow-500/30 space-y-1.5">
-                <div class="text-xs font-mono uppercase tracking-wider text-yellow-400 font-bold">
+              <div class="p-4 rounded-lg bg-[#e9eef4]/70 dark:bg-slate-800/80 border border-sky-500/30 space-y-1.5">
+                <div class="text-xs font-mono uppercase tracking-wider text-[#286090] dark:text-sky-400 font-bold">
                   Proper Mathematical Solution:
                 </div>
                 <div class="text-xs sm:text-sm leading-relaxed whitespace-pre-line font-mono opacity-90">${item.solution}</div>
@@ -3380,11 +3430,11 @@ create policy "Allow public insert and select" on public.mock_submissions
         keys.forEach(mId => {
           const sub = submissionsByMock[mId];
           html += `
-            <div class="p-4 rounded-xl border border-yellow-500/30 bg-black/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="p-4 rounded-lg exam-stat-box flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
                 <div class="flex items-center gap-2">
-                  <span class="font-display font-bold text-metallic-gold">${sub.mockName}</span>
-                  <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-yellow-500/15 text-yellow-400">Sec ${String(sub.sectionId).padStart(2, '0')}</span>
+                  <span class="font-bold text-metallic-gold">${sub.mockName}</span>
+                  <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-[#286090] text-white font-semibold">Sec ${String(sub.sectionId).padStart(2, '0')}</span>
                 </div>
                 <div class="text-xs font-mono opacity-75 mt-1">
                   Mock Date: ${sub.scheduledDate} • Submitted: ${sub.submittedAtFormatted}
@@ -3392,10 +3442,10 @@ create policy "Allow public insert and select" on public.mock_submissions
               </div>
               <div class="flex items-center gap-3">
                 <div class="text-right font-mono">
-                  <div class="text-sm font-bold text-yellow-400">${Number(sub.score).toFixed(2)} / 50</div>
-                  <div class="text-[11px] text-emerald-400">Acc: ${Number(sub.accuracy).toFixed(1)}% (✗ ${sub.incorrectCount}, ○ ${sub.unattemptedCount})</div>
+                  <div class="text-sm font-bold text-[#286090] dark:text-sky-400">${Number(sub.score).toFixed(2)} / 50</div>
+                  <div class="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold">Acc: ${Number(sub.accuracy).toFixed(1)}% (✗ ${sub.incorrectCount}, ○ ${sub.unattemptedCount})</div>
                 </div>
-                <button type="button" data-history-review="${mId}" class="px-3.5 py-2 rounded-lg bg-metallic-gold font-bold text-xs">
+                <button type="button" data-history-review="${mId}" class="px-3.5 py-2 rounded bg-metallic-gold font-bold text-xs">
                   View Solutions
                 </button>
               </div>
